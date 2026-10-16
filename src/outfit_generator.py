@@ -50,6 +50,47 @@ LIVE_TRENDYOL_FEEDS = {
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
     {
+        "id": "pajama_morning_vibe",
+        "title": "Pastel Mavi Pijama & Sabah Ev Stili",
+        "category_map": {
+            "outerwear": "pajama_set",
+            "cap": "cap",
+            "top": "camisole_top",
+            "bottom": "pajama_shorts",
+            "bag": "bag",
+            "shoes": "house_slippers",
+        },
+        "keywords": {
+            "outerwear": ["pijama", "gömlek", "saten", "pamuklu", "mavi", "penti", "takım"],
+            "cap": ["uyku", "maske", "göz", "mavi", "saten", "aksesuar"],
+            "top": ["beyaz", "ekru", "askılı", "büstiyer", "bralet", "crop", "pamuklu"],
+            "bottom": ["şort", "mavi", "gri", "pamuklu", "penye", "rahat"],
+            "bag": ["krem", "bej", "beyaz", "kapitone", "çanta"],
+            "shoes": ["beyaz", "bej", "terlik", "ev", "rahat", "yumuşak", "babet"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/outfit3_01_jacket.png",
+            "cap": "assets/items/outfit3_02_cap.png",
+            "top": "assets/items/outfit3_03_top.png",
+            "bottom": "assets/items/outfit3_04_bottom.png",
+            "bag": "assets/items/outfit3_05_bag.png",
+            "shoes": "assets/items/outfit3_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/outfit3_01_jacket.png",
+            "cap": "assets/items/outfit3_02_cap.png",
+            "top": "assets/items/outfit3_03_top.png",
+            "bottom": "assets/items/outfit3_04_bottom.png",
+            "bag": "assets/items/outfit3_05_bag.png",
+            "shoes": "assets/items/outfit3_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/outfit3_model_step1.jpg",
+            "assets/outfit3_model_step2.jpg",
+            "assets/outfit3_model_step3.jpg",
+        ],
+    },
+    {
         "id": "chic_black_biker_denim",
         "title": "Siyah Ceket & Palazzo Jean Sokak Stili",
         "keywords": {
@@ -419,15 +460,20 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     items = {}
     total_price = 0.0
 
+    cat_map = archetype.get("category_map", {})
     for cat_key in ["outerwear", "cap", "top", "bottom", "bag", "shoes"]:
-        live_pool = fetch_live_trendyol_items(cat_key)
-        if cat_key == "bag":
-            live_pool = fetch_live_bagmori_bags() + live_pool
-        elif cat_key in ("outerwear", "top", "bottom"):
-            live_pool = live_pool + fetch_live_quzu_items(cat_key)
-
-        if cached_catalog.get(cat_key):
-            live_pool = live_pool + cached_catalog[cat_key]
+        mapped_cat = cat_map.get(cat_key, cat_key)
+        live_pool = []
+        if cached_catalog.get(mapped_cat):
+            live_pool.extend(cached_catalog[mapped_cat])
+        if not live_pool:
+            live_pool = fetch_live_trendyol_items(cat_key)
+            if cat_key == "bag":
+                live_pool = fetch_live_bagmori_bags() + live_pool
+            elif cat_key in ("outerwear", "top", "bottom"):
+                live_pool = live_pool + fetch_live_quzu_items(cat_key)
+            if cached_catalog.get(cat_key):
+                live_pool.extend(cached_catalog[cat_key])
 
         chosen = _pick_matching_live_item(live_pool, archetype["keywords"].get(cat_key, []), rng)
         if not chosen:
