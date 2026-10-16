@@ -217,7 +217,8 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     font_brand = get_font(31, bold=True)
     font_price = get_font(27, bold=True)
     font_badge = get_font(33, bold=True)
-    font_sub = get_font(25, bold=True)
+    font_sub = get_font(24, bold=True)
+    font_legal = get_font(19, bold=False)
 
     total_duration = 11.0
     total_frames = int(total_duration * FPS)
@@ -288,20 +289,27 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             # Alt Toplam Kombin & Link Bilgisi Bandı (True OLED Black)
             if t > 3.85:
                 b_prog = ease_out_back(min(1.0, (t - 3.85) / 0.5))
-                by = int(S(1720) - b_prog * S(155))
-                draw.rounded_rectangle((S(95), by, S(985), by + S(115)), radius=S(48), fill=(10, 10, 14, 250))
+                by = int(S(1710) - b_prog * S(155))
+                draw.rounded_rectangle((S(85), by, S(995), by + S(138)), radius=S(48), fill=(10, 10, 14, 250))
                 draw.text(
-                    (S(540), by + S(38)),
+                    (S(540), by + S(35)),
                     f"TOPLAM KOMBİN: {total_price_str}  •  KAYDET",
                     fill=(255, 255, 255, 255),
                     font=font_badge,
                     anchor="mm",
                 )
                 draw.text(
-                    (S(540), by + S(82)),
-                    "» ÜRÜN LİNKLERİ AÇIKLAMADA & İLK YORUMDA «",
+                    (S(540), by + S(76)),
+                    "» LİNKLER AÇIKLAMADA, YORUMDA & THREADS'TE «",
                     fill=(242, 218, 178, 255),
                     font=font_sub,
+                    anchor="mm",
+                )
+                draw.text(
+                    (S(540), by + S(114)),
+                    "Reklam / iş birliği içermez • Kombin önerisidir (zorunlu #reklam)",
+                    fill=(195, 195, 202, 245),
+                    font=font_legal,
                     anchor="mm",
                 )
 
@@ -339,19 +347,26 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             mini_draw.rounded_rectangle((S(45), S(90), S(620), S(165)), radius=S(36), fill=(10, 10, 14, 228))
             mini_draw.text((S(332), S(128)), "KOMBİNİN DURUŞU • 2K UHD", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
 
-            mini_draw.rounded_rectangle((S(55), S(1605), S(1025), S(1735)), radius=S(30), fill=(255, 255, 255, 238))
+            mini_draw.rounded_rectangle((S(55), S(1595), S(1025), S(1755)), radius=S(30), fill=(255, 255, 255, 240))
             mini_draw.text(
-                (S(540), S(1648)),
+                (S(540), S(1632)),
                 walk_summary_line,
                 fill=(12, 12, 16, 255),
                 font=font_price,
                 anchor="mm",
             )
             mini_draw.text(
-                (S(540), S(1695)),
-                "» Tüm ürün linkleri & kodları açıklamada ve ilk yorumda! «",
+                (S(540), S(1680)),
+                "» Ürün linkleri açıklamada, ilk yorumda & Threads'te! «",
                 fill=(65, 45, 30, 255),
                 font=font_sub,
+                anchor="mm",
+            )
+            mini_draw.text(
+                (S(540), S(1724)),
+                "Reklam / iş birliği içermez • Kombin önerisidir (zorunlu #reklam)",
+                fill=(105, 105, 112, 255),
+                font=font_legal,
                 anchor="mm",
             )
 
