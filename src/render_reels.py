@@ -208,6 +208,8 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             draw.rounded_rectangle((220, 80, 860, 152), radius=36, fill=(24, 24, 28, header_alpha))
             draw.text((540, 116), "GÜNÜN KOMBİNİ • LİNKLİ", fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
 
+            # 1) Önce tüm kıyafet görsellerini çiz
+            active_labels = []
             for idx, p in enumerate(prepared_items):
                 dt = (t - p["t_in"]) / 0.65
                 if dt <= 0:
@@ -228,15 +230,19 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
                     lbl_prog = min(1.0, (dt - 0.45) / 0.4)
                     lx, ly = p["label_xy"]
                     ly_anim = int(ly + (1.0 - lbl_prog) * 22)
-                    brand = (p["data"].get("brand") or "").strip()
-                    if len(brand) > 15:
-                        brand = brand[:14] + "."
-                    price = p["data"]["price"]
-                    if brand:
-                        draw.text((lx, ly_anim), brand, fill=(22, 22, 24, 255), font=font_brand, anchor="mm")
-                        draw.text((lx, ly_anim + 34), price, fill=(45, 45, 48, 255), font=font_price, anchor="mm")
-                    else:
-                        draw.text((lx, ly_anim), price, fill=(22, 22, 24, 255), font=font_brand, anchor="mm")
+                    active_labels.append((lx, ly_anim, p["data"]))
+
+            # 2) Tüm marka ve fiyat etiketlerini görsellerin üst katmanına çiz
+            for lx, ly_anim, item_d in active_labels:
+                brand = (item_d.get("brand") or "").strip()
+                if len(brand) > 15:
+                    brand = brand[:14] + "."
+                price = item_d["price"]
+                if brand:
+                    draw.text((lx, ly_anim), brand, fill=(22, 22, 24, 255), font=font_brand, anchor="mm")
+                    draw.text((lx, ly_anim + 34), price, fill=(45, 45, 48, 255), font=font_price, anchor="mm")
+                else:
+                    draw.text((lx, ly_anim), price, fill=(22, 22, 24, 255), font=font_brand, anchor="mm")
 
             # Alt Toplam Kombin & Link Bilgisi Bandı
             if t > 3.85:
@@ -252,8 +258,8 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
                 )
                 draw.text(
                     (540, by + 82),
-                    "🔗 ÜRÜN LİNKLERİ AÇIKLAMADA & İLK YORUMDA",
-                    fill=(230, 210, 175, 255),
+                    "» ÜRÜN LİNKLERİ AÇIKLAMADA & İLK YORUMDA «",
+                    fill=(235, 212, 175, 255),
                     font=font_sub,
                     anchor="mm",
                 )
@@ -302,7 +308,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             )
             mini_draw.text(
                 (540, 1695),
-                "🛍️ Tüm ürün linkleri & kodları açıklamada ve ilk yorumda!",
+                "» Tüm ürün linkleri & kodları açıklamada ve ilk yorumda! «",
                 fill=(70, 50, 35, 255),
                 font=font_sub,
                 anchor="mm",
