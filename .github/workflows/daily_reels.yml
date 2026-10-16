@@ -1,0 +1,73 @@
+name: Otomatik Instagram Kombin Reels (Günde 3 Kez)
+
+on:
+  schedule:
+    # Türkiye Saati (UTC+3) karşılıkları:
+    # 07:00 UTC = 10:00 TSİ (Sabah Kombin Reels)
+    # 12:00 UTC = 15:00 TSİ (Öğlen Kombin Reels)
+    # 17:00 UTC = 20:00 TSİ (Akşam Kombin Reels)
+    - cron: '0 7,12,17 * * *'
+  workflow_dispatch: # GitHub üzerinden tek tıkla manuel deneme/tetikleme imkanı
+    inputs:
+      slot_name:
+        description: 'Paylaşım Kuşağı (sabah / oglen / aksam)'
+        required: false
+        default: 'deneme'
+      dry_run:
+        description: 'Sadece videoyu üret, Instagrama yükleme (true/false)'
+        required: false
+        default: 'false'
+
+jobs:
+  create-and-publish-reel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: 📥 Proje Dosyalarını Çek
+        uses: actions/checkout@v4
+
+      - name: 🐍 Python 3.11 Kurulumu
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 🎬 FFmpeg ve Sistem Kütüphanelerini Kur
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-liberation libgl1
+
+      - name: 📦 Python Paketlerini Yükle (Ücretsiz / Açık Kaynak)
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 👗 Günlük Kombin Oluştur + Graph Motion & Yürüyen Model Reels Üret
+        env:
+          IG_WATERMARK: ${{ vars.IG_WATERMARK || '@guzelaicom' }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          SLOT_NAME: ${{ github.event.inputs.slot_name || 'otomatik' }}
+        run: |
+          python src/main.py --output output/daily_kombin_reel.mp4
+
+      - name: 📤 Videoyu Artifacts Olarak Kaydet (İndirilebilir Önizleme)
+        uses: actions/upload-artifact@v4
+        with:
+          name: kombin-reels-${{ github.run_number }}
+          path: |
+            output/daily_kombin_reel.mp4
+            output/kombin_collage.png
+            output/model_street.png
+          retention-days: 7
+
+      - name: 📱 Instagram Reels Olarak Otomatik Paylaş
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          IG_USERNAME: ${{ secrets.IG_USERNAME }}
+          IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
+          IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: |
+          python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
