@@ -56,6 +56,29 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
     cl = Client()
     cl.set_locale("tr_TR")
     cl.set_timezone_offset(3 * 3600)
+
+    # Mevcut bloks_versioning_id değerini koruyarak yalnızca uygulama sürümünü 2026 güncel Android sürümüne yükselt
+    bloks_id = cl.device_settings.get(
+        "bloks_versioning_id",
+        "ce55589ef1240402f432c191a51c6c993c31d194ce71825317e27f600f6d1323"
+    )
+    cl.device_settings.update({
+        "app_version": "365.0.0.45.109",
+        "android_version": 34,
+        "android_release": "14.0",
+        "dpi": "480dpi",
+        "resolution": "1080x2400",
+        "manufacturer": "Samsung",
+        "device": "dm1q",
+        "model": "SM-S911B",
+        "cpu": "qcom",
+        "version_code": "678901234",
+        "bloks_versioning_id": bloks_id,
+    })
+    cl.set_user_agent(
+        "Instagram 365.0.0.45.109 Android (34/14.0; 480dpi; 1080x2400; samsung; SM-S911B; dm1q; qcom; tr_TR; 678901234)"
+    )
+
     clean_username = username.lstrip("@").strip()
 
     try:
@@ -65,23 +88,17 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
                 cl.set_settings(settings)
                 cl.login(clean_username, password)
             else:
-                # Doğrudan tarayıcı sessionid çerezi ile giriş (veri merkezi IP engelini aşar)
                 cl.login_by_sessionid(unquote(session_str.strip()))
-            print(f"[instagrapi] Oturum anahtarı (sessionid) ile @{clean_username} hesabına giriş yapıldı!")
+            print(f"[instagrapi] Oturum anahtarı ile @{clean_username} hesabına giriş yapıldı!")
         else:
             cl.login(clean_username, password)
-            print(f"[instagrapi] @{clean_username} hesabına giriş yapıldı!")
+            print(f"[instagrapi] @{clean_username} hesabına başarıyla giriş yapıldı!")
 
         media = cl.clip_upload(video_path, caption=caption)
         print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk} | Code: {media.code}")
         return True
     except Exception as e:
         print(f"[Instagram Giriş/Paylaşım Uyarısı] {type(e).__name__}: {e}")
-        print(
-            "İpucu: GitHub Actions (veri merkezi IP'si) üzerinden doğrudan şifre ile giriş Instagram tarafından "
-            "engellenirse, tarayıcınızdan instagram.com'a girip F12 -> Application -> Cookies -> sessionid "
-            "değerini kopyalayarak GitHub Secrets'ta IG_SESSION_JSON olarak kaydedebilirsiniz."
-        )
         return False
 
 
