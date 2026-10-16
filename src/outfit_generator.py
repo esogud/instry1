@@ -345,15 +345,59 @@ def _pick_matching_live_item(candidates: list, keywords: list, rng: random.Rando
     return rng.choice(top_pool)
 
 
+def fetch_live_quzu_items(category_key: str) -> list:
+    """Quzu mağazasından (ABD sunucularından da erişilebilen canlı JSON) ilgili kategorideki ürünleri çeker."""
+    cat_keywords = {
+        "outerwear": ["ceket", "trençkot", "kaban", "mont", "blazer"],
+        "top": ["kazak", "triko", "sweatshirt", "bluz", "gömlek", "hırka"],
+        "bottom": ["pantolon", "jean", "palazzo", "tayt"],
+    }
+    kws = cat_keywords.get(category_key, [])
+    if not kws:
+        return []
+    collected = []
+    try:
+        r = requests.get("https://www.quzu.com.tr/products.json?limit=80", headers=HEADERS, timeout=10)
+        if r.status_code == 200:
+            for p in r.json().get("products", []):
+                title = p.get("title", "")
+                if not any(k in title.lower() for k in kws):
+                    continue
+                variants = p.get("variants") or []
+                images = p.get("images") or []
+                if not variants or not images:
+                    continue
+                price_val = float(variants[0].get("price", 0))
+                if price_val <= 0:
+                    continue
+                handle = p.get("handle", "")
+                img_srcs = [im.get("src") for im in images if im.get("src")]
+                collected.append({
+                    "id": f"quzu_{p.get('id')}",
+                    "brand": "QUZU",
+                    "price": _format_price_tr(price_val),
+                    "price_val": price_val,
+                    "name": _clean_product_title(title, "Quzu"),
+                    "full_name": title,
+                    "sku": str(variants[0].get("sku") or p.get("id")),
+                    "product_url": f"https://www.quzu.com.tr/products/{handle}",
+                    "image_url": img_srcs[0],
+                    "image_urls": img_srcs,
+                    "color": "",
+                })
+    except Exception as e:
+        print(f"[Quzu Canlı Tarama Uyarısı] {e}")
+    return collected
+
+
 def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     """
-    Canlı e-ticaret mağazalarından (Trendyol, Bagmori vb.) güncel ürünleri, gerçek TL fiyatlarını,
+    Canlı e-ticaret mağazalarından (Trendyol, Quzu, Bagmori vb.) güncel ürünleri, gerçek TL fiyatlarını,
     SKU ürün kodlarını ve doğrudan satın alma linklerini çekerek yeni bir 6'lı kombin oluşturur.
     """
     seed_str = f"{datetime.utcnow().strftime('%Y-%m-%d-%H-%M')}-{slot_name}"
     rng = random.Random(hashlib.md5(seed_str.encode()).hexdigest())
 
-    # Yeni kombin arketipini seç (outfit2 mevcutsa öncelik ver)
     archetype = OUTFIT_ARCHETYPES[0]
     if not os.path.exists(archetype["model_frames"][0]):
         archetype = OUTFIT_ARCHETYPES[1]
@@ -362,6 +406,16 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
 
     print(f"[Kombin Motoru] '{archetype['title']}' teması için canlı mağaza linkleri taranıyor...")
 
+    # GitHub Actions ABD sunucularında Trendyol Cloudflare kısıtlamasına takılmamak için
+    # önceden taranmış 200+ gerçek Trendyol ürün havuzunu da yükle
+    cached_catalog = {}
+    if os.path.exists("assets/live_trendyol_catalog.json"):
+        try:
+            with open("assets/live_trendyol_catalog.json", "r", encoding="utf-8") as f:
+                cached_catalog = json.load(f)
+        except Exception:
+            cached_catalog = {}
+
     items = {}
     total_price = 0.0
 
@@ -369,10 +423,14 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         live_pool = fetch_live_trendyol_items(cat_key)
         if cat_key == "bag":
             live_pool = fetch_live_bagmori_bags() + live_pool
+        elif cat_key in ("outerwear", "top", "bottom"):
+            live_pool = live_pool + fetch_live_quzu_items(cat_key)
+
+        if cached_catalog.get(cat_key):
+            live_pool = live_pool + cached_catalog[cat_key]
 
         chosen = _pick_matching_live_item(live_pool, archetype["keywords"].get(cat_key, []), rng)
         if not chosen:
-            # Acil durum yedek verisi (eğer internet/site geçici yanıt vermezse)
             chosen = {
                 "id": f"fallback_{cat_key}",
                 "brand": "ZARA",
