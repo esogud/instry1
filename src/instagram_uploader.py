@@ -85,10 +85,12 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
             print(f"[instagrapi] @{clean_username} hesabına şifre ile başarıyla giriş yapıldı!")
             logged_in = True
         except Exception as e:
-            print(f"[Instagram Giriş Uyarısı] {type(e).__name__}: {e}")
             last_json = getattr(cl, "last_json", None)
-            if last_json:
-                print(f"[Instagram API Yanıtı] {json.dumps(last_json, ensure_ascii=False)[:600]}")
+            raw_dump = json.dumps(last_json, ensure_ascii=False) if last_json else ""
+            if "login_wrong_password" in raw_dump:
+                print("[Instagram Giriş Hatası] Yanlış şifre: @guzelaicom hesabı bulundu ancak girilen şifre Instagram tarafından 'Yanlış şifre' olarak reddedildi.")
+            else:
+                print(f"[Instagram Giriş Uyarısı] {type(e).__name__}: {e}")
             return False
 
     try:
