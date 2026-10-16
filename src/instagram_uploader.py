@@ -173,22 +173,29 @@ def upload_via_instagrapi(
             except Exception as ce:
                 print(f"[Yorum Bilgilendirmesi] İlk yorum eklenemedi ({ce}), linkler zaten açıklamada yer alıyor.")
 
-        # Threads paylaşım zincirini canlı Instagram Reels linkiyle güncelle
+        # Threads paylaşım zincirini canlı Instagram Reels linkiyle güncelle ve Threads'te yayınla
         out_dir = str(Path(video_path).parent)
         meta_path = os.path.join(out_dir, "outfit_links.json")
         if os.path.exists(meta_path):
             try:
-                from threads_publisher import save_threads_outputs, publish_to_threads_api
+                from threads_publisher import (
+                    save_threads_outputs,
+                    publish_via_threads_session,
+                    publish_to_threads_api,
+                )
                 with open(meta_path, "r", encoding="utf-8") as mf:
                     outfit_data = json.load(mf)
                 outfit_data["reel_url"] = reel_url
                 with open(meta_path, "w", encoding="utf-8") as mf:
                     json.dump(outfit_data, mf, ensure_ascii=False, indent=2)
                 chain = save_threads_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
-                th_token = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
-                th_user = os.environ.get("THREADS_USER_ID", "").strip()
-                if th_token and th_user:
-                    publish_to_threads_api(chain, th_token, th_user)
+                if session_str:
+                    publish_via_threads_session(chain, session_str)
+                else:
+                    th_token = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
+                    th_user = os.environ.get("THREADS_USER_ID", "").strip()
+                    if th_token and th_user:
+                        publish_to_threads_api(chain, th_token, th_user)
             except Exception as te:
                 print(f"[Threads Güncelleme Bilgilendirmesi] {te}")
 
