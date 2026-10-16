@@ -10,6 +10,11 @@ if hasattr(sys.stderr, "reconfigure"):
 
 from outfit_generator import select_daily_outfit
 from render_reels import render_kombin_reel
+from threads_publisher import (
+    TR_LEGAL_NOTICE_FULL,
+    TR_LEGAL_NOTICE_SHORT,
+    save_threads_outputs,
+)
 
 
 def build_caption(outfit: dict) -> str:
@@ -22,9 +27,9 @@ def build_caption(outfit: dict) -> str:
         "Sizce bu kombin 10 üzerinden kaç? Yorumlara yazın 👇🤍",
         "",
         "🛍️ KOMBİN FİYAT & ÜRÜN DETAYLARI:",
-        f"🧥 Ceket: {items['outerwear']['brand']} - {items['outerwear']['name']} ({items['outerwear']['price']}) [Kod: {items['outerwear'].get('sku', '-')}]",
+        f"🧥 Ceket/Üst: {items['outerwear']['brand']} - {items['outerwear']['name']} ({items['outerwear']['price']}) [Kod: {items['outerwear'].get('sku', '-')}]",
         f"🕶️ Aksesuar: {items['cap']['brand']} - {items['cap']['name']} ({items['cap']['price']}) [Kod: {items['cap'].get('sku', '-')}]",
-        f"👕 Üst: {items['top']['brand']} - {items['top']['name']} ({items['top']['price']}) [Kod: {items['top'].get('sku', '-')}]",
+        f"👕 İç/Üst: {items['top']['brand']} - {items['top']['name']} ({items['top']['price']}) [Kod: {items['top'].get('sku', '-')}]",
         f"👖 Alt: {items['bottom']['brand']} - {items['bottom']['name']} ({items['bottom']['price']}) [Kod: {items['bottom'].get('sku', '-')}]",
         f"👜 Çanta: {items['bag']['brand']} - {items['bag']['name']} ({items['bag']['price']}) [Kod: {items['bag'].get('sku', '-')}]",
         f"👟 Ayakkabı: {items['shoes']['brand']} - {items['shoes']['name']} ({items['shoes']['price']}) [Kod: {items['shoes'].get('sku', '-')}]",
@@ -32,15 +37,18 @@ def build_caption(outfit: dict) -> str:
         f"💰 TOPLAM KOMBİN: {total_str}",
         "",
         "🔗 DOĞRUDAN ÜRÜN LİNKLERİ:",
-        f"🧥 Ceket Linki: {items['outerwear']['product_url']}",
+        f"🧥 Ceket/Üst Linki: {items['outerwear']['product_url']}",
         f"🕶️ Aksesuar Linki: {items['cap']['product_url']}",
-        f"👕 Üst Linki: {items['top']['product_url']}",
-        f"👖 Pantolon Linki: {items['bottom']['product_url']}",
+        f"👕 İç/Üst Linki: {items['top']['product_url']}",
+        f"👖 Alt Giyim Linki: {items['bottom']['product_url']}",
         f"👜 Çanta Linki: {items['bag']['product_url']}",
         f"👟 Ayakkabı Linki: {items['shoes']['product_url']}",
         "",
+        "🧵 Tıklanabilir doğrudan ürün linkleri Threads profilimizde: https://www.threads.net/@guzelaicom",
         f"🎵 Müzik: {music_name}",
         "📌 Kaydetmeyi ve kombin arkadaşına göndermeyi unutma!",
+        "",
+        TR_LEGAL_NOTICE_FULL,
         "",
         "#kombin #günlükkombin #kombinönerileri #negiysem #sokakmodası #trendyolkombin #zarakombin #kesfet #reelsinstagram #ootdtr",
     ]
@@ -52,12 +60,15 @@ def build_links_comment(outfit: dict) -> str:
     lines = [
         "🛍️ KOMBİNDEKİ ÜRÜNLERİN GÜNCEL LİNKLERİ VE KODLARI 👇",
         "",
-        f"🧥 Ceket ({items['outerwear']['price']}): {items['outerwear']['product_url']}",
+        f"🧥 Ceket/Üst ({items['outerwear']['price']}): {items['outerwear']['product_url']}",
         f"🕶️ Aksesuar ({items['cap']['price']}): {items['cap']['product_url']}",
-        f"👕 Üst ({items['top']['price']}): {items['top']['product_url']}",
-        f"👖 Pantolon ({items['bottom']['price']}): {items['bottom']['product_url']}",
+        f"👕 İç/Üst ({items['top']['price']}): {items['top']['product_url']}",
+        f"👖 Alt Giyim ({items['bottom']['price']}): {items['bottom']['product_url']}",
         f"👜 Çanta ({items['bag']['price']}): {items['bag']['product_url']}",
         f"👟 Ayakkabı ({items['shoes']['price']}): {items['shoes']['product_url']}",
+        "",
+        "🧵 Tıklanabilir link zinciri: https://www.threads.net/@guzelaicom",
+        TR_LEGAL_NOTICE_SHORT,
     ]
     return "\n".join(lines)
 
@@ -88,7 +99,9 @@ def main():
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(outfit, f, ensure_ascii=False, indent=2)
 
-    print(f"[BAŞARILI] Açıklama ve doğrudan ürün linkleri hazırlandı: {caption_path}")
+    save_threads_outputs(outfit, out_dir=out_dir)
+
+    print(f"[BAŞARILI] Açıklama, yasal uyarı ve doğrudan ürün linkleri hazırlandı: {caption_path}")
 
 
 if __name__ == "__main__":
