@@ -149,11 +149,11 @@ def upload_via_instagrapi(
         collage_candidate = Path(video_path).parent / "kombin_collage.png"
         street_candidate = Path(video_path).parent / "model_street.png"
         if collage_candidate.exists():
-            Image.open(collage_candidate).convert("RGB").save(thumb_path, "JPEG", quality=92)
+            Image.open(collage_candidate).convert("RGB").save(thumb_path, "JPEG", quality=98, subsampling=0)
         elif street_candidate.exists():
-            Image.open(street_candidate).convert("RGB").save(thumb_path, "JPEG", quality=92)
+            Image.open(street_candidate).convert("RGB").save(thumb_path, "JPEG", quality=98, subsampling=0)
         else:
-            Image.new("RGB", (1080, 1920), (247, 245, 240)).save(thumb_path, "JPEG", quality=92)
+            Image.new("RGB", (1440, 2560), (247, 245, 241)).save(thumb_path, "JPEG", quality=98, subsampling=0)
 
         media = cl.clip_upload(video_path, caption=caption, thumbnail=thumb_path)
         reel_url = f"https://www.instagram.com/reel/{media.code}/"
