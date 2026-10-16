@@ -35,8 +35,8 @@ def ease_in_out_cubic(t: float) -> float:
 
 def get_font(size: int, bold: bool = True):
     candidates = [
-        "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
         "C:/Windows/Fonts/georgia.ttf",
         "C:/Windows/Fonts/courbd.ttf",
         "C:/Windows/Fonts/arialbd.ttf",

@@ -53,8 +53,24 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
     from instagrapi import Client
 
     cl = Client()
+    # Güncel Instagram Android 14 (Samsung S23 / SM-S911B) cihaz profili — "sürüm güncel değil" hatasını önler
+    cl.set_device({
+        "app_version": "365.0.0.45.109",
+        "android_version": 34,
+        "android_release": "14.0",
+        "dpi": "480dpi",
+        "resolution": "1080x2400",
+        "manufacturer": "Samsung",
+        "device": "dm1q",
+        "model": "SM-S911B",
+        "cpu": "qcom",
+        "version_code": "678901234",
+    })
+    cl.set_user_agent(
+        "Instagram 365.0.0.45.109 Android (34/14.0; 480dpi; 1080x2400; samsung; SM-S911B; dm1q; qcom; tr_TR; 678901234)"
+    )
     cl.set_locale("tr_TR")
-    cl.set_timezone_offset(3 * 3600)  # Türkiye Saati (UTC+3)
+    cl.set_timezone_offset(3 * 3600)
     clean_username = username.lstrip("@").strip()
 
     try:
@@ -62,17 +78,12 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
             settings = json.loads(session_json)
             cl.set_settings(settings)
         cl.login(clean_username, password)
-        print(f"[instagrapi] @{clean_username} hesabına başarıyla giriş yapıldı.")
+        print(f"[instagrapi] @{clean_username} hesabına başarıyla giriş yapıldı!")
         media = cl.clip_upload(video_path, caption=caption)
-        print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk}")
+        print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk} | Code: {media.code}")
         return True
     except Exception as e:
-        print(f"[Instagram Giriş/Paylaşım Uyarısı] {e}")
-        print(
-            "Not: Instagram yeni bir sunucu IP'sinden (GitHub Actions) ilk kez giriş yapıldığında "
-            "uygulama içinden 'Bu bendim (It was me)' onayı isteyebilir. "
-            "Üretilen MP4 videosu GitHub Actions Artifacts sekmesine başarıyla kaydedilmiştir."
-        )
+        print(f"[Instagram Giriş/Paylaşım Uyarısı] {type(e).__name__}: {e}")
         return False
 
 
