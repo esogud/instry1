@@ -382,8 +382,14 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     # - BT.709 tam renk uzayı ve kontrast bayrakları
     # - Luma/Chroma unsharp mask filtresi (unsharp=5:5:0.55:3:3:0.0)
     # - Yüksek profil H.264 (CRF 15, ~18 Mbps tavan bit hızı)
+    import shutil
+    ffmpeg_bin = shutil.which("ffmpeg")
+    if not ffmpeg_bin:
+        import imageio_ffmpeg
+        ffmpeg_bin = imageio_ffmpeg.get_ffmpeg_exe()
+
     cmd = [
-        "ffmpeg", "-y",
+        ffmpeg_bin, "-y",
         "-framerate", str(FPS),
         "-i", os.path.join(frames_dir, "frame_%04d.jpg"),
         "-i", wav_path,
