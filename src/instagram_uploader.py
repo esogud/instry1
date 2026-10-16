@@ -142,7 +142,20 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
         return False
 
     try:
-        media = cl.clip_upload(video_path, caption=caption)
+        from pathlib import Path
+        from PIL import Image
+
+        thumb_path = Path(video_path).with_suffix(".jpg")
+        collage_candidate = Path(video_path).parent / "kombin_collage.png"
+        street_candidate = Path("assets/trial1_model_street.jpg")
+        if collage_candidate.exists():
+            Image.open(collage_candidate).convert("RGB").save(thumb_path, "JPEG", quality=92)
+        elif street_candidate.exists():
+            Image.open(street_candidate).convert("RGB").save(thumb_path, "JPEG", quality=92)
+        else:
+            Image.new("RGB", (1080, 1920), (247, 245, 240)).save(thumb_path, "JPEG", quality=92)
+
+        media = cl.clip_upload(video_path, caption=caption, thumbnail=thumb_path)
         print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk} | Code: {media.code} | Link: https://www.instagram.com/reel/{media.code}/")
         return True
     except Exception as e:
