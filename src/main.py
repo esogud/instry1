@@ -1,6 +1,13 @@
 import os
+import sys
 import json
 import argparse
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from outfit_generator import select_daily_outfit
 from render_reels import render_kombin_reel
 
