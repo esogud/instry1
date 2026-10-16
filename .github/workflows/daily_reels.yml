@@ -59,6 +59,9 @@ jobs:
             output/daily_kombin_reel.mp4
             output/kombin_collage.png
             output/model_street.png
+            output/caption.txt
+            output/comment_links.txt
+            output/outfit_links.json
           retention-days: 7
 
       - name: 📱 Instagram Reels Olarak Otomatik Paylaş
