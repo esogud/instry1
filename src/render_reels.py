@@ -244,7 +244,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@nemigiy
             # Üst Başlık Bandı
             header_alpha = int(min(1.0, t / 0.4) * 255)
             draw.rounded_rectangle((260, 85, 820, 155), radius=35, fill=(28, 28, 30, header_alpha))
-            draw.text((540, 120), "GÜNÜN KOMBİNİ ✨", fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
+            draw.text((540, 120), "GÜNÜN KOMBİNİ", fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
 
             for idx, p in enumerate(prepared_items):
                 dt = (t - p["t_in"]) / 0.65
@@ -280,8 +280,8 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@nemigiy
             if t > 3.9:
                 b_prog = ease_out_back(min(1.0, (t - 3.9) / 0.5))
                 by = int(1720 - b_prog * 140)
-                draw.rounded_rectangle((160, by, 920, by + 95), radius=48, fill=(25, 25, 28, 245))
-                draw.text((540, by + 48), "TOPLAM KOMBİN: 1.383,15₺  •  KAYDET 🔖", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
+                draw.rounded_rectangle((140, by, 940, by + 95), radius=48, fill=(25, 25, 28, 245))
+                draw.text((540, by + 48), "TOPLAM KOMBİN: 1.383,15₺  •  KAYDET", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
 
             if abs(t - 5.0) < (0.5 / FPS):
                 canvas.convert("RGB").save(os.path.join(os.path.dirname(output_mp4), "kombin_collage.png"))
@@ -320,7 +320,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@nemigiy
             # Sol üstte mini kombin referans kartı (izleyicinin kıyafetleri karşılaştırması için)
             mini_draw = ImageDraw.Draw(walk_frame)
             mini_draw.rounded_rectangle((45, 90, 560, 165), radius=36, fill=(20, 20, 24, 215))
-            mini_draw.text((302, 128), "KOMBİNİN DURUŞU ✨", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
+            mini_draw.text((302, 128), "KOMBİNİN DURUŞU", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
 
             # Yürürken alt kısımda kayan parça etiketleri
             mini_draw.rounded_rectangle((65, 1620, 1015, 1730), radius=28, fill=(255, 255, 255, 225))

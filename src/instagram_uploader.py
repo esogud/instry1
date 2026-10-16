@@ -2,6 +2,7 @@ import os
 import json
 import time
 import argparse
+from urllib.parse import unquote
 import requests
 
 
@@ -49,41 +50,38 @@ def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_us
     return True
 
 
-def upload_via_instagrapi(video_path: str, caption: str, username: str, password: str, session_json: str = "") -> bool:
+def upload_via_instagrapi(video_path: str, caption: str, username: str, password: str, session_str: str = "") -> bool:
     from instagrapi import Client
 
     cl = Client()
-    # Güncel Instagram Android 14 (Samsung S23 / SM-S911B) cihaz profili — "sürüm güncel değil" hatasını önler
-    cl.set_device({
-        "app_version": "365.0.0.45.109",
-        "android_version": 34,
-        "android_release": "14.0",
-        "dpi": "480dpi",
-        "resolution": "1080x2400",
-        "manufacturer": "Samsung",
-        "device": "dm1q",
-        "model": "SM-S911B",
-        "cpu": "qcom",
-        "version_code": "678901234",
-    })
-    cl.set_user_agent(
-        "Instagram 365.0.0.45.109 Android (34/14.0; 480dpi; 1080x2400; samsung; SM-S911B; dm1q; qcom; tr_TR; 678901234)"
-    )
     cl.set_locale("tr_TR")
     cl.set_timezone_offset(3 * 3600)
     clean_username = username.lstrip("@").strip()
 
     try:
-        if session_json:
-            settings = json.loads(session_json)
-            cl.set_settings(settings)
-        cl.login(clean_username, password)
-        print(f"[instagrapi] @{clean_username} hesabına başarıyla giriş yapıldı!")
+        if session_str:
+            if session_str.startswith("{"):
+                settings = json.loads(session_str)
+                cl.set_settings(settings)
+                cl.login(clean_username, password)
+            else:
+                # Doğrudan tarayıcı sessionid çerezi ile giriş (veri merkezi IP engelini aşar)
+                cl.login_by_sessionid(unquote(session_str.strip()))
+            print(f"[instagrapi] Oturum anahtarı (sessionid) ile @{clean_username} hesabına giriş yapıldı!")
+        else:
+            cl.login(clean_username, password)
+            print(f"[instagrapi] @{clean_username} hesabına giriş yapıldı!")
+
         media = cl.clip_upload(video_path, caption=caption)
         print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk} | Code: {media.code}")
         return True
     except Exception as e:
         print(f"[Instagram Giriş/Paylaşım Uyarısı] {type(e).__name__}: {e}")
+        print(
+            "İpucu: GitHub Actions (veri merkezi IP'si) üzerinden doğrudan şifre ile giriş Instagram tarafından "
+            "engellenirse, tarayıcınızdan instagram.com'a girip F12 -> Application -> Cookies -> sessionid "
+            "değerini kopyalayarak GitHub Secrets'ta IG_SESSION_JSON olarak kaydedebilirsiniz."
+        )
         return False
 
 
@@ -104,7 +102,7 @@ def main():
 
     if access_token and ig_user_id:
         upload_via_graph_api(args.video, caption, access_token, ig_user_id)
-    elif username and password:
+    elif username or session_json:
         upload_via_instagrapi(args.video, caption, username, password, session_json)
     else:
         print("[BİLGİ] Instagram giriş bilgileri tanımlanmadığı için video yalnızca Artifacts olarak kaydedildi.")
