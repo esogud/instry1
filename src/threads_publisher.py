@@ -1,14 +1,19 @@
 import os
 import sys
+import re
 import json
 import time
+import random
 import argparse
+from urllib.parse import unquote
 import requests
 
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 
 TR_LEGAL_NOTICE_FULL = (
     "⚠️ YASAL UYARI: Reklam veya sponsorlu iş birliği içermez. "
@@ -19,6 +24,16 @@ TR_LEGAL_NOTICE_FULL = (
 TR_LEGAL_NOTICE_SHORT = (
     "⚠️ Yasal Uyarı: Reklam veya iş birliği içermez, tamamen kombin önerisidir (zorunlu #reklam)."
 )
+
+
+def media_id_to_shortcode(media_id: int | str) -> str:
+    mid = int(str(media_id).split("_")[0])
+    shortcode = ""
+    while mid > 0:
+        rem = mid % 64
+        shortcode = ALPHABET[rem] + shortcode
+        mid = mid // 64
+    return shortcode
 
 
 def _trim_to_threads_limit(text: str, limit: int = 495) -> str:
@@ -121,6 +136,93 @@ def save_threads_outputs(outfit: dict, out_dir: str = "output", reel_url: str = 
     return chain
 
 
+def publish_via_threads_session(chain: dict, session_str: str) -> str:
+    """
+    Instagram sessionid çerezini kullanarak (ayrı bir şifreye gerek kalmadan)
+    www.threads.net/api/v1/media/configure_text_only_post/ üzerinden
+    ana gönderiyi ve altındaki tıklanabilir ürün linki zincirini otomatik paylaşır.
+    """
+    if not session_str:
+        return ""
+
+    raw = session_str.strip()
+    if raw.startswith("{"):
+        try:
+            data = json.loads(raw)
+            sid = data.get("cookies", {}).get("sessionid") or data.get("authorization_data", {}).get("sessionid") or ""
+        except Exception:
+            sid = ""
+    else:
+        sid = raw
+    sid = unquote(sid.strip())
+    if not sid:
+        return ""
+
+    user_match = re.search(r"^\d+", sid)
+    viewer_id = user_match.group(0) if user_match else "46394512287"
+    csrf = "gs7Zz2Zor02UJBDhPeDdrL6KUCvcT6zF"
+    lsd = "AVqw_XEyRAI"
+    cookie_str = f"sessionid={sid}; ds_user_id={viewer_id}; csrftoken={csrf}"
+
+    headers = {
+        "authority": "www.threads.net",
+        "origin": "https://www.threads.net",
+        "referer": "https://www.threads.net/",
+        "content-type": "application/x-www-form-urlencoded",
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "x-asbd-id": "129477",
+        "x-ig-app-id": "238260118697367",
+        "x-fb-lsd": lsd,
+        "x-csrftoken": csrf,
+        "cookie": cookie_str,
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    }
+
+    parent_pk = None
+    root_url = ""
+
+    for idx, p in enumerate(chain.get("posts", [])):
+        if idx > 0:
+            time.sleep(random.uniform(3.2, 4.8))
+
+        app_info = {"reply_control": 0}
+        if parent_pk:
+            app_info["reply_id"] = str(parent_pk)
+        if p.get("link_attachment"):
+            app_info["link_attachment_url"] = p["link_attachment"]
+
+        payload = {
+            "publish_mode": "text_post",
+            "caption": p["text"][:500],
+            "upload_id": str(int(time.time() * 1000)),
+            "text_post_app_info": json.dumps(app_info),
+        }
+
+        r = requests.post(
+            "https://www.threads.net/api/v1/media/configure_text_only_post/",
+            headers=headers,
+            data=payload,
+            timeout=25,
+        )
+        if r.status_code == 200 and "media" in r.text:
+            m = r.json().get("media", {})
+            pk = str(m.get("pk", ""))
+            code = m.get("code") or (media_id_to_shortcode(pk) if pk else "")
+            post_url = f"https://www.threads.net/@guzelaicom/post/{code}"
+            print(f"[BAŞARILI - Threads] Adım {p['step']} paylaşıldı! PK: {pk} | Link: {post_url}")
+            if idx == 0:
+                root_url = post_url
+            if pk:
+                parent_pk = pk
+        else:
+            print(f"[Threads Uyarısı] Adım {p['step']} ({r.status_code}): {r.text[:250]}")
+            break
+
+    return root_url
+
+
 def publish_to_threads_api(chain: dict, access_token: str, threads_user_id: str) -> bool:
     """
     Meta Threads Graph API (graph.threads.net) üzerinden ana gönderiyi ve altındaki
@@ -162,6 +264,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--outfit-json", default="output/outfit_links.json")
     parser.add_argument("--reel-url", default="")
+    parser.add_argument("--publish", action="store_true", help="Threads'te canlı yayınla")
     args = parser.parse_args()
 
     out_dir = os.path.dirname(args.outfit_json) or "output"
@@ -171,13 +274,14 @@ def main():
     reel_url = args.reel_url.strip() or outfit.get("reel_url", "")
     chain = save_threads_outputs(outfit, out_dir=out_dir, reel_url=reel_url)
 
-    th_token = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
-    th_user = os.environ.get("THREADS_USER_ID", "").strip()
-    if th_token and th_user:
-        try:
+    if args.publish:
+        session_json = os.environ.get("IG_SESSION_JSON", "").strip()
+        th_token = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
+        th_user = os.environ.get("THREADS_USER_ID", "").strip()
+        if session_json:
+            publish_via_threads_session(chain, session_json)
+        elif th_token and th_user:
             publish_to_threads_api(chain, th_token, th_user)
-        except Exception as e:
-            print(f"[Threads API Uyarısı] {e}")
 
 
 if __name__ == "__main__":
