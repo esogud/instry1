@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import json
 import time
@@ -7,6 +8,11 @@ from pathlib import Path
 from urllib.parse import unquote
 import requests
 from PIL import Image
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
 def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_user_id: str) -> bool:
