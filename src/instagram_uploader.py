@@ -1,4 +1,5 @@
 import os
+import re
 import json
 import time
 import argparse
@@ -50,6 +51,38 @@ def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_us
     return True
 
 
+def try_web_ajax_sessionid(cl, username: str, password: str) -> str:
+    """Instagram Web AJAX uç noktasından doğrudan sessionid çerezi almayı dener."""
+    s = requests.Session()
+    s.headers.update({
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
+        "X-IG-App-ID": "936619743392459",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": "https://www.instagram.com/accounts/login/",
+        "Origin": "https://www.instagram.com",
+    })
+    r0 = s.get("https://www.instagram.com/accounts/login/", timeout=15)
+    csrf_match = re.search(r'"csrf_token":"([^"]+)"', r0.text)
+    csrf = s.cookies.get("csrftoken") or (csrf_match.group(1) if csrf_match else "")
+    s.headers["X-CSRFToken"] = csrf
+
+    enc = cl.password_encrypt(password)
+    r = s.post(
+        "https://www.instagram.com/api/v1/web/accounts/login/ajax/",
+        data={
+            "username": username,
+            "enc_password": enc,
+            "queryParams": "{}",
+            "optIntoOneTap": "false",
+        },
+        timeout=15,
+    )
+    sid = s.cookies.get("sessionid", "")
+    print(f"[Web AJAX] status={r.status_code} | has_sessionid={bool(sid)} | body={r.text[:250]}")
+    return sid
+
+
 def upload_via_instagrapi(video_path: str, caption: str, username: str, password: str, session_str: str = "") -> bool:
     from instagrapi import Client
 
@@ -62,36 +95,51 @@ def upload_via_instagrapi(video_path: str, caption: str, username: str, password
     clean_username = username.lstrip("@").strip()
     print(
         f"[instagrapi] Hazir: user=@{clean_username} | pass_len={len(password)} | "
-        f"app={cl.device_settings.get('app_version')} | bloks={getattr(cl, 'bloks_versioning_id', '')[:12]}..."
+        f"app={cl.device_settings.get('app_version')}"
     )
 
     logged_in = False
+
+    # 1. Kayıtlı IG_SESSION_JSON varsa dene
     if session_str:
         try:
             if session_str.startswith("{"):
                 settings = json.loads(session_str)
                 cl.set_settings(settings)
-                cl.login(clean_username, password)
+                sid = settings.get("cookies", {}).get("sessionid") or settings.get("authorization_data", {}).get("sessionid")
+                if sid:
+                    cl.login_by_sessionid(unquote(sid))
+                else:
+                    cl.login(clean_username, password)
             else:
                 cl.login_by_sessionid(unquote(session_str.strip()))
             print(f"[instagrapi] Oturum anahtarı ile @{clean_username} hesabına giriş yapıldı!")
             logged_in = True
         except Exception as se:
-            print(f"[instagrapi] Oturum anahtarı ile giriş başarısız ({type(se).__name__}: {se}), şifre ile deneniyor...")
+            print(f"[instagrapi] Oturum anahtarı ile giriş başarısız ({type(se).__name__}: {se}), diğer yöntemler deneniyor...")
 
-    if not logged_in:
+    # 2. Web AJAX ile sessionid alıp login_by_sessionid dene
+    if not logged_in and password:
+        try:
+            sid = try_web_ajax_sessionid(cl, clean_username, password)
+            if sid:
+                cl.login_by_sessionid(unquote(sid))
+                print(f"[instagrapi] Web AJAX sessionid ile @{clean_username} hesabına giriş yapıldı!")
+                logged_in = True
+        except Exception as we:
+            print(f"[Web AJAX Uyarısı] {type(we).__name__}: {we}")
+
+    # 3. Mobil CAA Bloks girişi dene
+    if not logged_in and password:
         try:
             cl.login(clean_username, password)
-            print(f"[instagrapi] @{clean_username} hesabına şifre ile başarıyla giriş yapıldı!")
+            print(f"[instagrapi] @{clean_username} hesabına mobil şifre ile giriş yapıldı!")
             logged_in = True
         except Exception as e:
-            last_json = getattr(cl, "last_json", None)
-            raw_dump = json.dumps(last_json, ensure_ascii=False) if last_json else ""
-            if "login_wrong_password" in raw_dump:
-                print("[Instagram Giriş Hatası] Yanlış şifre: @guzelaicom hesabı bulundu ancak girilen şifre Instagram tarafından 'Yanlış şifre' olarak reddedildi.")
-            else:
-                print(f"[Instagram Giriş Uyarısı] {type(e).__name__}: {e}")
-            return False
+            print(f"[Instagram Giriş Uyarısı] {type(e).__name__}: {e}")
+
+    if not logged_in:
+        return False
 
     try:
         media = cl.clip_upload(video_path, caption=caption)
