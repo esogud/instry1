@@ -51,7 +51,7 @@ jobs:
         run: |
           python src/main.py --output output/daily_kombin_reel.mp4
 
-      - name: 📤 Videoyu Artifacts Olarak Kaydet (İndirilebilir Önizleme)
+      - name: 📤 Videoyu ve Threads Link Zincirini Artifacts Olarak Kaydet
         uses: actions/upload-artifact@v4
         with:
           name: kombin-reels-${{ github.run_number }}
@@ -61,10 +61,12 @@ jobs:
             output/model_street.png
             output/caption.txt
             output/comment_links.txt
+            output/threads_post.txt
+            output/threads_thread.json
             output/outfit_links.json
           retention-days: 7
 
-      - name: 📱 Instagram Reels Olarak Otomatik Paylaş
+      - name: 📱 Instagram Reels & Threads Olarak Otomatik Paylaş
         if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
           IG_USERNAME: ${{ secrets.IG_USERNAME }}
@@ -72,5 +74,7 @@ jobs:
           IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
         run: |
           python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
