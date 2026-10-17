@@ -1,13 +1,7 @@
 name: Otomatik Instagram Kombin Reels (Günde 3 Kez)
 
 on:
-  schedule:
-    # Türkiye Saati (UTC+3) karşılıkları:
-    # 07:00 UTC = 10:00 TSİ (Sabah Kombin Reels)
-    # 12:00 UTC = 15:00 TSİ (Öğlen Kombin Reels)
-    # 17:00 UTC = 20:00 TSİ (Akşam Kombin Reels)
-    - cron: '0 7,12,17 * * *'
-  workflow_dispatch: # GitHub üzerinden tek tıkla manuel deneme/tetikleme imkanı
+  workflow_dispatch: # Yalnızca manuel tetikleme (Yerel güvenli cihaz otomasyonu aktif olduğu için bulut cron kapalıdır)
     inputs:
       slot_name:
         description: 'Paylaşım Kuşağı (sabah / oglen / aksam)'
@@ -16,7 +10,7 @@ on:
       dry_run:
         description: 'Sadece videoyu üret, Instagrama yükleme (true/false)'
         required: false
-        default: 'false'
+        default: 'true'
 
 jobs:
   create-and-publish-reel:
@@ -63,10 +57,14 @@ jobs:
             output/comment_links.txt
             output/threads_post.txt
             output/threads_thread.json
+            output/telegram_post.html
+            output/telegram_post.json
+            output/pinterest_pin.txt
+            output/pinterest_pin.json
             output/outfit_links.json
           retention-days: 7
 
-      - name: 📱 Instagram Reels & Threads Olarak Otomatik Paylaş
+      - name: 📱 Instagram Reels, Threads & Telegram Olarak Otomatik Paylaş
         if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
           IG_USERNAME: ${{ secrets.IG_USERNAME }}
@@ -76,5 +74,8 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
           THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
+          python src/telegram_publisher.py --outfit-json output/outfit_links.json --publish
