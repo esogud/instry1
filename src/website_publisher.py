@@ -336,6 +336,23 @@ def _gh_put_file(repo_path: str, content_bytes: bytes, commit_message: str) -> b
     return True
 
 
+def _get_existing_go_files() -> set:
+    """Returns the set of filenames (e.g. '981976289.html') already present in `public/go` on GitHub."""
+    if not os.path.exists(GH_EXE):
+        return set()
+    try:
+        raw = subprocess.check_output(
+            [GH_EXE, "api", f"repos/{GUZELAI_REPO}/contents/public/go"],
+            stderr=subprocess.DEVNULL,
+        )
+        items = json.loads(raw)
+        if isinstance(items, list):
+            return {str(x.get("name", "")) for x in items if isinstance(x, dict)}
+    except Exception:
+        pass
+    return set()
+
+
 def publish_to_guzelai_website(
     outfit: Dict[str, Any],
     collage_path: Optional[Path] = None,
@@ -362,7 +379,7 @@ def publish_to_guzelai_website(
             sample_entries.append(build_verified_kombin_entry(sample_outfit, ig_reel_url=s_reel))
             seen_ids.add(sid)
 
-    # Deploy `public/go/{sku}.html` redirect pages for every unique SKU across all sample outfits
+    existing_go = _get_existing_go_files()
     uploaded_redirects: List[str] = []
     seen_skus = set()
     for s_entry in sample_entries:
@@ -371,16 +388,18 @@ def publish_to_guzelai_website(
             if not sku or sku == "-" or sku in seen_skus:
                 continue
             seen_skus.add(sku)
+            fname = f"{sku}.html"
+            if fname in existing_go:
+                uploaded_redirects.append(f"https://guzelai.com/go/{sku}")
+                continue
             html_bytes = _build_guzelai_redirect_html(it)
             ok = _gh_put_file(
-                f"public/go/{sku}.html",
+                f"public/go/{fname}",
                 html_bytes,
                 f"feat(go): add guzelai.com/go/{sku} verified redirect page",
             )
             if ok:
                 uploaded_redirects.append(f"https://guzelai.com/go/{sku}")
-
-    print(f"🔗 [GuzelAI.com Trafik & Yönlendirme Linkleri]: {len(uploaded_redirects)} adet /go/{{sku}} sayfası yayında.")
 
     # Save local verification report
     report_path = os.path.join(out_dir, "website_verification.json")
@@ -405,7 +424,7 @@ def publish_to_guzelai_website(
         "broadcasts": sample_entries,
     }
 
-    # Upload optimized JPEG collage to public/data/latest_kombin_collage.jpg
+    # Upload optimized JPEG collage
     if collage_path is None:
         collage_path = Path(out_dir) / "kombin_collage.png"
     collage_uploaded = False
@@ -423,7 +442,7 @@ def publish_to_guzelai_website(
         except Exception as e:
             print(f"[UYARI] Kolaj optimize/yükleme hatası: {e}")
 
-    # Upload Short Graph-Motion Video (output/graphmotion_short.mp4) to public/data/latest_kombin_video.mp4
+    # Upload Short Graph-Motion Video
     gm_video_path = Path(out_dir) / "graphmotion_short.mp4"
     video_uploaded = False
     if gm_video_path.exists():
@@ -436,20 +455,7 @@ def publish_to_guzelai_website(
         except Exception as ve:
             print(f"[UYARI] Graph-Motion video yükleme hatası: {ve}")
 
-    # Upload 6 Visual Product Cards (output/item_card_{key}.jpg) to public/data/item_card_{key}.jpg
-    for key, _, _ in CATEGORY_META:
-        c_file = Path(out_dir) / f"item_card_{key}.jpg"
-        if c_file.exists():
-            try:
-                _gh_put_file(
-                    f"public/data/item_card_{key}.jpg",
-                    c_file.read_bytes(),
-                    f"chore(kombin): update visual product card {key}",
-                )
-            except Exception:
-                pass
-
-    # Upload public/data/kombin_feed.json
+    # Upload public/data/kombin_feed.json last so it triggers the final production build
     feed_bytes = json.dumps(feed_payload, ensure_ascii=False, indent=2).encode("utf-8")
     feed_uploaded = _gh_put_file(
         "public/data/kombin_feed.json",
@@ -457,6 +463,7 @@ def publish_to_guzelai_website(
         f"feat(kombin): publish pre-verified sample outfits & redirect links for {entry['title']}",
     )
 
+    print(f"🔗 [GuzelAI.com Trafik & Yönlendirme Linkleri]: {len(uploaded_redirects)} adet /go/{{sku}} sayfası yayında.")
     status = "published" if feed_uploaded else "local_only"
     print(f"🌐 [GuzelAI.com Vitrin Güncellemesi]: {status} -> {GUZELAI_SHOWCASE_URL}")
     return {
