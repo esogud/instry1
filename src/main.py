@@ -25,65 +25,81 @@ from tiktok_uploader import save_tiktok_outputs
 from website_publisher import publish_to_guzelai_website
 
 
+from quality_checker import inspect_rendered_reel_quality
+
+
 def build_caption(outfit: dict) -> str:
     items = outfit["items"]
     total_str = outfit.get("total_price_str", "")
-    music_name = outfit.get("music_info", {}).get("name", "Runway Deep House Mix")
+    music_name = outfit.get("music_info", {}).get("name", "Veor Uranis – Da Da Da Dadada (Viral Edit)")
     hook_title = (
         outfit.get("hook_title")
         or outfit.get("archetype_title")
-        or "5.000₺ Bütçeyle 50.000₺'lik 'Old Money' Görünmenin Sırrı! (4. Parçaya Dikkat) 🔥"
+        or "Bordo & Koyu Kahve Peluş Deri Mont: Sonbaharın En Viral 2K Kapsül Kombini 🔥🍂✨"
     )
     viral_hook = outfit.get(
         "viral_hook",
-        "🛑 SAKIN GEÇME! Girdiğin her ortamda 'Üzerindekileri hangi lüks markadan aldın?' dedirten, boyu 10 cm daha uzun gösteren o 6 parçalık Old Money sırrı çözüldü! 👇✨",
+        "🛑 Önce guzelai.com'da doğrulanan 6 parçalık 2K kapsül kombin! 👇🔥",
     )
     seo_note = outfit.get(
         "seo_note",
-        "📌 Not: Görseldeki kadın kombin parçalarının stokta olan birebir veya en yakın %100 Kadın mağaza muadil (benzer) ürün linkleri doğrulanarak aşağıda listelenmiştir:",
+        "📌 Not: Videodaki %100 Kadın kombin parçaları önce guzelai.com üzerinde görsel ve renk olarak doğrulanmış olup tüm ürün linkleri guzelai.com/go/ üzerinden doğrudan ilgili mağazaya yönlendirilmektedir:",
     )
+
+    c_out = items["outerwear"].get("category_label", "Mont / Ceket")
+    c_cap = items["cap"].get("category_label", "Gözlük / Aksesuar")
+    c_top = items["top"].get("category_label", "Kazak / Üst")
+    c_bot = items["bottom"].get("category_label", "Pantolon / Alt")
+    c_bag = items["bag"].get("category_label", "Çanta")
+    c_sho = items["shoes"].get("category_label", "Ayakkabı")
+
+    u_out = items["outerwear"].get("guzelai_url") or items["outerwear"]["product_url"]
+    u_cap = items["cap"].get("guzelai_url") or items["cap"]["product_url"]
+    u_top = items["top"].get("guzelai_url") or items["top"]["product_url"]
+    u_bot = items["bottom"].get("guzelai_url") or items["bottom"]["product_url"]
+    u_bag = items["bag"].get("guzelai_url") or items["bag"]["product_url"]
+    u_sho = items["shoes"].get("guzelai_url") or items["shoes"]["product_url"]
 
     lines = [
         f"🔥 {hook_title}",
+        "📌 'Bugün ne giysem?' krizinde saniyeler içinde kurtulmak için bu 2K kombini hemen KAYDET ve kombin arkadaşına GÖNDER! 🤍",
         "",
         viral_hook,
-        "🎃 Ekim Sonbahar & Cadılar Bayramı (Halloween) Gece/Gündüz Davet Şıklığı | Old Money Kadın Stil Kodları",
-        "Sizce bu kombin 10 üzerinden kaç? Yorumlara yazın 👇🤍",
         "",
-        "🌐 GÖRSELLİ & DOĞRULANMIŞ E-TİCARET LİNK VİTRİNİ:",
+        f"💬 STİL ANKETİ: Bu kombinde senin favori parçan {items['outerwear']['name']} mi yoksa {items['top']['name']} mu? Yorumlarda buluşalım 👇✨",
+        "",
+        "🌐 TÜM ÖRNEK KOMBİNLER & DOĞRULANMIŞ VİTRİN (Tek Tıkla İncele):",
         "👉 https://guzelai.com/#kombinler",
         "",
         seo_note,
         "",
-        "🛍️ KOMBİN FİYAT & ÜRÜN DETAYLARI (%100 KADIN KOLEKSİYONU):",
-        f"⌚ Saat/Üst: {items['outerwear']['brand']} - {items['outerwear']['name']} ({items['outerwear']['price']}) [Kod: {items['outerwear'].get('sku', '-')}]",
-        f"✨ Küpe/Aksesuar: {items['cap']['brand']} - {items['cap']['name']} ({items['cap']['price']}) [Kod: {items['cap'].get('sku', '-')}]",
-        f"👚 Gömlek/Üst: {items['top']['brand']} - {items['top']['name']} ({items['top']['price']}) [Kod: {items['top'].get('sku', '-')}]",
-        f"👖 Pantolon/Alt: {items['bottom']['brand']} - {items['bottom']['name']} ({items['bottom']['price']}) [Kod: {items['bottom'].get('sku', '-')}]",
-        f"👜 Çanta: {items['bag']['brand']} - {items['bag']['name']} ({items['bag']['price']}) [Kod: {items['bag'].get('sku', '-')}]",
-        f"👠 Ayakkabı: {items['shoes']['brand']} - {items['shoes']['name']} ({items['shoes']['price']}) [Kod: {items['shoes'].get('sku', '-')}]",
+        "🛍️ KOMBİN FİYAT, MARKA & ÜRÜN KODU DETAYLARI (%100 KADIN KOLEKSİYONU):",
+        f"1️⃣ 🧥 {c_out}: {items['outerwear']['brand']} – {items['outerwear']['name']} | Fiyat: {items['outerwear']['price']} | Ürün Kodu: {items['outerwear'].get('sku', '-')}",
+        f"2️⃣ 🕶️ {c_cap}: {items['cap']['brand']} – {items['cap']['name']} | Fiyat: {items['cap']['price']} | Ürün Kodu: {items['cap'].get('sku', '-')}",
+        f"3️⃣ 👚 {c_top}: {items['top']['brand']} – {items['top']['name']} | Fiyat: {items['top']['price']} | Ürün Kodu: {items['top'].get('sku', '-')}",
+        f"4️⃣ 👖 {c_bot}: {items['bottom']['brand']} – {items['bottom']['name']} | Fiyat: {items['bottom']['price']} | Ürün Kodu: {items['bottom'].get('sku', '-')}",
+        f"5️⃣ 👜 {c_bag}: {items['bag']['brand']} – {items['bag']['name']} | Fiyat: {items['bag']['price']} | Ürün Kodu: {items['bag'].get('sku', '-')}",
+        f"6️⃣ 👟 {c_sho}: {items['shoes']['brand']} – {items['shoes']['name']} | Fiyat: {items['shoes']['price']} | Ürün Kodu: {items['shoes'].get('sku', '-')}",
         "",
-        f"💰 TOPLAM KOMBİN: {total_str}",
+        f"💰 TOPLAM 6 PARÇA KOMBİN BÜTÇESİ: {total_str}",
         "",
-        "🔗 DOĞRUDAN MAĞAZA ÜRÜN LİNKLERİ (BİREBİR / BENZER MUADİL):",
-        f"⌚ Saat/Üst Linki: {items['outerwear']['product_url']}",
-        f"✨ Aksesuar Linki: {items['cap']['product_url']}",
-        f"👚 Gömlek/Üst Linki: {items['top']['product_url']}",
-        f"👖 Pantolon Linki: {items['bottom']['product_url']}",
-        f"👜 Çanta Linki: {items['bag']['product_url']}",
-        f"👠 Ayakkabı Linki: {items['shoes']['product_url']}",
+        "🔗 GÜZELAİ.COM DOĞRULANMIŞ MAĞAZA YÖNLENDİRME LİNKLERİ (100% Aktif & Doğrulanmış):",
+        f"🧥 {c_out}: {u_out}",
+        f"🕶️ {c_cap}: {u_cap}",
+        f"👚 {c_top}: {u_top}",
+        f"👖 {c_bot}: {u_bot}",
+        f"👜 {c_bag}: {u_bag}",
+        f"👟 {c_sho}: {u_sho}",
         "",
-        "🌐 Görselli Doğrulanmış Mağaza Linkleri: https://guzelai.com/#kombinler",
-        "💬 WhatsApp Kombin Kanalımız: https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016",
-        "𝕏 X (Twitter) Kombin Zinciri: https://x.com/guzelaicom",
-        "▶️ YouTube Shorts Kanalımız: https://www.youtube.com/@guzelaicom",
-        f"🎵 Enstrüman & Müzik: {music_name} ({outfit.get('music_info', {}).get('instruments_desc', 'Çoklu Enstrüman Stüdyo Kaydı')})",
-        f"🎙️ Sesli Hook: \"{outfit.get('music_info', {}).get('dialogue_q', '')} — {outfit.get('music_info', {}).get('dialogue_a', '')}\"",
-        "📌 Kaydetmeyi ve kombin arkadaşına göndermeyi unutma!",
+        "🔎 INSTAGRAM ARAMA & STİL REHBERİ (SEO):",
+        "Kadın sonbahar kış kombin önerileri • İçi peluş koyu kahve deri mont nasıl kombinlenir? • Bordo bisiklet yaka triko kazak ve kemerli antrasit palazzo pantolon kombinleri • Adidas Handball Spezial bordo kadın sneaker günlük sokak stili.",
+        "",
+        f"🎵 Müzik: {music_name}",
+        f"🎙️ Sesli Hook: \"{outfit.get('music_info', {}).get('dialogue_q', '')} — Detaylar guzelai.com'da!\"",
         "",
         TR_LEGAL_NOTICE_FULL,
         "",
-        "#kadınkombin #kombinönerileri #oldmoneystil #sonbaharkombini #cadılarbayramı #halloweenkombin #ekimstili #palazzopantolon #satengömlek #trendyolkombin #ofisşıklığı #negiysem #kesfet #reelsinstagram #ootdtr",
+        "#kadınkombin #kombinönerileri #sonbaharkombini #derimont #bortotriko #palazzopantolon #adidasspezial #trendyolkombin #sokakstili #negiysem #oldmoneystil #kesfet #reelsinstagram #guzelai",
     ]
     return "\n".join(lines)
 
@@ -94,26 +110,19 @@ def build_links_comment(outfit: dict) -> str:
         "viral_hook",
         "🛑 Bu 6'lı kadın kombinini kaybetmemek için hemen kaydet! 👇✨",
     )
-    seo_note = outfit.get(
-        "seo_note",
-        "📌 Görseldeki kombinin stokta olan birebir veya en yakın %100 Kadın mağaza muadil (benzer) ürün linkleri:",
-    )
     lines = [
+        "📌 KOMBİNDEKİ 6 KADIN PARÇASININ GÜZELAİ.COM DOĞRULANMIŞ LİNKLERİ & KODLARI 👇",
         viral_hook,
-        "🛍️ KOMBİNDEKİ KADIN ÜRÜNLERİNİN DOĞRULANMIŞ MAĞAZA LİNKLERİ (BENZER MUADİL) 👇",
-        "🌐 Görselli Doğrulanmış Mağaza Vitrini: https://guzelai.com/#kombinler",
-        seo_note,
+        "🌐 Tüm Örnek Kombinler & Görselli Alışveriş Vitrini: https://guzelai.com/#kombinler",
         "",
-        f"⌚ Saat/Üst ({items['outerwear']['price']}): {items['outerwear']['product_url']}",
-        f"✨ Aksesuar ({items['cap']['price']}): {items['cap']['product_url']}",
-        f"👚 Gömlek/Üst ({items['top']['price']}): {items['top']['product_url']}",
-        f"👖 Pantolon ({items['bottom']['price']}): {items['bottom']['product_url']}",
-        f"👜 Çanta ({items['bag']['price']}): {items['bag']['product_url']}",
-        f"👠 Ayakkabı ({items['shoes']['price']}): {items['shoes']['product_url']}",
+        f"1️⃣ 🧥 {items['outerwear']['name']} ({items['outerwear']['price']} | Kod: {items['outerwear'].get('sku', '-')}): {items['outerwear'].get('guzelai_url') or items['outerwear']['product_url']}",
+        f"2️⃣ 🕶️ {items['cap']['name']} ({items['cap']['price']} | Kod: {items['cap'].get('sku', '-')}): {items['cap'].get('guzelai_url') or items['cap']['product_url']}",
+        f"3️⃣ 👚 {items['top']['name']} ({items['top']['price']} | Kod: {items['top'].get('sku', '-')}): {items['top'].get('guzelai_url') or items['top']['product_url']}",
+        f"4️⃣ 👖 {items['bottom']['name']} ({items['bottom']['price']} | Kod: {items['bottom'].get('sku', '-')}): {items['bottom'].get('guzelai_url') or items['bottom']['product_url']}",
+        f"5️⃣ 👜 {items['bag']['name']} ({items['bag']['price']} | Kod: {items['bag'].get('sku', '-')}): {items['bag'].get('guzelai_url') or items['bag']['product_url']}",
+        f"6️⃣ 👟 {items['shoes']['name']} ({items['shoes']['price']} | Kod: {items['shoes'].get('sku', '-')}): {items['shoes'].get('guzelai_url') or items['shoes']['product_url']}",
         "",
-        "💬 WhatsApp Kanalı: https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016",
-        "𝕏 X (Twitter): https://x.com/guzelaicom",
-        "▶️ YouTube Shorts: https://www.youtube.com/@guzelaicom",
+        "💬 Senin favorin kaç numaralı parça? (1-6 arası yoruma yaz 👇)",
         TR_LEGAL_NOTICE_SHORT,
     ]
     return "\n".join(lines)
@@ -132,6 +141,15 @@ def main():
 
     outfit = select_daily_outfit(slot_name=slot)
     render_kombin_reel(outfit, args.output, watermark=watermark)
+
+    # Otomatik Video & Ses Yapaylık / Kalite Kontrolü (Quality Gate)
+    qc_report = inspect_rendered_reel_quality(
+        outfit=outfit,
+        frames_dir=os.path.join(out_dir, "_frames"),
+        wav_path=os.path.join(out_dir, "viral_fashion_track.wav"),
+        out_report_path=os.path.join(out_dir, "quality_check_report.json"),
+    )
+    outfit["quality_report"] = qc_report
 
     caption_path = os.path.join(out_dir, "caption.txt")
     with open(caption_path, "w", encoding="utf-8") as f:
