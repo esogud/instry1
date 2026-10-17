@@ -173,17 +173,8 @@ def _tr_upper(s: str) -> str:
 
 def _wrap_hook_lines(text: str, max_chars: int = 24) -> list:
     """Splits a viral hook title into 2-3 punchy uppercase magazine cover lines."""
-    clean = (
-        (text or "")
-        .replace("🔥", "")
-        .replace("✨", "")
-        .replace("🤍", "")
-        .replace("🍂", "")
-        .replace("🎃", "")
-        .replace("👔", "")
-        .replace("★", "")
-        .strip()
-    )
+    raw = "".join(ch for ch in (text or "") if ord(ch) < 0x2000 or ch in "’‘“”–—")
+    clean = raw.strip()
     if ":" in clean:
         parts = [p.strip() for p in clean.split(":", 1) if p.strip()]
         if len(parts) == 2 and len(parts[1]) >= 10:
