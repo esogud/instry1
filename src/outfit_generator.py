@@ -59,6 +59,417 @@ LIVE_TRENDYOL_FEEDS = {
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
     {
+        "id": "sunday_slot1_espresso_cream_oldmoney",
+        "preferred_music_id": "veor_uranis_da_da_da_2026",
+        "title": "Pazar Brunch & Boğaz Yürüyüşü Old Money Zarafeti: Espresso Kahve, Vizon Triko & Taş Palazzo 🤍☕🍂",
+        "spoken_hook_text": "Pazar brunch'ında herkesin dönüp baktığı o zahmetsiz Old Money sonbahar şıklığı!",
+        "viral_hook": "🛑 Espresso kahve asimetrik kuşaklı kaşe kaban, vizon yumuşak dokulu triko kazak, kahve kemerli taş rengi pileli bol paça pantolon ve krem gold tokalı çanta & slingback topuklu uyumu! Önce guzelai.com'da doğrulanan 6 parçalık Pazar Brunch Old Money kombini! 👇🤍✨",
+        "video_badge_collage": "» PAZAR BRUNCH OLD MONEY KOMBİNİ «",
+        "video_badge_walk": "» ESPRESSO, VİZON & TAŞ ZARAFETİ «",
+        "seo_note": "📌 Not: Videodaki %100 Kadın Old Money kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "quzu_27KKBN02965035",
+                "category_label": "Kaban & Dış Giyim",
+                "brand": "QUZU",
+                "price": "3.490₺",
+                "price_val": 3490.0,
+                "name": "Kadın Espresso Kahve Asimetrik Dik Yaka Kuşaklı Kısa Kaşe Kaban",
+                "full_name": "Quzu Asimetrik Dik Yaka Kuşaklı Kısa Kaban Kahverengi 27KKBN02965-035",
+                "sku": "27KKBN02965035",
+                "color": "Espresso Kahverengi",
+                "store_url": "https://www.quzu.com.tr/products/asimetrik-dik-yaka-kusakli-kisa-kaban-kahverengi",
+                "product_url": "https://guzelai.com/go/27KKBN02965035",
+                "guzelai_url": "https://guzelai.com/go/27KKBN02965035",
+                "image_url": "https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KKBN02965_035.jpg?v=1791902548",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KKBN02965_035.jpg?v=1791902548"],
+            },
+            "cap": {
+                "id": "ty_1136773133",
+                "category_label": "Gözlük & Aksesuar",
+                "brand": "NILU MODA",
+                "price": "255,08₺",
+                "price_val": 255.08,
+                "name": "Kadın Yeni Sezon Gold Detaylı Çerçevesiz Kahve Güneş Gözlüğü",
+                "full_name": "Nilu Moda Yeni Sezon Kahve Çerçevesiz Gold Detaylı Kadın Güneş Gözlüğü",
+                "sku": "1136773133",
+                "color": "Kahve / Gold",
+                "store_url": "https://www.trendyol.com/nilu-moda/yeni-sezon-kahve-new-model-gunes-gozlugu-p-1136773133",
+                "product_url": "https://guzelai.com/go/1136773133",
+                "guzelai_url": "https://guzelai.com/go/1136773133",
+                "image_url": "https://cdn.dsmcdn.com/ty1857/prod/QC_PREP/20260422/23/a5cc7148-058f-36dd-a688-e3295b94c214/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1857/prod/QC_PREP/20260422/23/a5cc7148-058f-36dd-a688-e3295b94c214/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_959762013",
+                "category_label": "Triko & Kazak",
+                "brand": "K-ODEA BUTİK",
+                "price": "390₺",
+                "price_val": 390.0,
+                "name": "Kadın Vizon Yumuşak Dokulu Bisiklet Yaka Oversize Triko Kazak",
+                "full_name": "K-ODEA BUTİK Kadın Vizon Oversize Triko Kazak Yumuşak Dokulu Bisiklet Yaka",
+                "sku": "959762013",
+                "color": "Vizon / Taupe",
+                "store_url": "https://www.trendyol.com/k-odea-butik/kadin-vizon-oversize-triko-kazak-yumusak-dokulu-bisiklet-yaka-p-959762013",
+                "product_url": "https://guzelai.com/go/959762013",
+                "guzelai_url": "https://guzelai.com/go/959762013",
+                "image_url": "https://cdn.dsmcdn.com/ty1722/prod/QC_ENRICHMENT/20250809/23/2140e62c-9042-3128-b5aa-171c2a0dc383/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1722/prod/QC_ENRICHMENT/20250809/23/2140e62c-9042-3128-b5aa-171c2a0dc383/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "quzu_26YPNT01724063",
+                "category_label": "Pantolon",
+                "brand": "QUZU",
+                "price": "1.267,50₺",
+                "price_val": 1267.50,
+                "name": "Kadın Kahve Kemerli Taş Rengi Yüksek Bel Pileli Bol Paça Pantolon",
+                "full_name": "Quzu Yüksek Bel Kemerli Pileli Pantolon Taş 26YPNT01724-063",
+                "sku": "26YPNT01724063",
+                "color": "Taş / Krem (Kahve Kemerli)",
+                "store_url": "https://www.quzu.com.tr/products/yuksek-bel-kemerli-pileli-pantolon-tas",
+                "product_url": "https://guzelai.com/go/26YPNT01724063",
+                "guzelai_url": "https://guzelai.com/go/26YPNT01724063",
+                "image_url": "https://cdn.shopify.com/s/files/1/0750/9285/3049/files/26YPNT01724_063.jpg?v=1776178637",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0750/9285/3049/files/26YPNT01724_063.jpg?v=1776178637"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106141",
+                "category_label": "Çanta",
+                "brand": "BAGMORI",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Krem Gold Kemer Toka Aksesuarlı Askılı Mini El & Omuz Çantası",
+                "full_name": "Bagmori Krem Kemer Toka Aksesuarlı Askılı Mini Kadın Çanta",
+                "sku": "8682166106141",
+                "color": "Krem / Gold Tokalı",
+                "store_url": "https://www.bagmori.com/products/krem-aksesuarli-askili-mini-canta-m000008795",
+                "product_url": "https://guzelai.com/go/8682166106141",
+                "guzelai_url": "https://guzelai.com/go/8682166106141",
+                "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106141-1_94d81d59-b656-42c8-a0a5-74dcc7fc613a.jpg?v=1784880647",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106141-1_94d81d59-b656-42c8-a0a5-74dcc7fc613a.jpg?v=1784880647"],
+            },
+            "shoes": {
+                "id": "ty_930094922",
+                "category_label": "Topuklu Ayakkabı",
+                "brand": "BRIELFY",
+                "price": "682₺",
+                "price_val": 682.0,
+                "name": "Kadın Bej Sivri Burun Gold Aksesuarlı 7cm Topuklu Slingback Ayakkabı",
+                "full_name": "Brielfy Kadın Bej Sivri Burun Konik 7cm Topuklu Slingback Yandan Tokalı Ayakkabı",
+                "sku": "930094922",
+                "color": "Bej / Krem Rugan",
+                "store_url": "https://www.trendyol.com/brielfy/kadin-bej-sivri-burun-konik-7cm-topuklu-slingback-yandan-tokali-gunluk-is-ofis-ayakkabisi-p-930094922",
+                "product_url": "https://guzelai.com/go/930094922",
+                "guzelai_url": "https://guzelai.com/go/930094922",
+                "image_url": "https://cdn.dsmcdn.com/ty1811/prod/QC_ENRICHMENT/20260113/12/23a27027-063b-3dcc-bf5e-51d15de7a563/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1811/prod/QC_ENRICHMENT/20260113/12/23a27027-063b-3dcc-bf5e-51d15de7a563/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["kahve", "kuşaklı", "kaban", "ceket", "kadın"],
+            "cap": ["kahve", "gold", "kadın", "gözlük"],
+            "top": ["vizon", "krem", "triko", "kazak", "kadın"],
+            "bottom": ["taş", "bej", "kemerli", "pileli", "pantolon"],
+            "bag": ["krem", "toka", "mini", "çanta"],
+            "shoes": ["bej", "sivri", "topuklu", "ayakkabı"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/sun1_01_outer.png",
+            "cap": "assets/items/sun1_02_cap.png",
+            "top": "assets/items/sun1_03_top.png",
+            "bottom": "assets/items/sun1_04_bottom.png",
+            "bag": "assets/items/sun1_05_bag.png",
+            "shoes": "assets/items/sun1_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/sun1_01_outer.png",
+            "cap": "assets/items/sun1_02_cap.png",
+            "top": "assets/items/sun1_03_top.png",
+            "bottom": "assets/items/sun1_04_bottom.png",
+            "bag": "assets/items/sun1_05_bag.png",
+            "shoes": "assets/items/sun1_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/sun1_model_step1.jpg",
+            "assets/sun1_model_step2.jpg",
+            "assets/sun1_model_step3.jpg",
+        ],
+    },
+    {
+        "id": "sunday_slot2_olive_butter_taupe",
+        "preferred_music_id": "veor_uranis_da_da_da_2026",
+        "title": "Nişantaşı Galeri & Akşamüstü Kahve Quiet Luxury: Haki Trençkot, Beyaz Gömlek & Kahve Palazzo 🫒🤍✨",
+        "spoken_hook_text": "Pazar akşamüstü şehirde en çok kaydedilen o sessiz lüks sonbahar renk uyumu!",
+        "viral_hook": "🛑 Haki kemer detaylı kısa trençkot, beyaz klasik poplin gömlek, gold tokalı kahverengi pileli palazzo pantolon, taba hasır garnili silindir çanta ve bej çift bantlı rugan topuklu uyumu! Önce guzelai.com'da doğrulanan 6 parçalık Quiet Luxury kombini! 👇🫒✨",
+        "video_badge_collage": "» PAZAR AKŞAMÜSTÜ QUIET LUXURY «",
+        "video_badge_walk": "» HAKİ, BEYAZ & KAHVE UYUMU «",
+        "seo_note": "📌 Not: Videodaki %100 Kadın Quiet Luxury kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_975378960",
+                "category_label": "Trençkot & Ceket",
+                "brand": "VESS MODA",
+                "price": "1.696₺",
+                "price_val": 1696.0,
+                "name": "Kadın Haki Kemer Detaylı Kruvaze Kısa Trençkot",
+                "full_name": "VESS MODA Kadın Kemer Detaylı Kısa Trençkot Haki",
+                "sku": "975378960",
+                "color": "Haki / Zeytin Yeşili",
+                "store_url": "https://www.trendyol.com/vess-moda/kadin-kemer-detayli-kisa-trenckot-haki-p-975378960",
+                "product_url": "https://guzelai.com/go/975378960",
+                "guzelai_url": "https://guzelai.com/go/975378960",
+                "image_url": "https://cdn.dsmcdn.com/ty1943/prod/QC_ENRICHMENT/20260512/08/ea304b71-98ea-3e2c-8780-cdade9c1fa3d/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1943/prod/QC_ENRICHMENT/20260512/08/ea304b71-98ea-3e2c-8780-cdade9c1fa3d/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_1120763550",
+                "category_label": "Gözlük & Aksesuar",
+                "brand": "BYC POLO",
+                "price": "182₺",
+                "price_val": 182.0,
+                "name": "Kadın Kahve Tortoiseshell Zarif Oval Güneş Gözlüğü",
+                "full_name": "Byc Polo CBP064 GCC Kahve Zarif Şık Kadın Güneş Gözlüğü",
+                "sku": "1120763550",
+                "color": "Kahve / Tortoiseshell",
+                "store_url": "https://www.trendyol.com/byc-polo/cbp064-gcc-kahve-zarif-sik-kadin-gunes-gozlugu-p-1120763550",
+                "product_url": "https://guzelai.com/go/1120763550",
+                "guzelai_url": "https://guzelai.com/go/1120763550",
+                "image_url": "https://cdn.dsmcdn.com/ty1848/prod/QC_ENRICHMENT/20260403/22/47e91a8f-ee4b-3ac4-a180-c91099f8d6e0/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1848/prod/QC_ENRICHMENT/20260403/22/47e91a8f-ee4b-3ac4-a180-c91099f8d6e0/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_905066889",
+                "category_label": "Gömlek & Bluz",
+                "brand": "U.S. POLO ASSN.",
+                "price": "719,98₺",
+                "price_val": 719.98,
+                "name": "Kadın Beyaz Uzun Kollu Klasik Basic Poplin Gömlek",
+                "full_name": "U.S. Polo Assn. Kadın Beyaz Uzun Kollu Basic Gömlek 50324791-VR013",
+                "sku": "905066889",
+                "color": "Beyaz",
+                "store_url": "https://www.trendyol.com/u-s-polo-assn/kadin-beyaz-uzun-kollu-basic-gomlek-50324791-vr013-p-905066889",
+                "product_url": "https://guzelai.com/go/905066889",
+                "guzelai_url": "https://guzelai.com/go/905066889",
+                "image_url": "https://cdn.dsmcdn.com/ty1939/prod/QC_ENRICHMENT/20260730/21/63eaefc5-0056-3282-8b7a-5954c1b8cdab/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1939/prod/QC_ENRICHMENT/20260730/21/63eaefc5-0056-3282-8b7a-5954c1b8cdab/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "quzu_27KPNT02911035",
+                "category_label": "Pantolon",
+                "brand": "QUZU",
+                "price": "2.190₺",
+                "price_val": 2190.0,
+                "name": "Kadın Gold Toka Kemerli Yüksek Bel Pileli Palazzo Pantolon Kahverengi",
+                "full_name": "Quzu Pileli Kemerli Palazzo Pantolon Kahverengi 27KPNT02911-035",
+                "sku": "27KPNT02911035",
+                "color": "Kahverengi (Gold Toka Kemerli)",
+                "store_url": "https://www.quzu.com.tr/products/pileli-kemerli-palazzo-pantolon-kahverengi",
+                "product_url": "https://guzelai.com/go/27KPNT02911035",
+                "guzelai_url": "https://guzelai.com/go/27KPNT02911035",
+                "image_url": "https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KPNT02911_035.jpg?v=1792155035",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KPNT02911_035.jpg?v=1792155035"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106196",
+                "category_label": "Çanta",
+                "brand": "BAGMORI",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Taba Deri Saplı & Hasır Garnili Silindir Kadın El Çantası",
+                "full_name": "Bagmori Taba Hasır Garnili Silindir Kadın Çanta",
+                "sku": "8682166106196",
+                "color": "Taba / Krem Hasır",
+                "store_url": "https://www.bagmori.com/products/taba-hasir-garnili-silindir-canta-m000008800",
+                "product_url": "https://guzelai.com/go/8682166106196",
+                "guzelai_url": "https://guzelai.com/go/8682166106196",
+                "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106196-1_840895ee-e8a0-4199-bd70-a1fae0a62298.jpg?v=1784880703",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106196-1_840895ee-e8a0-4199-bd70-a1fae0a62298.jpg?v=1784880703"],
+            },
+            "shoes": {
+                "id": "ty_815163947",
+                "category_label": "Topuklu Ayakkabı",
+                "brand": "ELMANDO",
+                "price": "599,94₺",
+                "price_val": 599.94,
+                "name": "Kadın Bej Rugan Çift Bantlı Toka Detaylı Sivri Burun Topuklu Ayakkabı",
+                "full_name": "ELMANDO Biyana Çift Bantlı Toka Detaylı Bej Rugan Kadın Topuklu Ayakkabı",
+                "sku": "815163947",
+                "color": "Bej Rugan",
+                "store_url": "https://www.trendyol.com/elmando/biyana-cift-bantli-toka-detayli-bej-rugan-kadin-topuklu-ayakkabi-p-815163947",
+                "product_url": "https://guzelai.com/go/815163947",
+                "guzelai_url": "https://guzelai.com/go/815163947",
+                "image_url": "https://cdn.dsmcdn.com/ty1918/prod/QC_ENRICHMENT/20260608/01/126aff40-22f1-3c11-979b-4325d464f8fd/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1918/prod/QC_ENRICHMENT/20260608/01/126aff40-22f1-3c11-979b-4325d464f8fd/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["haki", "kemerli", "kısa", "trençkot", "kadın"],
+            "cap": ["kahve", "oval", "kadın", "gözlük"],
+            "top": ["beyaz", "uzun kollu", "kadın", "gömlek"],
+            "bottom": ["kahve", "pileli", "kemerli", "palazzo", "pantolon"],
+            "bag": ["taba", "hasır", "silindir", "çanta"],
+            "shoes": ["bej", "rugan", "bantlı", "topuklu", "ayakkabı"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/sun2_01_outer.png",
+            "cap": "assets/items/sun2_02_cap.png",
+            "top": "assets/items/sun2_03_top.png",
+            "bottom": "assets/items/sun2_04_bottom.png",
+            "bag": "assets/items/sun2_05_bag.png",
+            "shoes": "assets/items/sun2_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/sun2_01_outer.png",
+            "cap": "assets/items/sun2_02_cap.png",
+            "top": "assets/items/sun2_03_top.png",
+            "bottom": "assets/items/sun2_04_bottom.png",
+            "bag": "assets/items/sun2_05_bag.png",
+            "shoes": "assets/items/sun2_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/sun2_model_step1.jpg",
+            "assets/sun2_model_step2.jpg",
+            "assets/sun2_model_step3.jpg",
+        ],
+    },
+    {
+        "id": "sunday_slot3_navy_camel_ivory",
+        "preferred_music_id": "veor_uranis_da_da_da_2026",
+        "title": "Yeni Haftaya Hazırlık Prestij Old Money: Bej Kaşe Kaban, Ekru-Lacivert Polo Triko & Siyah Palazzo 🖤🤍✨",
+        "spoken_hook_text": "Pazar akşamı yeni haftaya en şık başlangıcı yaptıran o zamansız Old Money kombini!",
+        "viral_hook": "🛑 Bej asimetrik dik yaka kuşaklı kaşe kaban, ekru-lacivert çizgili polo yaka triko kazak, gold tokalı siyah yüksek bel palazzo pantolon, beyaz mini çanta ve siyah rugan slingback topuklu uyumu! Önce guzelai.com'da doğrulanan 6 parçalık Prestij Old Money kombini! 👇🖤✨",
+        "video_badge_collage": "» YENİ HAFTA PRESTİJ OLD MONEY «",
+        "video_badge_walk": "» BEJ, EKRU-LACİVERT & SİYAH ŞIKLIĞI «",
+        "seo_note": "📌 Not: Videodaki %100 Kadın Prestij Old Money kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "quzu_27KKBN02965004",
+                "category_label": "Kaban & Dış Giyim",
+                "brand": "QUZU",
+                "price": "3.490₺",
+                "price_val": 3490.0,
+                "name": "Kadın Bej Asimetrik Dik Yaka Kuşaklı Kısa Kaşe Kaban",
+                "full_name": "Quzu Asimetrik Dik Yaka Kuşaklı Kısa Kaban Bej 27KKBN02965-004",
+                "sku": "27KKBN02965004",
+                "color": "Bej / Yulaf",
+                "store_url": "https://www.quzu.com.tr/products/asimetrik-dik-yaka-kusakli-kisa-kaban-bej",
+                "product_url": "https://guzelai.com/go/27KKBN02965004",
+                "guzelai_url": "https://guzelai.com/go/27KKBN02965004",
+                "image_url": "https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KKBN02965_004_a5700818-af66-462c-90d3-525c04b87af9.jpg?v=1791902915",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0750/9285/3049/files/27KKBN02965_004_a5700818-af66-462c-90d3-525c04b87af9.jpg?v=1791902915"],
+            },
+            "cap": {
+                "id": "ty_1107126267",
+                "category_label": "Gözlük & Aksesuar",
+                "brand": "NILU MODA",
+                "price": "264,28₺",
+                "price_val": 264.28,
+                "name": "Kadın Lüx Kristal Gold Örme Saplı Çerçevesiz Siyah Güneş Gözlüğü",
+                "full_name": "Nilu Moda Lüx Kristal Gold Örme Detaylı Siyah Kadın Güneş Gözlüğü",
+                "sku": "1107126267",
+                "color": "Siyah / Gold",
+                "store_url": "https://www.trendyol.com/nilu-moda/lux-kristal-gold-orme-detayli-siyah-kadin-gunes-gozlugu-p-1107126267",
+                "product_url": "https://guzelai.com/go/1107126267",
+                "guzelai_url": "https://guzelai.com/go/1107126267",
+                "image_url": "https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_982411215",
+                "category_label": "Triko & Kazak",
+                "brand": "DIER MODA",
+                "price": "440,99₺",
+                "price_val": 440.99,
+                "name": "Kadın Ekru & Lacivert Çizgili Selanik Örgü Polo Yaka Triko Kazak",
+                "full_name": "Dier Moda Ekru Lacivert Selanik Örgü Polo Yaka Oversize Triko Kazak",
+                "sku": "982411215",
+                "color": "Ekru / Lacivert Çizgili",
+                "store_url": "https://www.trendyol.com/dier-moda/ekru-lacivert-selanik-orgu-polo-yaka-oversize-triko-kazak-kadin-kazak-p-982411215",
+                "product_url": "https://guzelai.com/go/982411215",
+                "guzelai_url": "https://guzelai.com/go/982411215",
+                "image_url": "https://cdn.dsmcdn.com/ty1749/prod/QC_PREP/20250904/11/84cfc0ba-64dd-307a-9777-01093131c826/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1749/prod/QC_PREP/20250904/11/84cfc0ba-64dd-307a-9777-01093131c826/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "quzu_26YPNT01724001",
+                "category_label": "Pantolon",
+                "brand": "QUZU",
+                "price": "1.267,50₺",
+                "price_val": 1267.50,
+                "name": "Kadın Gold Toka Kemerli Siyah Yüksek Bel Pileli Palazzo Pantolon",
+                "full_name": "Quzu Yüksek Bel Kemerli Pileli Pantolon Siyah 26YPNT01724-001",
+                "sku": "26YPNT01724001",
+                "color": "Siyah (Gold Toka Kemerli)",
+                "store_url": "https://www.quzu.com.tr/products/yuksek-bel-kemerli-pileli-pantolon-siyah",
+                "product_url": "https://guzelai.com/go/26YPNT01724001",
+                "guzelai_url": "https://guzelai.com/go/26YPNT01724001",
+                "image_url": "https://cdn.shopify.com/s/files/1/0750/9285/3049/files/26YPNT01724_001.jpg?v=1772456776",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0750/9285/3049/files/26YPNT01724_001.jpg?v=1772456776"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106127",
+                "category_label": "Çanta",
+                "brand": "BAGMORI",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Beyaz Gold Kemer Toka Aksesuarlı Askılı Mini Kadın Çantası",
+                "full_name": "Bagmori Beyaz Kemer Toka Aksesuarlı Askılı Mini Kadın Çanta",
+                "sku": "8682166106127",
+                "color": "Beyaz / Gold Tokalı",
+                "store_url": "https://www.bagmori.com/products/beyaz-aksesuarli-askili-mini-canta-m000008793",
+                "product_url": "https://guzelai.com/go/8682166106127",
+                "guzelai_url": "https://guzelai.com/go/8682166106127",
+                "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106127-1_0ba01d52-fa0a-45fa-aa6d-eafa9c2fd1bb.jpg?v=1784880625",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106127-1_0ba01d52-fa0a-45fa-aa6d-eafa9c2fd1bb.jpg?v=1784880625"],
+            },
+            "shoes": {
+                "id": "ty_930093536",
+                "category_label": "Topuklu Ayakkabı",
+                "brand": "BRIELFY",
+                "price": "675₺",
+                "price_val": 675.0,
+                "name": "Kadın Siyah Rugan Sivri Burun Gold Aksesuarlı 7cm Topuklu Slingback",
+                "full_name": "Brielfy Kadın Sivri Burun Konik 7cm Topuklu Siyah Slingback Yandan Tokalı Ayakkabı",
+                "sku": "930093536",
+                "color": "Siyah Rugan / Gold",
+                "store_url": "https://www.trendyol.com/brielfy/kadin-sivri-burun-konik-7cm-topuklu-siyah-slingback-yandan-tokali-gunluk-is-ofis-ayakkabisi-p-930093536",
+                "product_url": "https://guzelai.com/go/930093536",
+                "guzelai_url": "https://guzelai.com/go/930093536",
+                "image_url": "https://cdn.dsmcdn.com/ty1811/prod/QC_ENRICHMENT/20260113/12/b8d10e65-b334-39f6-93e2-0592b7d163d8/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1811/prod/QC_ENRICHMENT/20260113/12/b8d10e65-b334-39f6-93e2-0592b7d163d8/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["bej", "kuşaklı", "kaban", "ceket", "kadın"],
+            "cap": ["siyah", "gold", "kadın", "gözlük"],
+            "top": ["ekru", "lacivert", "çizgili", "polo", "triko", "kazak"],
+            "bottom": ["siyah", "kemerli", "pileli", "palazzo", "pantolon"],
+            "bag": ["beyaz", "toka", "mini", "çanta"],
+            "shoes": ["siyah", "rugan", "sivri", "topuklu", "ayakkabı"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/sun3_01_outer.png",
+            "cap": "assets/items/sun3_02_cap.png",
+            "top": "assets/items/sun3_03_top.png",
+            "bottom": "assets/items/sun3_04_bottom.png",
+            "bag": "assets/items/sun3_05_bag.png",
+            "shoes": "assets/items/sun3_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/sun3_01_outer.png",
+            "cap": "assets/items/sun3_02_cap.png",
+            "top": "assets/items/sun3_03_top.png",
+            "bottom": "assets/items/sun3_04_bottom.png",
+            "bag": "assets/items/sun3_05_bag.png",
+            "shoes": "assets/items/sun3_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/sun3_model_step1.jpg",
+            "assets/sun3_model_step2.jpg",
+            "assets/sun3_model_step3.jpg",
+        ],
+    },
+    {
         "id": "pinterest_oldmoney_camel_iceblue_ecru",
         "preferred_music_id": "veor_uranis_da_da_da_2026",
         "title": "Pinterest'te En Çok Kaydedilen Old Money Sonbahar Renk Kurgusu: Camel, Buz Mavisi & Ekru Zarafeti 🤍🍂✨",
@@ -1326,17 +1737,41 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
                 used_skus.update(str(s) for s in h_data.get("used_skus", []))
         except Exception:
             pass
+    for extra_hist, key_name in (
+        ("output/instagram_uploaded_history.json", "published_archetypes"),
+        ("output/published_history.json", "archetype_ids"),
+    ):
+        if os.path.exists(extra_hist):
+            try:
+                with open(extra_hist, "r", encoding="utf-8") as ef:
+                    ed = json.load(ef)
+                    for aid in ed.get(key_name, []):
+                        if aid and aid not in used_archetypes:
+                            used_archetypes.append(aid)
+            except Exception:
+                pass
 
-    # Öncelikle daha önce paylaşılmamış ve model kareleri mevcut olan özgün arketipi seç
-    available_archetypes = [
-        a for a in OUTFIT_ARCHETYPES
-        if a["id"] not in used_archetypes[-3:] and os.path.exists(a["model_frames"][0])
-    ]
-    if not available_archetypes:
-        available_archetypes = [a for a in OUTFIT_ARCHETYPES if os.path.exists(a["model_frames"][0])] or [OUTFIT_ARCHETYPES[0]]
+    forced_id = os.environ.get("FORCE_ARCHETYPE_ID", "").strip() or slot_name
+    forced_matches = [a for a in OUTFIT_ARCHETYPES if a["id"] == forced_id and os.path.exists(a["model_frames"][0])]
+    if forced_matches:
+        archetype = forced_matches[0]
+        force_live_scrape = False
+    else:
+        # Öncelikle daha önce Instagram'da paylaşılmamış ve model kareleri mevcut olan özgün arketipi sırayla seç
+        available_archetypes = [
+            a for a in OUTFIT_ARCHETYPES
+            if a["id"] not in used_archetypes and os.path.exists(a["model_frames"][0])
+        ]
+        if not available_archetypes:
+            available_archetypes = [
+                a for a in OUTFIT_ARCHETYPES
+                if a["id"] not in used_archetypes[-3:] and os.path.exists(a["model_frames"][0])
+            ]
+        if not available_archetypes:
+            available_archetypes = [a for a in OUTFIT_ARCHETYPES if os.path.exists(a["model_frames"][0])] or [OUTFIT_ARCHETYPES[0]]
 
-    archetype = available_archetypes[0]
-    force_live_scrape = archetype["id"] in used_archetypes
+        archetype = available_archetypes[0]
+        force_live_scrape = archetype["id"] in used_archetypes
 
     print(f"[Özgün Kombin Motoru] '{archetype['title']}' ({archetype['id']}) için canlı mağaza ürünleri taranıyor...")
 
@@ -1541,7 +1976,19 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
             "video_badge_walk": "» AMA KOMBİNİM 10/10 OLMAK ZORUNDA «",
         },
     ]
-    if archetype["id"] == "pinterest_oldmoney_camel_iceblue_ecru":
+    if archetype.get("video_badge_collage") and archetype.get("viral_hook"):
+        chosen_hook_pack = {
+            "hook_title": archetype["title"],
+            "spoken_hook_text": archetype.get("spoken_hook_text", archetype["title"]),
+            "x_short_hook": archetype["title"][:95],
+            "yt_short_title": archetype["title"],
+            "tiktok_hook_title": f"POV: {archetype.get('spoken_hook_text', archetype['title'])}",
+            "pinterest_title": f"{archetype['title']} | GuzelAI.com",
+            "viral_hook": archetype["viral_hook"],
+            "video_badge_collage": archetype["video_badge_collage"],
+            "video_badge_walk": archetype.get("video_badge_walk", "» OLD MONEY ZARAFETİ «"),
+        }
+    elif archetype["id"] == "pinterest_oldmoney_camel_iceblue_ecru":
         chosen_hook_pack = hook_packs[0]
     elif archetype["id"] == "veor_uranis_bordo_kapsul_2k":
         chosen_hook_pack = hook_packs[1]
