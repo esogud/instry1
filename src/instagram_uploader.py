@@ -198,9 +198,12 @@ def upload_via_instagrapi(
             return existing_url
 
         thumb_path = Path(video_path).with_suffix(".jpg")
+        hook_cover_candidate = Path(video_path).parent / "hook_cover.jpg"
         collage_candidate = Path(video_path).parent / "kombin_collage.png"
         street_candidate = Path(video_path).parent / "model_street.png"
-        if collage_candidate.exists():
+        if hook_cover_candidate.exists():
+            Image.open(hook_cover_candidate).convert("RGB").save(thumb_path, "JPEG", quality=98, subsampling=0)
+        elif collage_candidate.exists():
             Image.open(collage_candidate).convert("RGB").save(thumb_path, "JPEG", quality=98, subsampling=0)
         elif street_candidate.exists():
             Image.open(street_candidate).convert("RGB").save(thumb_path, "JPEG", quality=98, subsampling=0)
@@ -247,10 +250,11 @@ def upload_via_instagrapi(
 
 
 def dispatch_all_channels(video_path: str, reel_url: str = ""):
-    """Dispatches and publishes across all 9 connected channels (GuzelAI, TikTok, YouTube, X, Facebook, Pinterest, WhatsApp, Telegram, Threads)."""
+    """Dispatches and publishes across connected channels (TikTok is paused unless ENABLE_TIKTOK_UPLOAD=1)."""
     out_dir = str(Path(video_path).parent)
     meta_path = os.path.join(out_dir, "outfit_links.json")
-    collage_candidate = Path(video_path).parent / "kombin_collage.png"
+    hook_cover_candidate = Path(video_path).parent / "hook_cover.jpg"
+    collage_candidate = hook_cover_candidate if hook_cover_candidate.exists() else (Path(video_path).parent / "kombin_collage.png")
     outfit_data = {}
 
     if os.path.exists(meta_path):
@@ -281,15 +285,18 @@ def dispatch_all_channels(video_path: str, reel_url: str = ""):
     except Exception as te:
         print(f"[Threads Güncelleme Bilgilendirmesi] {te}")
 
-    # 3. TikTok (@guzelaicom) otomatik paylaşım
-    try:
-        from tiktok_uploader import build_tiktok_caption, publish_to_tiktok_cdp, save_tiktok_outputs
-        save_tiktok_outputs(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
-        tt_caption = build_tiktok_caption(outfit_data, ig_reel_url=reel_url)
-        tt_res = publish_to_tiktok_cdp(Path(video_path), tt_caption)
-        print(f"[TikTok Otomatik Paylaşım] Durum: {tt_res}")
-    except Exception as tke:
-        print(f"[TikTok Paylaşım Bilgilendirmesi] {tke}")
+    # 3. TikTok (@guzelaicom) paylaşımı — 0 izlenme sorunu çözülüp ENABLE_TIKTOK_UPLOAD=1 açılana kadar yatırım durduruldu
+    if os.environ.get("ENABLE_TIKTOK_UPLOAD", "0") == "1":
+        try:
+            from tiktok_uploader import build_tiktok_caption, publish_to_tiktok_cdp, save_tiktok_outputs
+            save_tiktok_outputs(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
+            tt_caption = build_tiktok_caption(outfit_data, ig_reel_url=reel_url)
+            tt_res = publish_to_tiktok_cdp(Path(video_path), tt_caption)
+            print(f"[TikTok Otomatik Paylaşım] Durum: {tt_res}")
+        except Exception as tke:
+            print(f"[TikTok Paylaşım Bilgilendirmesi] {tke}")
+    else:
+        print("[TikTok Yatırımı Durduruldu] 0-izlenme / algoritma koruması aktif: Onayınız olmadan TikTok'a otomatik yükleme yapılmaz.")
 
     # 4. Telegram botunda (@guzelaibot) otomatik paylaşım
     try:
