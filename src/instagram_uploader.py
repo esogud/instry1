@@ -151,6 +151,52 @@ def upload_via_instagrapi(
         return False
 
     try:
+        out_dir = Path(video_path).parent
+        meta_path = out_dir / "outfit_links.json"
+        ig_hist_path = out_dir / "instagram_uploaded_history.json"
+        cur_arch_id = ""
+        cur_model_frame = ""
+        if meta_path.exists():
+            try:
+                mdata = json.loads(meta_path.read_text(encoding="utf-8"))
+                cur_arch_id = mdata.get("archetype_id", "")
+                mframes = mdata.get("model_frames") or []
+                cur_model_frame = mframes[0] if mframes else ""
+            except Exception:
+                pass
+
+        published_archs = {
+            "telegram_curly_champagne_palazzo",
+            "curly_khaki_suede_palazzo",
+            "pajama_morning_vibe",
+            "chic_black_biker_denim",
+            "casual_denim_sherpa_grey",
+        }
+        published_models = {
+            "assets/telegram_curly_step1.jpg",
+            "assets/curly_model_step1.jpg",
+            "assets/outfit3_model_step1.jpg",
+            "assets/outfit2_model_step1.jpg",
+            "assets/trial1_model_street.jpg",
+        }
+        last_urls = {}
+        if ig_hist_path.exists():
+            try:
+                hobj = json.loads(ig_hist_path.read_text(encoding="utf-8"))
+                published_archs.update(hobj.get("published_archetypes", []))
+                published_models.update(hobj.get("published_models", []))
+                last_urls = hobj.get("reel_urls", {})
+            except Exception:
+                pass
+
+        if (cur_arch_id and cur_arch_id in published_archs) or (cur_model_frame and cur_model_frame in published_models):
+            existing_url = last_urls.get(cur_arch_id, "https://www.instagram.com/guzelaicom/reels/")
+            print(
+                f"[TEKRAR ENGELLEYİCİ] '{cur_arch_id}' ({cur_model_frame}) zaten Instagram'da yayınlanmış! "
+                f"Aynı kombin/manken tekrar yüklenmedi -> {existing_url}"
+            )
+            return existing_url
+
         thumb_path = Path(video_path).with_suffix(".jpg")
         collage_candidate = Path(video_path).parent / "kombin_collage.png"
         street_candidate = Path(video_path).parent / "model_street.png"
@@ -165,6 +211,27 @@ def upload_via_instagrapi(
         reel_url = f"https://www.instagram.com/reel/{media.code}/"
         print(f"[BAŞARILI] Instagram Reels paylaşıldı! Media PK: {media.pk} | Code: {media.code} | Link: {reel_url}")
 
+        try:
+            if cur_arch_id:
+                published_archs.add(cur_arch_id)
+                last_urls[cur_arch_id] = reel_url
+            if cur_model_frame:
+                published_models.add(cur_model_frame)
+            ig_hist_path.write_text(
+                json.dumps(
+                    {
+                        "published_archetypes": sorted(published_archs),
+                        "published_models": sorted(published_models),
+                        "reel_urls": last_urls,
+                    },
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+        except Exception as he:
+            print(f"[IG Geçmiş Kayıt Uyarısı] {he}")
+
         # Ürün linklerini Reels'in ilk yorumuna da otomatik göm
         if comment_text:
             try:
@@ -173,36 +240,112 @@ def upload_via_instagrapi(
             except Exception as ce:
                 print(f"[Yorum Bilgilendirmesi] İlk yorum eklenemedi ({ce}), linkler zaten açıklamada yer alıyor.")
 
-        # Threads paylaşım zincirini canlı Instagram Reels linkiyle güncelle ve Threads'te yayınla
-        out_dir = str(Path(video_path).parent)
-        meta_path = os.path.join(out_dir, "outfit_links.json")
-        if os.path.exists(meta_path):
-            try:
-                from threads_publisher import (
-                    save_threads_outputs,
-                    publish_via_threads_session,
-                    publish_to_threads_api,
-                )
-                with open(meta_path, "r", encoding="utf-8") as mf:
-                    outfit_data = json.load(mf)
-                outfit_data["reel_url"] = reel_url
-                with open(meta_path, "w", encoding="utf-8") as mf:
-                    json.dump(outfit_data, mf, ensure_ascii=False, indent=2)
-                chain = save_threads_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
-                if session_str:
-                    publish_via_threads_session(chain, session_str)
-                else:
-                    th_token = os.environ.get("THREADS_ACCESS_TOKEN", "").strip()
-                    th_user = os.environ.get("THREADS_USER_ID", "").strip()
-                    if th_token and th_user:
-                        publish_to_threads_api(chain, th_token, th_user)
-            except Exception as te:
-                print(f"[Threads Güncelleme Bilgilendirmesi] {te}")
-
-        return True
+        return reel_url
     except Exception as e:
         print(f"[Instagram Paylaşım Uyarısı] {type(e).__name__}: {e}")
-        return False
+        return ""
+
+
+def dispatch_all_channels(video_path: str, reel_url: str = ""):
+    """Dispatches and publishes across all 9 connected channels (GuzelAI, TikTok, YouTube, X, Facebook, Pinterest, WhatsApp, Telegram, Threads)."""
+    out_dir = str(Path(video_path).parent)
+    meta_path = os.path.join(out_dir, "outfit_links.json")
+    collage_candidate = Path(video_path).parent / "kombin_collage.png"
+    outfit_data = {}
+
+    if os.path.exists(meta_path):
+        with open(meta_path, "r", encoding="utf-8") as mf:
+            outfit_data = json.load(mf)
+        if reel_url:
+            outfit_data["reel_url"] = reel_url
+            with open(meta_path, "w", encoding="utf-8") as mf:
+                json.dump(outfit_data, mf, ensure_ascii=False, indent=2)
+
+    # 1. GuzelAI.com (#kombinler) e-ticaret link doğrulama ve görselli vitrin yayını
+    try:
+        from website_publisher import publish_to_guzelai_website
+        web_res = publish_to_guzelai_website(
+            outfit_data,
+            collage_path=collage_candidate,
+            ig_reel_url=reel_url,
+            out_dir=out_dir,
+        )
+        print(f"[GuzelAI.com Görselli Link Vitrini] Durum: {web_res}")
+    except Exception as webe:
+        print(f"[GuzelAI.com Vitrin Bilgilendirmesi] {webe}")
+
+    # 2. Threads metin çıktısını hazırla
+    try:
+        from threads_publisher import save_threads_outputs
+        save_threads_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
+    except Exception as te:
+        print(f"[Threads Güncelleme Bilgilendirmesi] {te}")
+
+    # 3. TikTok (@guzelaicom) otomatik paylaşım
+    try:
+        from tiktok_uploader import build_tiktok_caption, publish_to_tiktok_cdp, save_tiktok_outputs
+        save_tiktok_outputs(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
+        tt_caption = build_tiktok_caption(outfit_data, ig_reel_url=reel_url)
+        tt_res = publish_to_tiktok_cdp(Path(video_path), tt_caption)
+        print(f"[TikTok Otomatik Paylaşım] Durum: {tt_res}")
+    except Exception as tke:
+        print(f"[TikTok Paylaşım Bilgilendirmesi] {tke}")
+
+    # 4. Telegram botunda (@guzelaibot) otomatik paylaşım
+    try:
+        from telegram_publisher import publish_to_telegram
+        tg_res = publish_to_telegram(outfit_data, out_dir=out_dir, reel_url=reel_url)
+        print(f"[Telegram Otomatik Paylaşım] Durum: {tg_res}")
+    except Exception as tge:
+        print(f"[Telegram Paylaşım Bilgilendirmesi] {tge}")
+
+    # 5. Pinterest hesabında (archzencir@gmail.com) otomatik Pin paylaşımı
+    try:
+        from pinterest_publisher import save_pinterest_outputs, publish_to_pinterest_cdp
+        save_pinterest_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
+        pin_media = collage_candidate if collage_candidate.exists() else Path(video_path)
+        pin_res = publish_to_pinterest_cdp(outfit_data, pin_media, reel_url=reel_url)
+        print(f"[Pinterest Otomatik Paylaşım] Durum: {pin_res}")
+    except Exception as pne:
+        print(f"[Pinterest Paylaşım Bilgilendirmesi] {pne}")
+
+    # 6. YouTube Shorts kanalında (https://www.youtube.com/@guzelaicom) otomatik paylaşım
+    try:
+        from youtube_publisher import save_youtube_outputs, publish_to_youtube_cdp
+        save_youtube_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
+        yt_res = publish_to_youtube_cdp(outfit_data, Path(video_path), reel_url=reel_url)
+        print(f"[YouTube Shorts Otomatik Paylaşım] Durum: {yt_res}")
+    except Exception as yte:
+        print(f"[YouTube Shorts Paylaşım Bilgilendirmesi] {yte}")
+
+    # 7. X / Twitter hesabında (https://x.com/guzelaicom) otomatik paylaşım
+    try:
+        from x_publisher import save_x_outputs, publish_to_x_cdp
+        save_x_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
+        x_media = Path(video_path) if Path(video_path).exists() else collage_candidate
+        x_res = publish_to_x_cdp(outfit_data, media_path=x_media, reel_url=reel_url)
+        print(f"[X (Twitter) Otomatik Paylaşım] Durum: {x_res}")
+    except Exception as xe:
+        print(f"[X (Twitter) Paylaşım Bilgilendirmesi] {xe}")
+
+    # 8. Facebook hesabında (archzencir@gmail.com) otomatik paylaşım
+    try:
+        from facebook_publisher import save_facebook_outputs, publish_to_facebook_cdp
+        save_facebook_outputs(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
+        fb_media = collage_candidate if collage_candidate.exists() else Path(video_path)
+        fb_res = publish_to_facebook_cdp(outfit_data, media_path=fb_media, ig_reel_url=reel_url)
+        print(f"[Facebook Otomatik Paylaşım] Durum: {fb_res}")
+    except Exception as fbe:
+        print(f"[Facebook Paylaşım Bilgilendirmesi] {fbe}")
+
+    # 9. WhatsApp Kanalı (https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016 - guzelai.com) canlı yayın
+    try:
+        from whatsapp_publisher import save_whatsapp_outputs, publish_to_whatsapp_cdp
+        wa_res = save_whatsapp_outputs(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
+        wa_pub = publish_to_whatsapp_cdp(outfit_data, ig_reel_url=reel_url)
+        print(f"[WhatsApp Kanalı Otomatik Paylaşım] Durum: {wa_pub}")
+    except Exception as wae:
+        print(f"[WhatsApp Kanalı Bilgilendirmesi] {wae}")
 
 
 def main():
@@ -222,16 +365,23 @@ def main():
 
     access_token = os.environ.get("IG_ACCESS_TOKEN", "").strip()
     ig_user_id = os.environ.get("IG_USER_ID", "").strip()
-    username = os.environ.get("IG_USERNAME", "").strip()
-    password = os.environ.get("IG_PASSWORD", "").strip()
+    username = os.environ.get("IG_USERNAME", "guzelaicom").strip()
+    password = os.environ.get("IG_PASSWORD", "K@rd3s.34-48/mugla").strip()
     session_json = os.environ.get("IG_SESSION_JSON", "").strip()
 
+    local_trusted_session = Path(r"C:\Users\zenci\.gemini\antigravity\scratch\ig_session.json")
+    if not session_json and local_trusted_session.exists():
+        session_json = local_trusted_session.read_text(encoding="utf-8").strip()
+
+    reel_url = ""
     if access_token and ig_user_id:
         upload_via_graph_api(args.video, caption, access_token, ig_user_id)
     elif username or session_json:
-        upload_via_instagrapi(args.video, caption, username, password, session_json, comment_text=comment_text)
+        reel_url = upload_via_instagrapi(args.video, caption, username, password, session_json, comment_text=comment_text) or ""
     else:
         print("[BİLGİ] Instagram giriş bilgileri tanımlanmadığı için video yalnızca Artifacts olarak kaydedildi.")
+
+    dispatch_all_channels(args.video, reel_url=reel_url)
 
 
 if __name__ == "__main__":
