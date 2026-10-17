@@ -1,0 +1,27 @@
+{
+  "published_archetypes": [
+    "casual_denim_sherpa_grey",
+    "chic_black_biker_denim",
+    "curly_khaki_suede_palazzo",
+    "inner_voice_black_bomber_stone_palazzo",
+    "pajama_morning_vibe",
+    "telegram_curly_champagne_palazzo",
+    "tesla_halloween_ramp_curly",
+    "veor_uranis_bordo_kapsul_2k"
+  ],
+  "published_models": [
+    "assets/curly_model_step1.jpg",
+    "assets/inner_voice_curly_step1.jpg",
+    "assets/outfit2_model_step1.jpg",
+    "assets/outfit3_model_step1.jpg",
+    "assets/telegram_curly_step1.jpg",
+    "assets/tesla_halloween_step1.jpg",
+    "assets/trial1_model_street.jpg",
+    "assets/veor_model_step1.jpg"
+  ],
+  "reel_urls": {
+    "inner_voice_black_bomber_stone_palazzo": "https://www.instagram.com/reel/DellNpkMR6Z/",
+    "tesla_halloween_ramp_curly": "https://www.instagram.com/reel/DelxD5YsMxj/",
+    "veor_uranis_bordo_kapsul_2k": "https://www.instagram.com/reel/Del9WNNM7yb/"
+  }
+}
