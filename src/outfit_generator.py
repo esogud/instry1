@@ -50,6 +50,351 @@ LIVE_TRENDYOL_FEEDS = {
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
     {
+        "id": "inner_voice_black_bomber_stone_palazzo",
+        "title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ (Ama kombinimden asla ödün vermem)",
+        "viral_hook": "🛑 Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey kontrol altında' imajı! Siyah kaşe bomber ceket ve taş rengi palazzo jean uyumuyla gün boyu kurtarıcı 6 kadın parçası! 👇🔥",
+        "seo_note": "📌 Not: Videodaki %100 Kadın kombin parçalarının canlı taranmış mağaza ve benzer muadil ürün linkleri aşağıda doğrulanarak listelenmiştir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_1194463658",
+                "brand": "LACASE",
+                "price": "852,24₺",
+                "price_val": 852.24,
+                "name": "Kadın Kaşe Bomber Siyah Ceket (Benzer Muadil)",
+                "full_name": "LACASE Kadın Kaşe Bomber Siyah Ceket (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "1194463658",
+                "color": "Siyah",
+                "product_url": "https://www.trendyol.com/lacase/kadin-kase-bomber-siyah-ceket-p-1194463658",
+                "image_url": "https://cdn.dsmcdn.com/ty1950/prod/QC_PREP/20260901/17/b79dd0f6-c1a3-35af-b780-11ba074fdb25/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1950/prod/QC_PREP/20260901/17/b79dd0f6-c1a3-35af-b780-11ba074fdb25/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_1107126267",
+                "brand": "NILU MODA",
+                "price": "264,28₺",
+                "price_val": 264.28,
+                "name": "Lüks Kristal Gold Detaylı Siyah Kadın Güneş Gözlüğü",
+                "full_name": "Nilu Moda Lüks Kristal Gold Örme Detaylı Siyah Kadın Güneş Gözlüğü",
+                "sku": "1107126267",
+                "color": "Siyah / Gold",
+                "product_url": "https://www.trendyol.com/nilu-moda/lux-kristal-gold-orme-detayli-siyah-kadin-gunes-gozlugu-p-1107126267",
+                "image_url": "https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_855800408",
+                "brand": "DEFACTO",
+                "price": "297,49₺",
+                "price_val": 297.49,
+                "name": "Kadın Oversize Bisiklet Yaka Triko/Sweatshirt (Benzer Muadil)",
+                "full_name": "DeFacto Kadın Oversize Bisiklet Yaka Basic Sweatshirt A4177AX24WN (Benzer Muadil)",
+                "sku": "855800408",
+                "color": "Açık Gri / Ekru",
+                "product_url": "https://www.trendyol.com/defacto/oversize-bisiklet-yaka-basic-sweatshirt-a4177ax24wn-p-855800408",
+                "image_url": "https://cdn.dsmcdn.com/ty1836/prod/QC_ENRICHMENT/20260312/12/a4bcf387-1412-33c8-8f0a-524aa0542fe2/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1836/prod/QC_ENRICHMENT/20260312/12/a4bcf387-1412-33c8-8f0a-524aa0542fe2/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_776397345",
+                "brand": "LAMİRAMOOD",
+                "price": "647,03₺",
+                "price_val": 647.03,
+                "name": "Kadın Taş Rengi Palazzo Bol Paça Yüksek Bel Jean Pantolon",
+                "full_name": "LAMİRAMOOD Taş Palazzo Bol Paça Yüksek Bel Kadın Kot Pantolon",
+                "sku": "776397345",
+                "color": "Taş / Açık Gri",
+                "product_url": "https://www.trendyol.com/lamiramood/tas-palazzo-bol-paca-yuksek-bel-kot-pantolon-p-776397345",
+                "image_url": "https://cdn.dsmcdn.com/ty1443/product/media/images/prod/QC/20240726/20/eea924c7-2c97-37ad-a143-60e543c3536d/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1443/product/media/images/prod/QC/20240726/20/eea924c7-2c97-37ad-a143-60e543c3536d/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "ty_990568843",
+                "brand": "JUDOUR BAGS",
+                "price": "199₺",
+                "price_val": 199.0,
+                "name": "Kadın Siyah Fularlı Fermuarlı Deri El ve Omuz Çantası",
+                "full_name": "Judour Bags Siyah Kadın Fularlı Fermuarlı Kapamalı Shopper El ve Omuz Çantası",
+                "sku": "990568843",
+                "color": "Siyah",
+                "product_url": "https://www.trendyol.com/judour-bags/siyah-kadin-fularli-fermuarli-kapamali-shopper-el-ve-omuz-cantasi-p-990568843",
+                "image_url": "https://cdn.dsmcdn.com/ty1963/prod/QC_ENRICHMENT/20260925/16/24a9554e-13de-3977-87c3-71282050156c/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1963/prod/QC_ENRICHMENT/20260925/16/24a9554e-13de-3977-87c3-71282050156c/1_org_zoom.jpg"],
+            },
+            "shoes": {
+                "id": "ty_822317202",
+                "brand": "ADIDAS",
+                "price": "2.312,02₺",
+                "price_val": 2312.02,
+                "name": "VL Court Base Kadın Sneaker Ayakkabı ID3715",
+                "full_name": "adidas VL Court Base Kadın Sneaker Spor Ayakkabı ID3715",
+                "sku": "822317202",
+                "color": "Beyaz / Siyah",
+                "product_url": "https://www.trendyol.com/adidas/vl-court-base-kadin-sneaker-id3715-p-822317202",
+                "image_url": "https://cdn.dsmcdn.com/ty1841/prod/QC_ENRICHMENT/20260316/15/b8e1af12-82dc-33ef-86bd-924539c7e7b1/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1841/prod/QC_ENRICHMENT/20260316/15/b8e1af12-82dc-33ef-86bd-924539c7e7b1/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["siyah", "kaşe", "bomber", "kadın", "ceket"],
+            "cap": ["siyah", "gold", "kadın", "gözlük"],
+            "top": ["gri", "ekru", "bisiklet", "kadın", "kazak", "sweatshirt"],
+            "bottom": ["taş", "gri", "yüksek bel", "palazzo", "kadın", "kot", "pantolon"],
+            "bag": ["siyah", "fularlı", "kadın", "omuz", "çanta"],
+            "shoes": ["beyaz", "court", "adidas", "kadın", "sneaker"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/iv_01_jacket.png",
+            "cap": "assets/items/iv_02_cap.png",
+            "top": "assets/items/iv_03_top.png",
+            "bottom": "assets/items/iv_04_bottom.png",
+            "bag": "assets/items/iv_05_bag.png",
+            "shoes": "assets/items/iv_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/iv_01_jacket.png",
+            "cap": "assets/items/iv_02_cap.png",
+            "top": "assets/items/iv_03_top.png",
+            "bottom": "assets/items/iv_04_bottom.png",
+            "bag": "assets/items/iv_05_bag.png",
+            "shoes": "assets/items/iv_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/inner_voice_curly_step1.jpg",
+            "assets/inner_voice_curly_step2.jpg",
+            "assets/inner_voice_curly_step3.jpg",
+        ],
+    },
+    {
+        "id": "telegram_curly_champagne_palazzo",
+        "title": "5.000₺ Bütçeyle 50.000₺'lik 'Old Money' Görünmenin Sırrı! (4. Parçaya Dikkat) 🔥",
+        "viral_hook": "🛑 SAKIN GEÇME! Girdiğin her ortamda 'Üzerindekileri hangi lüks markadan aldın?' dedirten, boyu 10 cm daha uzun gösteren o 6 parçalık Old Money kadın kombin sırrı çözüldü! 👇✨",
+        "seo_note": "📌 Not: Görseldeki kadın kombin parçalarının stokta olan birebir veya en yakın %100 Kadın mağaza muadil (benzer) ürün linkleri doğrulanarak aşağıya eklenmiştir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_959328122",
+                "brand": "FERRUCCI",
+                "price": "2.473,45₺",
+                "price_val": 2473.45,
+                "name": "Kadın Gold Çelik Kordon Kol Saati (Benzer Muadil)",
+                "full_name": "Ferrucci Çelik Kordon Çelik Kasa Kadın Kol Saati 3 ATM Su Geçirmez Gold (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "959328122",
+                "color": "Altın / Gold",
+                "product_url": "https://www.trendyol.com/ferrucci/celik-kordon-celik-kasa-kadin-kol-saati-3-atm-su-gecirmez-gumus-gold-zmfer190-p-959328122",
+                "image_url": "https://cdn.dsmcdn.com/ty1713/prod/QC_PREP/20250721/23/d1929c87-d600-32e5-990d-94ce553396d7/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1713/prod/QC_PREP/20250721/23/d1929c87-d600-32e5-990d-94ce553396d7/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_1120763550",
+                "brand": "BYC POLO",
+                "price": "118₺",
+                "price_val": 118.0,
+                "name": "Kadın Gold & Kahve Zarif Aksesuar Gözlük (Benzer Muadil)",
+                "full_name": "BYC POLO Kahve & Gold Zarif Şık Kadın Güneş Gözlüğü Aksesuar (Görseldeki Takı/Aksesuarın Muadili)",
+                "sku": "1120763550",
+                "color": "Gold / Kahve",
+                "product_url": "https://www.trendyol.com/byc-polo/cbp064-gcc-kahve-zarif-sik-kadin-gunes-gozlugu-p-1120763550",
+                "image_url": "https://cdn.dsmcdn.com/ty1848/prod/QC_ENRICHMENT/20260403/22/47e91a8f-ee4b-3ac4-a180-c91099f8d6e0/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1848/prod/QC_ENRICHMENT/20260403/22/47e91a8f-ee4b-3ac4-a180-c91099f8d6e0/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_1059088919",
+                "brand": "ETOS",
+                "price": "863,10₺",
+                "price_val": 863.10,
+                "name": "Kadın Saten Kumaş Gizli Düğmeli Gömlek (Benzer Muadil)",
+                "full_name": "Etos Kadın Gömlek Saten Kumaş Gizli Düğmeli Kırışmaz Şık Kadın Gömlek (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "1059088919",
+                "color": "Şampanya / Ekru",
+                "product_url": "https://www.trendyol.com/etos/kadin-gomlek-saten-kumas-yeni-trend-model-nakisli-gizli-dugme-kirismaz-kumas-p-1059088919",
+                "image_url": "https://cdn.dsmcdn.com/ty1797/prod/QC_ENRICHMENT/20251208/18/df37804e-e30c-392c-99e6-d1ab12938109/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1797/prod/QC_ENRICHMENT/20251208/18/df37804e-e30c-392c-99e6-d1ab12938109/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_652719507",
+                "brand": "LAVİNİM",
+                "price": "550,05₺",
+                "price_val": 550.05,
+                "name": "Kadın Yüksek Bel Pensli Kumaş Palazzo Pantolon (Benzer Muadil)",
+                "full_name": "LAVİNİM Kadın Yüksek Bel Pensli Bol Paça Kumaş Palazzo Pantolon (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "652719507",
+                "color": "Acı Kahve",
+                "product_url": "https://www.trendyol.com/lavinim/palazzo-pantolon-oversize-orjinal-kesim-p-652719507",
+                "image_url": "https://cdn.dsmcdn.com/ty1000057/product/media/images/prod/PIM/20260106/07/dfcdaed6-81a7-4e40-b99f-844894f475c4/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1000057/product/media/images/prod/PIM/20260106/07/dfcdaed6-81a7-4e40-b99f-844894f475c4/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "ty_1206721873",
+                "brand": "NWR BAGS",
+                "price": "501,90₺",
+                "price_val": 501.90,
+                "name": "Kadın Krem & Kahve Deri El ve Omuz Çantası (Benzer Muadil)",
+                "full_name": "NWR BAGS Kadın Krem ve Kahverengi Detaylı Omuz ve El Çantası (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "1206721873",
+                "color": "Krem / Kahve",
+                "product_url": "https://www.trendyol.com/nwr-bags/3-lu-set-fular-detayli-kadin-omuz-ve-kol-cantasi-siyah-krem-kahverengi-p-1206721873",
+                "image_url": "https://cdn.dsmcdn.com/ty1965/prod/QC_PREP/20260929/17/b5ffd1b8-5227-3a8e-836d-fed1fc28e822/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1965/prod/QC_PREP/20260929/17/b5ffd1b8-5227-3a8e-836d-fed1fc28e822/1_org_zoom.jpg"],
+            },
+            "shoes": {
+                "id": "ty_938465141",
+                "brand": "SAVVES",
+                "price": "678,94₺",
+                "price_val": 678.94,
+                "name": "Kadın Bantlı Klasik Sivri Burun Topuklu Ayakkabı (Benzer Muadil)",
+                "full_name": "Savves Kadın Bantlı Yeni Sezon Klasik Sivri Burun Topuklu Ayakkabı (Görseldeki Ürünün Birebir/Benzer Muadili)",
+                "sku": "938465141",
+                "color": "Krem / Rugan",
+                "product_url": "https://www.trendyol.com/savves/kadin-siyah-rugan-bantli-yeni-sezon-kisa-topuklu-ayakkabi-p-938465141",
+                "image_url": "https://cdn.dsmcdn.com/ty1688/prod/QC_ENRICHMENT/20250601/18/3a70ca83-a221-3c05-adf7-1fb355c4a31c/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1688/prod/QC_ENRICHMENT/20250601/18/3a70ca83-a221-3c05-adf7-1fb355c4a31c/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["gold", "altın", "kadın", "saat"],
+            "cap": ["gold", "kahve", "kadın", "gözlük", "küpe"],
+            "top": ["ekru", "krem", "saten", "kadın", "gömlek"],
+            "bottom": ["kahve", "yüksek bel", "palazzo", "kadın", "pantolon"],
+            "bag": ["krem", "bej", "kadın", "el", "omuz", "çanta"],
+            "shoes": ["krem", "bantlı", "sivri", "kadın", "topuklu"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/tg_01_watch.png",
+            "cap": "assets/items/tg_02_earrings.png",
+            "top": "assets/items/tg_03_shirt.png",
+            "bottom": "assets/items/tg_04_pants.png",
+            "bag": "assets/items/tg_05_bag.png",
+            "shoes": "assets/items/tg_06_heels.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/tg_01_watch.png",
+            "cap": "assets/items/tg_02_earrings.png",
+            "top": "assets/items/tg_03_shirt.png",
+            "bottom": "assets/items/tg_04_pants.png",
+            "bag": "assets/items/tg_05_bag.png",
+            "shoes": "assets/items/tg_06_heels.png",
+        },
+        "model_frames": [
+            "assets/telegram_curly_step1.jpg",
+            "assets/telegram_curly_step2.jpg",
+            "assets/telegram_curly_step3.jpg",
+        ],
+    },
+    {
+        "id": "curly_khaki_suede_palazzo",
+        "title": "Haki Süet Bomber & Antrasit Palazzo Sonbahar Kadın Stili",
+        "viral_hook": "🛑 BU SONBAHAR HERKESİN ÜZERİNDE GÖRECEĞİNİZ O KOMBİN! Ekim & Cadılar Bayramı haftasında hem gündüz hem gece kurtarıcı 6 parça! 👇🔥",
+        "seo_note": "📌 Kombindeki %100 Kadın parçaların doğrulanmış mağaza ve benzer muadil linkleri aşağıdadır:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_985362984",
+                "brand": "NET OF NOT",
+                "price": "1.424,99₺",
+                "price_val": 1424.99,
+                "name": "Oversize Kadın Bomber Haki Süet Deri Ceket",
+                "full_name": "NET OF NOT Oversize Kadın Bomber Haki Süet Deri Ceket",
+                "sku": "985362984",
+                "color": "Haki",
+                "product_url": "https://www.trendyol.com/net-of-not/oversize-kadin-bomber-haki-suet-deri-ceket-p-985362984",
+                "image_url": "https://cdn.dsmcdn.com/ty1753/prod/QC_PREP/20250910/20/7dfc80a6-17a4-3901-a8c3-b461800247a7/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1753/prod/QC_PREP/20250910/20/7dfc80a6-17a4-3901-a8c3-b461800247a7/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_1160666803",
+                "brand": "NILU MODA",
+                "price": "130,29₺",
+                "price_val": 130.29,
+                "name": "Premium Siyah Kadın Oval Vintage Güneş Gözlüğü",
+                "full_name": "NILU MODA Premium Siyah Kadın Güneş Gözlüğü UV400 Korumalı Oval Vintage Tasarım",
+                "sku": "1160666803",
+                "color": "Siyah",
+                "product_url": "https://www.trendyol.com/nilu-moda/premium-siyah-kadin-gunes-gozlugu-uv400-korumali-oval-vintage-tasarim-p-1160666803",
+                "image_url": "https://cdn.dsmcdn.com/ty1935/prod/QC_PREP/20260625/09/d21386fe-930a-3d8a-b762-8b7984913232/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1935/prod/QC_PREP/20260625/09/d21386fe-930a-3d8a-b762-8b7984913232/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_963371271",
+                "brand": "GÜLCE MODA",
+                "price": "431,23₺",
+                "price_val": 431.23,
+                "name": "Kadın Bisiklet Yaka Yumuşak Dokulu Oversize Triko Kazak",
+                "full_name": "GÜLCE MODA Kadın Bisiklet Yaka Yumuşak Dokulu Oversize Triko Kazak",
+                "sku": "963371271",
+                "color": "Ekru",
+                "product_url": "https://www.trendyol.com/gulce-moda/kadin-bisiklet-yaka-yumusak-dokulu-oversize-triko-kazak-p-963371271",
+                "image_url": "https://cdn.dsmcdn.com/ty1956/prod/QC_ENRICHMENT/20260913/00/a333cf9f-e2a1-333a-95c1-410ec6a7c513/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1956/prod/QC_ENRICHMENT/20260913/00/a333cf9f-e2a1-333a-95c1-410ec6a7c513/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_866458994",
+                "brand": "RITNICE",
+                "price": "789₺",
+                "price_val": 789.0,
+                "name": "Kadın Rena Kemerli Likralı Antrasit Palazzo Pantolon",
+                "full_name": "RITNICE Kadın Rena Kemerli Likralı Antrasit Palazzo Pantolon",
+                "sku": "866458994",
+                "color": "Antrasit",
+                "product_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+                "image_url": "https://cdn.dsmcdn.com/ty1945/prod/QC_ENRICHMENT/20260819/16/3d01e71d-545b-3160-b00e-91c7a8b4ec07/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1945/prod/QC_ENRICHMENT/20260819/16/3d01e71d-545b-3160-b00e-91c7a8b4ec07/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "ty_826407400",
+                "brand": "HAPBUY",
+                "price": "449₺",
+                "price_val": 449.0,
+                "name": "Kadın Siyah Yumuşak Dokulu Deri Omuz Çantası",
+                "full_name": "HAPBUY Kadın Siyah Omuz Çantası Yumuşak İç ve Dış Dokulu Suni Deri El Çantası",
+                "sku": "826407400",
+                "color": "Siyah",
+                "product_url": "https://www.trendyol.com/hapbuy/kadin-siyah-omuz-cantasi-yumusak-ic-ve-dis-dokulu-kaliteli-iscilik-ve-yumusak-suni-deri-el-cantasi-p-826407400",
+                "image_url": "https://cdn.dsmcdn.com/ty1723/prod/QC_ENRICHMENT/20250808/10/5f0408d2-bd1e-3652-abdc-2aa23cadf6f3/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1723/prod/QC_ENRICHMENT/20250808/10/5f0408d2-bd1e-3652-abdc-2aa23cadf6f3/1_org_zoom.jpg"],
+            },
+            "shoes": {
+                "id": "ty_994497307",
+                "brand": "ADIDAS",
+                "price": "4.499,40₺",
+                "price_val": 4499.40,
+                "name": "Handball Spezial Kadın Sneaker Ayakkabı",
+                "full_name": "ADIDAS Handball Spezial Kadın Sneaker Ayakkabı",
+                "sku": "994497307",
+                "color": "Bordo / Beyaz",
+                "product_url": "https://www.trendyol.com/adidas/handball-spezial-kadin-bordo-ayakkabi-p-994497307",
+                "image_url": "https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["haki", "süet", "deri", "bomber", "ceket"],
+            "cap": ["siyah", "oval", "vintage", "gözlük"],
+            "top": ["ekru", "krem", "bisiklet", "triko", "kazak"],
+            "bottom": ["antrasit", "kemerli", "palazzo", "pantolon"],
+            "bag": ["siyah", "omuz", "deri", "çanta"],
+            "shoes": ["kadın", "spezial", "adidas", "sneaker"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/curly_01_jacket.png",
+            "cap": "assets/items/curly_02_cap.png",
+            "top": "assets/items/curly_03_top.png",
+            "bottom": "assets/items/curly_04_bottom.png",
+            "bag": "assets/items/curly_05_bag.png",
+            "shoes": "assets/items/curly_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/curly_01_jacket.png",
+            "cap": "assets/items/curly_02_cap.png",
+            "top": "assets/items/curly_03_top.png",
+            "bottom": "assets/items/curly_04_bottom.png",
+            "bag": "assets/items/curly_05_bag.png",
+            "shoes": "assets/items/curly_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/curly_model_step1.jpg",
+            "assets/curly_model_step2.jpg",
+            "assets/curly_model_step3.jpg",
+        ],
+    },
+    {
         "id": "pajama_morning_vibe",
         "title": "Pastel Mavi Pijama & Sabah Ev Stili",
         "category_map": {
@@ -213,7 +558,12 @@ def fetch_live_trendyol_items(category_key: str) -> list:
                         images = [images]
                     if not prod_url or not images:
                         continue
-                    clean_name = _clean_product_title(it.get("name", ""), raw_brand)
+                    raw_title = it.get("name", "")
+                    if any(bad in raw_title.lower() for bad in ("erkek", "unisex", "bay ")):
+                        continue
+                    clean_name = _clean_product_title(raw_title, raw_brand)
+                    if "(Benzer Muadil)" not in clean_name:
+                        clean_name = f"{clean_name} (Benzer Muadil)"
                     sku = str(it.get("sku") or "")
                     if not sku:
                         m_sku = re.search(r"-p-(\d+)", prod_url)
@@ -351,7 +701,7 @@ def load_cutout_image(item: dict, use_local_first: bool = True) -> Image.Image:
             resp = requests.get(url, headers=HEADERS, timeout=12)
             if resp.status_code == 200:
                 raw_im = Image.open(BytesIO(resp.content))
-                if is_clean_white_packshot(raw_im):
+                if HAS_REMBG or is_clean_white_packshot(raw_im):
                     cutout = _remove_white_bg_and_crop(raw_im)
                     if cutout.width > 60 and cutout.height > 60:
                         print(f"[Canlı Dekupe] '{item.get('name')}' mağaza görseli dekupe edildi: {url}")
@@ -431,24 +781,148 @@ def fetch_live_quzu_items(category_key: str) -> list:
     return collected
 
 
+def _infer_slot_from_text(text: str) -> str:
+    t = text.lower()
+    if any(k in t for k in ["ceket", "mont", "kaban", "trençkot", "trenckot", "yağmurluk", "yagmurluk", "yelek", "blazer", "hırka", "hirka", "pijama"]):
+        return "outerwear"
+    if any(k in t for k in ["gözlük", "gozluk", "şapka", "sapka", "bere", "atkı", "atki", "fular", "kemer", "kolye", "küpe", "kupe", "bileklik", "saat", "toka"]):
+        return "cap"
+    if any(k in t for k in ["pantolon", "jean", "kot", "tayt", "etek", "şort", "sort", "eşofman altı", "palazzo", "jogger"]):
+        return "bottom"
+    if any(k in t for k in ["çanta", "canta", "cüzdan", "cuzdan", "baget", "omuz çantası", "kol çantası"]):
+        return "bag"
+    if any(k in t for k in ["ayakkabı", "ayakkabi", "sneaker", "spor ayakkabı", "bot", "çizme", "cizme", "terlik", "topuklu", "loafer", "babet", "sandalet"]):
+        return "shoes"
+    return "top"
+
+
+def scrape_single_product_url(url: str, fallback_slot: str = "top") -> tuple[str, dict]:
+    """Scrapes brand, title, price, SKU, and image from any e-commerce product URL (Trendyol, Zara, etc.)."""
+    from urllib.parse import urlparse
+    parsed = urlparse(url)
+    host = (parsed.netloc or "").lower().replace("www.", "")
+    brand = host.split(".")[0].upper() if host else "MAĞAZA"
+    title = "Özel Seçim Kombin Parçası"
+    price_val = 750.0
+    sku = ""
+    img_url = ""
+
+    m_sku = re.search(r"-p-(\d+)", url)
+    if m_sku:
+        sku = m_sku.group(1)
+
+    try:
+        r = requests.get(url, headers=HEADERS, timeout=10)
+        html_text = r.text
+        for block in _extract_json_ld_blocks(html_text):
+            btype = block.get("@type")
+            if btype in ("Product", "ProductGroup") or "offers" in block:
+                title = block.get("name") or title
+                b_obj = block.get("brand")
+                if isinstance(b_obj, dict):
+                    brand = b_obj.get("name") or brand
+                elif isinstance(b_obj, str):
+                    brand = b_obj
+                offers = block.get("offers")
+                if isinstance(offers, list) and offers:
+                    offers = offers[0]
+                if isinstance(offers, dict):
+                    p_raw = offers.get("price") or offers.get("lowPrice")
+                    if p_raw:
+                        price_val = float(str(p_raw).replace(",", "."))
+                imgs = block.get("image")
+                if isinstance(imgs, list) and imgs:
+                    img_url = imgs[0] if isinstance(imgs[0], str) else (imgs[0].get("url") or "")
+                elif isinstance(imgs, dict):
+                    img_url = imgs.get("url") or ""
+                elif isinstance(imgs, str):
+                    img_url = imgs
+                sku = str(block.get("sku") or block.get("productID") or sku)
+                break
+
+        if title == "Özel Seçim Kombin Parçası":
+            m_og_t = re.search(r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\']([^"\']+)["\']', html_text, re.I)
+            if m_og_t:
+                title = m_og_t.group(1).split("|")[0].strip()
+        if not img_url:
+            m_og_i = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', html_text, re.I)
+            if m_og_i:
+                img_url = m_og_i.group(1).strip()
+    except Exception as e:
+        print(f"[Özel Link Tarama Uyarısı] {url}: {e}")
+
+    slot = _infer_slot_from_text(f"{title} {url}") or fallback_slot
+    local_cutout = None
+    if img_url:
+        try:
+            os.makedirs("output", exist_ok=True)
+            cut_path = f"output/custom_item_{slot}.png"
+            ir = requests.get(img_url, headers=HEADERS, timeout=10)
+            if ir.status_code == 200:
+                pil_img = Image.open(BytesIO(ir.content))
+                cut_img = _remove_white_bg_and_crop(pil_img)
+                cut_img.save(cut_path, format="PNG")
+                local_cutout = cut_path
+        except Exception as e:
+            print(f"[Özel Ürün Görsel Dekupe Uyarısı] {e}")
+
+    clean_name = _clean_product_title(title, brand)
+    item_dict = {
+        "id": f"custom_{sku or int(datetime.utcnow().timestamp())}",
+        "brand": brand.upper(),
+        "price": _format_price_tr(price_val),
+        "price_val": price_val,
+        "name": clean_name,
+        "full_name": title,
+        "sku": sku or "OZEL",
+        "product_url": url,
+        "image_url": img_url,
+        "image_urls": [img_url] if img_url else [],
+        "color": "",
+    }
+    if local_cutout:
+        item_dict["local_asset"] = local_cutout
+    return slot, item_dict
+
+
 def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     """
     Canlı e-ticaret mağazalarından (Trendyol, Quzu, Bagmori vb.) güncel ürünleri, gerçek TL fiyatlarını,
-    SKU ürün kodlarını ve doğrudan satın alma linklerini çekerek yeni bir 6'lı kombin oluşturur.
+    SKU ürün kodlarını ve doğrudan satın alma linklerini çekerek her seferinde ÖZGÜN bir 6'lı kadın kombini oluşturur.
+    Daha önce paylaşılan kombinleri ve SKU kodlarını output/published_outfits_history.json dosyasında takip ederek
+    aynı kombinin tekrar paylaşılmasını engeller.
     """
-    seed_str = f"{datetime.utcnow().strftime('%Y-%m-%d-%H-%M')}-{slot_name}"
+    seed_str = f"{datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S')}-{slot_name}"
     rng = random.Random(hashlib.md5(seed_str.encode()).hexdigest())
 
-    archetype = OUTFIT_ARCHETYPES[0]
-    if not os.path.exists(archetype["model_frames"][0]):
-        archetype = OUTFIT_ARCHETYPES[1]
-    elif slot_name not in ("deneme", "yeni_kombin"):
-        archetype = rng.choice(OUTFIT_ARCHETYPES)
+    history_path = "output/published_outfits_history.json"
+    used_archetypes = ["telegram_curly_champagne_palazzo", "curly_khaki_suede_palazzo"]
+    used_skus = {
+        "959328122", "1120763550", "1059088919", "652719507", "1206721873", "938465141",
+        "985362984", "1160666803", "963371271", "866458994", "826407400", "994497307",
+    }
+    if os.path.exists(history_path):
+        try:
+            with open(history_path, "r", encoding="utf-8") as hf:
+                h_data = json.load(hf)
+                used_archetypes.extend(h_data.get("used_archetypes", []))
+                used_skus.update(str(s) for s in h_data.get("used_skus", []))
+        except Exception:
+            pass
 
-    print(f"[Kombin Motoru] '{archetype['title']}' teması için canlı mağaza linkleri taranıyor...")
+    # Öncelikle daha önce paylaşılmamış ve model kareleri mevcut olan özgün arketipi seç
+    available_archetypes = [
+        a for a in OUTFIT_ARCHETYPES
+        if a["id"] not in used_archetypes[-2:] and os.path.exists(a["model_frames"][0])
+    ]
+    if not available_archetypes:
+        available_archetypes = [a for a in OUTFIT_ARCHETYPES if os.path.exists(a["model_frames"][0])] or [OUTFIT_ARCHETYPES[0]]
 
-    # GitHub Actions ABD sunucularında Trendyol Cloudflare kısıtlamasına takılmamak için
-    # önceden taranmış 200+ gerçek Trendyol ürün havuzunu da yükle
+    archetype = available_archetypes[0]
+    force_live_scrape = archetype["id"] in used_archetypes
+
+    print(f"[Özgün Kombin Motoru] '{archetype['title']}' ({archetype['id']}) için canlı mağaza ürünleri taranıyor...")
+
     cached_catalog = {}
     if os.path.exists("assets/live_trendyol_catalog.json"):
         try:
@@ -460,55 +934,196 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     items = {}
     total_price = 0.0
 
+    exact_map = archetype.get("verified_exact_items", {})
     cat_map = archetype.get("category_map", {})
     for cat_key in ["outerwear", "cap", "top", "bottom", "bag", "shoes"]:
-        mapped_cat = cat_map.get(cat_key, cat_key)
-        live_pool = []
-        if cached_catalog.get(mapped_cat):
-            live_pool.extend(cached_catalog[mapped_cat])
-        if not live_pool:
+        chosen = None
+        if not force_live_scrape and exact_map.get(cat_key):
+            candidate = dict(exact_map[cat_key])
+            if str(candidate.get("sku", "")) not in used_skus:
+                try:
+                    chk = requests.get(candidate["product_url"], headers=HEADERS, timeout=8)
+                    if chk.status_code == 200:
+                        chosen = candidate
+                except Exception:
+                    pass
+
+        if not chosen:
+            mapped_cat = cat_map.get(cat_key, cat_key)
             live_pool = fetch_live_trendyol_items(cat_key)
             if cat_key == "bag":
                 live_pool = fetch_live_bagmori_bags() + live_pool
             elif cat_key in ("outerwear", "top", "bottom"):
                 live_pool = live_pool + fetch_live_quzu_items(cat_key)
-            if cached_catalog.get(cat_key):
+            if cached_catalog.get(mapped_cat):
+                live_pool.extend(cached_catalog[mapped_cat])
+            elif cached_catalog.get(cat_key):
                 live_pool.extend(cached_catalog[cat_key])
 
-        chosen = _pick_matching_live_item(live_pool, archetype["keywords"].get(cat_key, []), rng)
+            fresh_pool = [it for it in live_pool if str(it.get("sku", "")) not in used_skus]
+            chosen = _pick_matching_live_item(fresh_pool or live_pool, archetype["keywords"].get(cat_key, []), rng)
+
+        if not chosen and exact_map.get(cat_key):
+            chosen = dict(exact_map[cat_key])
+
         if not chosen:
             chosen = {
                 "id": f"fallback_{cat_key}",
-                "brand": "ZARA",
+                "brand": "TRENDYOL",
                 "price": "890₺",
                 "price_val": 890.0,
-                "name": f"Yeni Sezon {cat_key.title()}",
-                "full_name": f"Yeni Sezon {cat_key.title()}",
+                "name": f"Yeni Sezon Kadın {cat_key.title()}",
+                "full_name": f"Yeni Sezon Kadın {cat_key.title()}",
                 "sku": "202601",
                 "product_url": "https://www.trendyol.com/butik/liste/1/kadin",
                 "image_url": "",
                 "image_urls": [],
             }
 
-        chosen["local_asset"] = archetype["cutout_assets"].get(cat_key)
+        if not force_live_scrape:
+            chosen["local_asset"] = archetype["cutout_assets"].get(cat_key)
+        else:
+            chosen["local_asset"] = None
         chosen["fallback_asset"] = archetype["fallback_cutout_assets"].get(cat_key)
         items[cat_key] = chosen
-        total_price += float(chosen.get("price_val", 0.0))
+        if chosen.get("sku"):
+            used_skus.add(str(chosen["sku"]))
         print(
             f"  ✓ [{cat_key.upper()}] {chosen['brand']} - {chosen['name']} ({chosen['price']}) "
             f"-> {chosen['product_url']}"
         )
 
+    # Paylaşılan kombin geçmişini kaydet (bir sonraki çalışmada aynı kombinin seçilmesini önler)
+    try:
+        os.makedirs("output", exist_ok=True)
+        used_archetypes.append(archetype["id"])
+        with open(history_path, "w", encoding="utf-8") as hf:
+            json.dump(
+                {
+                    "used_archetypes": used_archetypes[-15:],
+                    "used_skus": list(used_skus)[-180:],
+                    "last_updated": datetime.utcnow().isoformat(),
+                },
+                hf,
+                ensure_ascii=False,
+                indent=2,
+            )
+    except Exception as he:
+        print(f"[Kombin Geçmişi Kayıt Uyarısı] {he}")
+
+    model_frames = list(archetype["model_frames"])
+    archetype_title = archetype["title"]
+
+    # Check if Telegram Bot triggered a custom link or image override
+    override_path = "output/telegram_trigger_override.json"
+    if os.path.exists(override_path):
+        try:
+            with open(override_path, "r", encoding="utf-8") as of:
+                ov = json.load(of)
+            print(f"[Telegram Tetikleme Override Algılandı]: {ov}")
+            custom_urls = ov.get("custom_urls") or []
+            slot_cycle = ["outerwear", "top", "bottom", "bag", "shoes", "cap"]
+            for idx, c_url in enumerate(custom_urls):
+                slot_k, c_item = scrape_single_product_url(c_url, fallback_slot=slot_cycle[idx % len(slot_cycle)])
+                if not c_item.get("local_asset"):
+                    c_item["local_asset"] = archetype["cutout_assets"].get(slot_k)
+                c_item["fallback_asset"] = archetype["fallback_cutout_assets"].get(slot_k)
+                items[slot_k] = c_item
+                print(f"  ★ [TELEGRAM ÖZEL ÜRÜN -> {slot_k.upper()}] {c_item['brand']} - {c_item['name']} ({c_item['price']})")
+
+            custom_img = ov.get("custom_image")
+            if custom_img and os.path.exists(custom_img):
+                try:
+                    up_pil = Image.open(custom_img)
+                    if is_clean_white_packshot(up_pil):
+                        uw, uh = up_pil.size
+                        grid_boxes = {
+                            "outerwear": (0.04, 0.03, 0.36, 0.34),
+                            "cap": (0.04, 0.35, 0.35, 0.56),
+                            "bag": (0.02, 0.56, 0.45, 0.96),
+                            "top": (0.36, 0.02, 0.98, 0.38),
+                            "bottom": (0.44, 0.37, 0.95, 0.78),
+                            "shoes": (0.45, 0.76, 0.96, 0.98),
+                        }
+                        for g_slot, (x0, y0, x1, y1) in grid_boxes.items():
+                            sub_crop = up_pil.crop((int(uw * x0), int(uh * y0), int(uw * x1), int(uh * y1)))
+                            cut_sub = _remove_white_bg_and_crop(sub_crop)
+                            auto_cut_path = f"output/tg_auto_{g_slot}.png"
+                            cut_sub.save(auto_cut_path, format="PNG")
+                            if g_slot in items:
+                                items[g_slot]["local_asset"] = auto_cut_path
+                        print(f"  ★ [TELEGRAM FLAT-LAY GÖRSEL] 6 ürün otomatik dekupe edildi: {custom_img}")
+                    else:
+                        model_frames = [custom_img, custom_img, custom_img]
+                        print(f"  ★ [TELEGRAM ÖZEL MODEL GÖRSELİ] Model karesi olarak ayarlandı: {custom_img}")
+                except Exception as img_e:
+                    print(f"[Telegram Görsel İşleme Uyarısı] {img_e}")
+
+            if ov.get("custom_title"):
+                archetype_title = ov["custom_title"]
+
+            os.remove(override_path)
+        except Exception as e:
+            print(f"[Telegram Override Uyarısı] {e}")
+
+    total_price = sum(float(v.get("price_val", 0.0)) for v in items.values())
     total_price_str = _format_price_tr(total_price)
+
+    hook_packs = [
+        {
+            "hook_title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ (Ama kombinimden asla ödün vermem)",
+            "x_short_hook": "İç sesim bir dk bile susmadığı için gün boyu böyleyim 😭✨",
+            "yt_short_title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ Kombin Sırrı",
+            "tiktok_hook_title": "POV: İç sesim bir dakika bile susmadığı için gün boyu sokakta böyle geziyorum 😭✨",
+            "pinterest_title": "Siyah Kaşe Bomber Ceket & Taş Rengi Palazzo Jean Kadın Sonbahar Kombini | GuzelAI.com",
+            "viral_hook": "🛑 Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey kontrol altında' imajı! Siyah kaşe bomber ceket ve taş rengi yüksek bel palazzo jean ile gün boyu kurtarıcı 6 kadın parçası! 👇🔥",
+            "video_badge_collage": "» İÇ SESİM HİÇ SUSMAZKEN BEN «",
+            "video_badge_walk": "» AMA KOMBİNİM 10/10 OLMAK ZORUNDA «",
+        },
+        {
+            "hook_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊☕✨",
+            "x_short_hook": "Kafamda 40 tilki dönerken dışarıya verdiğim şıklık 🦊✨",
+            "yt_short_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊✨",
+            "tiktok_hook_title": "POV: Kafamın içi kaosken dışarıya verdiğim 'Her şey kontrol altında' kombini 🦊☕",
+            "pinterest_title": "Kadın Sonbahar Sokak Stili: Siyah Bomber Ceket & Bol Paça Jean Kombin Önerisi",
+            "viral_hook": "🛑 'Giyecek hiçbir şeyim yok' krizinden 5 dakika sonra sokağa çıkarken ben! Boyu 10 cm uzun gösteren o 6 parçalık kurtarıcı kadın kombini! 👇🤍",
+            "video_badge_collage": "» KAFAMIN İÇİ KAOSKEN KOMBİNİM «",
+            "video_badge_walk": "» SOKAKTAKİ DURUŞU EFSANE «",
+        },
+        {
+            "hook_title": "Modum sıfırken bile kombinim 10/10 olmak zorunda çünkü terapi pahalı 💅🔥",
+            "x_short_hook": "Modum sıfırken bile kombinim 10/10 olmak zorunda 💅🔥",
+            "yt_short_title": "Modum sıfırken bile kombinim 10/10 olmak zorunda çünkü terapi pahalı 💅🔥",
+            "tiktok_hook_title": "POV: Modum sıfırken bile kombinim 10 üzerinden 10 olmak zorunda 💅✨",
+            "pinterest_title": "2026 Sonbahar Kadın Kombin Fikirleri: Siyah Ceket, Palazzo Jean & Sneaker",
+            "viral_hook": "🛑 Kimseyle konuşmak istemeyip yine de ortamdaki en şık kişi olma çabam! Sokakta herkesin dönüp baktığı o 6 kadın parçası! 👇✨",
+            "video_badge_collage": "» MODUM SIFIR AMA KOMBİNİM 10/10 «",
+            "video_badge_walk": "» ÜZERİNDEKİ DURUŞA DİKKAT «",
+        },
+    ]
+    chosen_hook_pack = hook_packs[0] if archetype["id"] == "inner_voice_black_bomber_stone_palazzo" else rng.choice(hook_packs)
+    archetype_title = chosen_hook_pack["hook_title"]
 
     return {
         "slot": slot_name,
         "is_trial": False,
         "archetype_id": archetype["id"],
-        "archetype_title": archetype["title"],
+        "archetype_title": archetype_title,
+        "hook_title": chosen_hook_pack["hook_title"],
+        "x_short_hook": chosen_hook_pack["x_short_hook"],
+        "yt_short_title": chosen_hook_pack["yt_short_title"],
+        "tiktok_hook_title": chosen_hook_pack["tiktok_hook_title"],
+        "pinterest_title": chosen_hook_pack["pinterest_title"],
+        "viral_hook": chosen_hook_pack["viral_hook"],
+        "video_badge_collage": chosen_hook_pack["video_badge_collage"],
+        "video_badge_walk": chosen_hook_pack["video_badge_walk"],
+        "seo_note": archetype.get(
+            "seo_note",
+            "📌 Not: Videodaki %100 Kadın kombin parçalarının canlı taranmış mağaza ve benzer muadil ürün linkleri aşağıda doğrulanarak listelenmiştir:",
+        ),
         "timestamp": datetime.utcnow().isoformat(),
         "items": items,
         "total_price_val": total_price,
         "total_price_str": total_price_str,
-        "model_frames": archetype["model_frames"],
+        "model_frames": model_frames,
     }
