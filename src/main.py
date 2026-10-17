@@ -60,26 +60,37 @@ def build_caption(outfit: dict) -> str:
     u_bag = items["bag"].get("guzelai_url") or items["bag"]["product_url"]
     u_sho = items["shoes"].get("guzelai_url") or items["shoes"]["product_url"]
 
+    cal = outfit.get("calendar_concept", {})
+    cal_title = cal.get("concept_title", "17 Ekim Altın Sonbahar & Pinterest 'Old Money / Quiet Luxury' Hafta Sonu Zarafeti")
+    cal_date = cal.get("date_label", "17 Ekim 2026 Cumartesi")
+    palette_note = outfit.get(
+        "color_palette_note",
+        "Pinterest 'Old Money / Quiet Luxury' Sonbahar Renk Kurgusu: Camel Kruvaze Trençkot (#C8A98E) + Buz Mavisi Çizgili Gömlek (#A8C3D4) + Taba Kemerli Ekru Pantolon (#F3EFEA) + Acı Kahve & Gold Deri Detaylar (#4A2E1B)",
+    )
+
     lines = [
         f"🔥 {hook_title}",
-        "📌 'Bugün ne giysem?' krizinde saniyeler içinde kurtulmak için bu 2K kombini hemen KAYDET ve kombin arkadaşına GÖNDER! 🤍",
+        "📌 'Bugün ne giysem?' krizinde saniyeler içinde kurtulmak için bu 2K Old Money kapsül kombini hemen KAYDET ve stil sahibi arkadaşına GÖNDER! 🤍✨",
+        "",
+        f"📅 TARİH & KONSEPT OTOMASYONU ({cal_date}): {cal_title}",
+        f"🎨 PINTEREST RENK KURGUSU: {palette_note}",
         "",
         viral_hook,
         "",
-        f"💬 STİL ANKETİ: Bu kombinde senin favori parçan {items['outerwear']['name']} mi yoksa {items['top']['name']} mu? Yorumlarda buluşalım 👇✨",
+        f"💬 STİL ANKETİ: Bu Old Money kombinde senin favori parçan {items['outerwear']['name']} mi yoksa {items['top']['name']} mu? Yorumlarda buluşalım 👇✨",
         "",
         "🌐 TÜM ÖRNEK KOMBİNLER & DOĞRULANMIŞ VİTRİN (Tek Tıkla İncele):",
         "👉 https://guzelai.com/#kombinler",
         "",
         seo_note,
         "",
-        "🛍️ KOMBİN FİYAT, MARKA & ÜRÜN KODU DETAYLARI (%100 KADIN KOLEKSİYONU):",
+        "🛍️ KOMBİN FİYAT, MARKA & ÜRÜN KODU DETAYLARI (%100 KADIN OLD MONEY KOLEKSİYONU):",
         f"1️⃣ 🧥 {c_out}: {items['outerwear']['brand']} – {items['outerwear']['name']} | Fiyat: {items['outerwear']['price']} | Ürün Kodu: {items['outerwear'].get('sku', '-')}",
         f"2️⃣ 🕶️ {c_cap}: {items['cap']['brand']} – {items['cap']['name']} | Fiyat: {items['cap']['price']} | Ürün Kodu: {items['cap'].get('sku', '-')}",
         f"3️⃣ 👚 {c_top}: {items['top']['brand']} – {items['top']['name']} | Fiyat: {items['top']['price']} | Ürün Kodu: {items['top'].get('sku', '-')}",
         f"4️⃣ 👖 {c_bot}: {items['bottom']['brand']} – {items['bottom']['name']} | Fiyat: {items['bottom']['price']} | Ürün Kodu: {items['bottom'].get('sku', '-')}",
         f"5️⃣ 👜 {c_bag}: {items['bag']['brand']} – {items['bag']['name']} | Fiyat: {items['bag']['price']} | Ürün Kodu: {items['bag'].get('sku', '-')}",
-        f"6️⃣ 👟 {c_sho}: {items['shoes']['brand']} – {items['shoes']['name']} | Fiyat: {items['shoes']['price']} | Ürün Kodu: {items['shoes'].get('sku', '-')}",
+        f"6️⃣ 👠 {c_sho}: {items['shoes']['brand']} – {items['shoes']['name']} | Fiyat: {items['shoes']['price']} | Ürün Kodu: {items['shoes'].get('sku', '-')}",
         "",
         f"💰 TOPLAM 6 PARÇA KOMBİN BÜTÇESİ: {total_str}",
         "",
@@ -89,17 +100,17 @@ def build_caption(outfit: dict) -> str:
         f"👚 {c_top}: {u_top}",
         f"👖 {c_bot}: {u_bot}",
         f"👜 {c_bag}: {u_bag}",
-        f"👟 {c_sho}: {u_sho}",
+        f"👠 {c_sho}: {u_sho}",
         "",
         "🔎 INSTAGRAM ARAMA & STİL REHBERİ (SEO):",
-        "Kadın sonbahar kış kombin önerileri • İçi peluş koyu kahve deri mont nasıl kombinlenir? • Bordo bisiklet yaka triko kazak ve kemerli antrasit palazzo pantolon kombinleri • Adidas Handball Spezial bordo kadın sneaker günlük sokak stili.",
+        "Pinterest Old Money sonbahar kadın kombin önerileri • Camel bej kruvaze kısa trençkot nasıl kombinlenir? • Buz mavisi çizgili gömlek ve taba kemerli ekru yüksek bel pileli bol paça kumaş pantolon kombinleri • Gold tokalı kahverengi deri çanta ve slingback topuklu ayakkabı ile sessiz lüks (Quiet Luxury) zarafeti.",
         "",
         f"🎵 Müzik: {music_name}",
         f"🎙️ Sesli Hook: \"{outfit.get('music_info', {}).get('dialogue_q', '')} — Detaylar guzelai.com'da!\"",
         "",
         TR_LEGAL_NOTICE_FULL,
         "",
-        "#kadınkombin #kombinönerileri #sonbaharkombini #derimont #bortotriko #palazzopantolon #adidasspezial #trendyolkombin #sokakstili #negiysem #oldmoneystil #kesfet #reelsinstagram #guzelai",
+        "#oldmoney #oldmoneystil #quietluxury #sonbaharkombini #kadınkombin #kombinönerileri #pinterestkombin #trençkotkombini #zarafet #şıklık #kapsülgardırop #negiysem #kesfet #reelsinstagram #guzelai",
     ]
     return "\n".join(lines)
 
