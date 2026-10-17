@@ -352,6 +352,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--video", required=True, help="Yüklenecek MP4 dosyası")
     parser.add_argument("--caption-file", required=True, help="Açıklama metni dosyası")
+    parser.add_argument(
+        "--all-channels",
+        action="store_true",
+        help="Yalnızca kullanıcı onayladıktan sonra diğer tüm sosyal medya kanallarına dağıt",
+    )
     args = parser.parse_args()
 
     with open(args.caption_file, "r", encoding="utf-8") as f:
@@ -381,7 +386,24 @@ def main():
     else:
         print("[BİLGİ] Instagram giriş bilgileri tanımlanmadığı için video yalnızca Artifacts olarak kaydedildi.")
 
-    dispatch_all_channels(args.video, reel_url=reel_url)
+    if args.all_channels:
+        dispatch_all_channels(args.video, reel_url=reel_url)
+    else:
+        if reel_url:
+            try:
+                out_dir = str(Path(args.video).parent)
+                meta_path = os.path.join(out_dir, "outfit_links.json")
+                if os.path.exists(meta_path):
+                    with open(meta_path, "r", encoding="utf-8") as mf:
+                        outfit_data = json.load(mf)
+                    outfit_data["reel_url"] = reel_url
+                    with open(meta_path, "w", encoding="utf-8") as mf:
+                        json.dump(outfit_data, mf, ensure_ascii=False, indent=2)
+                    from website_publisher import publish_to_guzelai_website
+                    publish_to_guzelai_website(outfit_data, out_dir=out_dir, ig_reel_url=reel_url)
+            except Exception as wbe:
+                print(f"[GuzelAI.com Reel URL Senkron Uyarısı] {wbe}")
+        print("[KALİTE KONTROL MODU] Yalnızca Instagram ve GuzelAI.com vitrinine yayın yapıldı. Onayınız olmadan diğer sosyal medya platformları pas geçildi.")
 
 
 if __name__ == "__main__":
