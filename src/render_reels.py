@@ -132,66 +132,101 @@ def fetch_or_generate_model_frames(outfit: dict, output_dir: str) -> list:
     return loaded
 
 
+def _draw_auto_pill_badge(
+    draw: ImageDraw.ImageDraw,
+    center_x: int,
+    center_y: int,
+    text: str,
+    font: ImageFont.FreeTypeFont,
+    fill_rgba: tuple,
+    text_rgba: tuple,
+    pad_x: int,
+    pad_y: int,
+    radius: int,
+    outline_rgba: tuple = None,
+    outline_width: int = 0,
+):
+    """Metin genişliğini ölçerek kutunun dışına taşmayan otomatik boyutlu kapsül rozet çizer."""
+    try:
+        bbox = draw.textbbox((0, 0), text, font=font)
+        tw = bbox[2] - bbox[0]
+        th = bbox[3] - bbox[1]
+    except Exception:
+        tw = int(len(text) * S(18))
+        th = S(32)
+    half_w = min((W - S(40)) // 2, (tw // 2) + pad_x)
+    half_h = (th // 2) + pad_y
+    rect = (center_x - half_w, center_y - half_h, center_x + half_w, center_y + half_h)
+    draw.rounded_rectangle(
+        rect,
+        radius=radius,
+        fill=fill_rgba,
+        outline=outline_rgba,
+        width=outline_width,
+    )
+    draw.text((center_x, center_y), text, fill=text_rgba, font=font, anchor="mm")
+
+
 def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelaicom") -> dict:
     out_dir = os.path.dirname(output_mp4) or "."
     os.makedirs(out_dir, exist_ok=True)
     bg_base = create_watermark_background(watermark)
 
-    # 6 Kıyafet Parçasının 2K (1440x2560) Graph Motion Yerleşim ve Zamanlama Tablosu
+    # 6 Kıyafet Parçasının 2K (1440x2560) Çakışmasız Graph Motion Yerleşim ve Zamanlama Tablosu
     items_cfg = [
         {
             "key": "outerwear",
-            "target_xy": (S(35), S(215)),
-            "target_size": (S(510), S(540)),
+            "target_xy": (S(45), S(205)),
+            "target_size": (S(460), S(490)),
             "start_xy": (S(-580), S(140)),
             "start_angle": -18.0,
-            "t_in": 0.25,
-            "label_xy": (S(290), S(795)),
+            "t_in": 0.22,
+            "label_xy": (S(275), S(742)),
         },
         {
             "key": "cap",
-            "target_xy": (S(480), S(195)),
-            "target_size": (S(230), S(140)),
-            "start_xy": (S(480), S(-220)),
+            "target_xy": (S(490), S(195)),
+            "target_size": (S(215), S(115)),
+            "start_xy": (S(490), S(-220)),
             "start_angle": 22.0,
-            "t_in": 0.85,
-            "label_xy": (S(595), S(355)),
+            "t_in": 0.78,
+            "label_xy": (S(598), S(345)),
         },
         {
             "key": "top",
-            "target_xy": (S(625), S(215)),
-            "target_size": (S(410), S(415)),
+            "target_xy": (S(645), S(200)),
+            "target_size": (S(375), S(395)),
             "start_xy": (S(1180), S(160)),
             "start_angle": 16.0,
-            "t_in": 1.45,
-            "label_xy": (S(825), S(655)),
+            "t_in": 1.34,
+            "label_xy": (S(832), S(635)),
         },
         {
             "key": "bottom",
-            "target_xy": (S(685), S(520)),
-            "target_size": (S(310), S(690)),
+            "target_xy": (S(680), S(695)),
+            "target_size": (S(310), S(590)),
             "start_xy": (S(1220), S(750)),
             "start_angle": 10.0,
-            "t_in": 2.05,
-            "label_xy": (S(835), S(1245)),
+            "t_in": 1.90,
+            "label_xy": (S(835), S(1328)),
         },
         {
             "key": "bag",
-            "target_xy": (S(355), S(735)),
-            "target_size": (S(270), S(275)),
-            "start_xy": (S(355), S(1980)),
+            "target_xy": (S(370), S(685)),
+            "target_size": (S(265), S(295)),
+            "start_xy": (S(370), S(1980)),
             "start_angle": -15.0,
-            "t_in": 2.65,
-            "label_xy": (S(490), S(1040)),
+            "t_in": 2.46,
+            "label_xy": (S(502), S(1022)),
         },
         {
             "key": "shoes",
-            "target_xy": (S(85), S(1055)),
-            "target_size": (S(375), S(190)),
+            "target_xy": (S(65), S(1060)),
+            "target_size": (S(395), S(195)),
             "start_xy": (S(-420), S(1080)),
             "start_angle": 14.0,
-            "t_in": 3.25,
-            "label_xy": (S(280), S(1265)),
+            "t_in": 3.02,
+            "label_xy": (S(265), S(1305)),
         },
     ]
 
@@ -200,7 +235,6 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     for cfg in items_cfg:
         item_data = outfit["items"][cfg["key"]]
         raw_img = load_cutout_image(item_data)
-        # Küçük dekupe görsellerini de tam 2K hedef kutusuna Lanczos ile büyüt
         tw, th = cfg["target_size"]
         scale_f = min(tw / max(1, raw_img.width), th / max(1, raw_img.height))
         new_w = max(1, int(round(raw_img.width * scale_f)))
@@ -213,12 +247,28 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     # Yürüyen model karelerini 2K OLED kalitesinde hazırla
     model_frames = fetch_or_generate_model_frames(outfit, out_dir)
 
-    font_header = get_font(40, bold=True)
-    font_brand = get_font(31, bold=True)
-    font_price = get_font(27, bold=True)
-    font_badge = get_font(33, bold=True)
-    font_sub = get_font(24, bold=True)
-    font_legal = get_font(19, bold=False)
+    # Tesla + Cadılar Bayramı Eğimli Pist (Sky-Ramp) arka planı ve şeffaf tam boy model dekupe görseli
+    ramp_bg_img = None
+    ramp_cutout_img = None
+    ramp_bg_path = outfit.get("ramp_empty_bg")
+    ramp_cutout_path = outfit.get("ramp_model_cutout")
+    if ramp_bg_path and os.path.exists(ramp_bg_path):
+        ramp_bg_img = Image.open(ramp_bg_path).convert("RGB").resize((W, H), Image.Resampling.LANCZOS)
+        ramp_bg_img = enhance_for_samsung_oled(ramp_bg_img, is_cutout=False)
+    if ramp_cutout_path and os.path.exists(ramp_cutout_path):
+        ramp_cutout_img = Image.open(ramp_cutout_path).convert("RGBA")
+        alpha_c = ramp_cutout_img.split()[3]
+        bbox_c = alpha_c.point(lambda p: 255 if p > 25 else 0).getbbox()
+        if bbox_c:
+            ramp_cutout_img = ramp_cutout_img.crop(bbox_c)
+        ramp_cutout_img = enhance_for_samsung_oled(ramp_cutout_img, is_cutout=True)
+
+    font_header = get_font(34, bold=True)
+    font_brand = get_font(27, bold=True)
+    font_price = get_font(25, bold=True)
+    font_badge = get_font(30, bold=True)
+    font_sub = get_font(23, bold=True)
+    font_legal = get_font(18, bold=False)
 
     # Her bir ürün için görselli ürün link kartı (output/item_card_{key}.jpg) üret
     for p in prepared_items:
@@ -245,18 +295,23 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
 
     total_duration = 11.0
     total_frames = int(total_duration * FPS)
-    collage_end_sec = 5.4
+    collage_end_sec = 5.2
 
     total_price_str = outfit.get("total_price_str", "2.490₺")
     it_map = outfit["items"]
+
+    def _short_brand(b: str, fallback_label: str) -> str:
+        b_clean = (b or "").strip().upper()
+        if b_clean in ("GENEL MARKALAR", "TRENDYOL", ""):
+            return fallback_label
+        return b_clean[:11]
+
     walk_summary_line = (
-        f"{it_map['outerwear']['brand']} {it_map['outerwear']['price']} • "
-        f"{it_map['top']['brand']} {it_map['top']['price']} • "
-        f"{it_map['bottom']['brand']} {it_map['bottom']['price']} • "
-        f"{it_map['shoes']['brand']} {it_map['shoes']['price']}"
+        f"{_short_brand(it_map['outerwear']['brand'], 'CEKET')} {it_map['outerwear']['price']} • "
+        f"{_short_brand(it_map['top']['brand'], 'TRİKO')} {it_map['top']['price']} • "
+        f"{_short_brand(it_map['bottom']['brand'], 'PALAZZO')} {it_map['bottom']['price']} • "
+        f"{_short_brand(it_map['shoes']['brand'], 'SNEAKER')} {it_map['shoes']['price']}"
     )
-    if len(walk_summary_line) > 66:
-        walk_summary_line = walk_summary_line[:64] + "..."
 
     frames_dir = os.path.join(out_dir, "_frames")
     os.makedirs(frames_dir, exist_ok=True)
@@ -264,24 +319,39 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     for f_idx in range(total_frames):
         t = f_idx / FPS
 
-        if t <= collage_end_sec + 0.5:
+        if t <= collage_end_sec + 0.15:
             canvas = bg_base.copy()
             draw = ImageDraw.Draw(canvas)
 
-            # Üst Başlık Bandı (True OLED Black - Viral Curiosity Hook)
-            header_alpha = int(min(1.0, t / 0.4) * 255)
-            collage_badge = outfit.get("video_badge_collage", "★ 50.000₺ GİBİ DURAN O KOMBİN ★").replace("🔥", "★").replace("✨", "★")
-            draw.rounded_rectangle((S(140), S(80), S(940), S(152)), radius=S(36), fill=(10, 10, 14, header_alpha))
-            draw.text((S(540), S(116)), collage_badge, fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
+            # Üst Başlık Bandı (Otomatik Boyutlanan Kapsül - Taşma Yapmaz)
+            header_alpha = int(min(1.0, t / 0.35) * 255)
+            collage_badge = (
+                outfit.get("video_badge_collage", "» CADILAR BAYRAMI PİST KOMBİNİM «")
+                .replace("🔥", "★")
+                .replace("✨", "★")
+                .replace("🎃", "★")
+            )
+            _draw_auto_pill_badge(
+                draw=draw,
+                center_x=W // 2,
+                center_y=S(112),
+                text=collage_badge,
+                font=font_header,
+                fill_rgba=(10, 10, 14, header_alpha),
+                text_rgba=(255, 255, 255, header_alpha),
+                pad_x=S(38),
+                pad_y=S(20),
+                radius=S(34),
+            )
 
             # 1) Önce tüm kıyafet görsellerini çiz
             active_labels = []
             for idx, p in enumerate(prepared_items):
-                dt = (t - p["t_in"]) / 0.65
+                dt = (t - p["t_in"]) / 0.62
                 if dt <= 0:
                     continue
                 prog = ease_out_back(min(1.0, dt))
-                float_y = math.sin(t * 3.2 + idx * 1.1) * S(5.0) if dt >= 1.0 else 0.0
+                float_y = math.sin(t * 3.0 + idx * 1.1) * S(4.0) if dt >= 1.0 else 0.0
                 cur_x = int(p["start_xy"][0] + (p["target_xy"][0] - p["start_xy"][0]) * prog)
                 cur_y = int(p["start_xy"][1] + (p["target_xy"][1] - p["start_xy"][1]) * prog + float_y)
                 cur_angle = p["start_angle"] * (1.0 - min(1.0, dt))
@@ -292,111 +362,178 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
 
                 canvas.paste(item_img, (cur_x, cur_y), item_img)
 
-                if dt > 0.45:
-                    lbl_prog = min(1.0, (dt - 0.45) / 0.4)
+                if dt > 0.42:
+                    lbl_prog = min(1.0, (dt - 0.42) / 0.38)
                     lx, ly = p["label_xy"]
-                    ly_anim = int(ly + (1.0 - lbl_prog) * S(22))
-                    active_labels.append((lx, ly_anim, p["data"]))
+                    ly_anim = int(ly + (1.0 - lbl_prog) * S(18))
+                    active_labels.append((lx, ly_anim, p["data"], p["key"]))
 
-            # 2) Tüm marka ve fiyat etiketlerini görsellerin üst katmanına çiz
-            for lx, ly_anim, item_d in active_labels:
-                brand = (item_d.get("brand") or "").strip()
-                if len(brand) > 15:
-                    brand = brand[:14] + "."
+            # 2) Tüm marka ve fiyat etiketlerini yüksek kontrastlı krem/siyah kapsül rozet içinde çiz (kıyafetle asla karışmaz)
+            for lx, ly_anim, item_d, item_k in active_labels:
+                raw_b = (item_d.get("brand") or "").strip().upper()
+                if raw_b == "GENEL MARKALAR":
+                    raw_b = "DERİ CEKET" if item_k == "outerwear" else "BUTİK SEÇİM"
+                if len(raw_b) > 14:
+                    raw_b = raw_b[:13] + "."
                 price = item_d["price"]
-                if brand:
-                    draw.text((lx, ly_anim), brand, fill=(14, 14, 18, 255), font=font_brand, anchor="mm")
-                    draw.text((lx, ly_anim + S(34)), price, fill=(38, 38, 42, 255), font=font_price, anchor="mm")
+                pill_w = S(215)
+                pill_h = S(68)
+                draw.rounded_rectangle(
+                    (lx - pill_w // 2, ly_anim - S(22), lx + pill_w // 2, ly_anim - S(22) + pill_h),
+                    radius=S(18),
+                    fill=(255, 255, 255, 242),
+                    outline=(210, 206, 198, 255),
+                    width=S(2),
+                )
+                if raw_b:
+                    draw.text((lx, ly_anim - S(2)), raw_b, fill=(14, 14, 18, 255), font=font_brand, anchor="mm")
+                    draw.text((lx, ly_anim + S(27)), price, fill=(175, 58, 24, 255), font=font_price, anchor="mm")
                 else:
-                    draw.text((lx, ly_anim), price, fill=(14, 14, 18, 255), font=font_brand, anchor="mm")
+                    draw.text((lx, ly_anim + S(12)), price, fill=(14, 14, 18, 255), font=font_brand, anchor="mm")
 
             # Alt Toplam Kombin & Link Bilgisi Bandı (True OLED Black)
-            if t > 3.85:
-                b_prog = ease_out_back(min(1.0, (t - 3.85) / 0.5))
-                by = int(S(1710) - b_prog * S(155))
-                draw.rounded_rectangle((S(85), by, S(995), by + S(138)), radius=S(48), fill=(10, 10, 14, 250))
+            if t > 3.55:
+                b_prog = ease_out_back(min(1.0, (t - 3.55) / 0.48))
+                by = int(S(1720) - b_prog * S(160))
+                draw.rounded_rectangle((S(75), by, W - S(75), by + S(142)), radius=S(44), fill=(10, 10, 14, 252))
                 draw.text(
-                    (S(540), by + S(35)),
+                    (W // 2, by + S(36)),
                     f"TOPLAM: {total_price_str} • KAYBOLMADAN KAYDET!",
                     fill=(255, 255, 255, 255),
                     font=font_badge,
                     anchor="mm",
                 )
                 draw.text(
-                    (S(540), by + S(76)),
+                    (W // 2, by + S(78)),
                     "» LİNKLER AÇIKLAMADA, YORUMDA & GUZELAI.COM'DA «",
                     fill=(242, 218, 178, 255),
                     font=font_sub,
                     anchor="mm",
                 )
                 draw.text(
-                    (S(540), by + S(114)),
+                    (W // 2, by + S(116)),
                     "Reklam / iş birliği içermez • Kombin önerisidir (zorunlu #reklam)",
                     fill=(195, 195, 202, 245),
                     font=font_legal,
                     anchor="mm",
                 )
 
-            if abs(t - 5.0) < (0.5 / FPS):
+            if abs(t - 4.8) < (0.5 / FPS):
                 canvas.convert("RGB").save(os.path.join(out_dir, "kombin_collage.png"), compress_level=1)
 
-        # 2. BÖLÜM: Sokakta / Mekanda Yürüyen Model (5.4sn - 11.0sn)
+        # 2. BÖLÜM: Tesla Eğimli Pist (Sky-Ramp) 3 Aşamalı Fotogerçekçi Graph-Motion Kamera Takibi (5.2sn - 11.0sn)
+        # ÇİFT POZLAMA (Image.blend) VE 2B YAPIŞTIRMA HALESİ TAMAMEN KALDIRILDI (%100 DOĞAL SİNEMATİK GEÇİŞ)
         if t >= collage_end_sec:
             walk_t = t - collage_end_sec
-            walk_dur = total_duration - collage_end_sec
-            norm_w = walk_t / walk_dur
+            walk_dur = total_duration - collage_end_sec  # 5.8s toplam (5.2s -> 11.0s)
 
-            n_models = len(model_frames)
-            if n_models > 0:
-                cycle_pos = (walk_t * 1.65) % n_models
-                idx_a = int(math.floor(cycle_pos)) % n_models
-                idx_b = (idx_a + 1) % n_models
-                blend = ease_in_out_cubic(cycle_pos - math.floor(cycle_pos))
-                blended_model = Image.blend(model_frames[idx_a], model_frames[idx_b], blend)
+            if len(model_frames) >= 3:
+                if walk_t < 1.9:
+                    # Aşama 1 (5.2s - 7.1s): Pistin dik üst virajından iniş (Dinamik Graph-Motion dikey kamera takibi)
+                    active_model = model_frames[0]
+                    local_u = max(0.0, min(1.0, walk_t / 1.9))
+                    eased_u = ease_in_out_cubic(local_u)
+                    zoom = 1.26 - 0.22 * eased_u
+                    crop_w = int(W / zoom)
+                    crop_h = int(H / zoom)
+                    cx = int((W - crop_w) * (0.54 - 0.04 * eased_u))
+                    cy = int((H - crop_h) * (0.18 + 0.32 * eased_u))
+                elif walk_t < 3.8:
+                    # Aşama 2 (7.1s - 9.0s): Pistin alt virajında güçlü yürüyüş adımı (Yakın plan sinematik takip)
+                    active_model = model_frames[1]
+                    local_u = max(0.0, min(1.0, (walk_t - 1.9) / 1.9))
+                    eased_u = ease_in_out_cubic(local_u)
+                    zoom = 1.01 + 0.06 * eased_u
+                    crop_w = int(W / zoom)
+                    crop_h = int(H / zoom)
+                    cx = (W - crop_w) // 2
+                    cy = int((H - crop_h) * (0.35 + 0.25 * eased_u))
+                else:
+                    # Aşama 3 (9.0s - 11.0s): Pist sonu Cadılar Bayramı balkabağı sahnesinde final duruşu ("Detaylar güzelai nokta com'da")
+                    active_model = model_frames[2]
+                    local_u = max(0.0, min(1.0, (walk_t - 3.8) / 2.0))
+                    eased_u = ease_in_out_cubic(local_u)
+                    zoom = 1.01 + 0.05 * eased_u
+                    crop_w = int(W / zoom)
+                    crop_h = int(H / zoom)
+                    cx = (W - crop_w) // 2
+                    cy = (H - crop_h) // 2
 
-                zoom = 1.03 + 0.08 * norm_w
-                bob_y = math.sin(walk_t * math.pi * 3.3) * S(10.0)
-                sway_x = math.cos(walk_t * math.pi * 1.65) * S(5.5)
-
+                walk_frame = (
+                    active_model.crop((cx, cy, cx + crop_w, cy + crop_h))
+                    .resize((W, H), Image.Resampling.LANCZOS)
+                    .convert("RGBA")
+                )
+            elif len(model_frames) > 0:
+                idx_m = min(len(model_frames) - 1, int((walk_t / walk_dur) * len(model_frames)))
+                active_model = model_frames[idx_m]
+                local_u = (walk_t % 1.9) / 1.9
+                zoom = 1.01 + 0.045 * ease_in_out_cubic(local_u)
                 crop_w = int(W / zoom)
                 crop_h = int(H / zoom)
-                cx = max(0, min(W - crop_w, int((W - crop_w) / 2 + sway_x)))
-                cy = max(0, min(H - crop_h, int((H - crop_h) / 2 + bob_y)))
-
-                walk_frame = blended_model.crop((cx, cy, cx + crop_w, cy + crop_h)).resize((W, H), Image.Resampling.LANCZOS).convert("RGBA")
+                cx = (W - crop_w) // 2
+                cy = (H - crop_h) // 2
+                walk_frame = (
+                    active_model.crop((cx, cy, cx + crop_w, cy + crop_h))
+                    .resize((W, H), Image.Resampling.LANCZOS)
+                    .convert("RGBA")
+                )
             else:
                 walk_frame = bg_base.copy()
 
-            walk_badge = outfit.get("video_badge_walk", "» 4. PARÇANIN DURUŞUNA BAKIN «").replace("🔥", "★").replace("✨", "★")
+            walk_badge = (
+                outfit.get("video_badge_walk", "» DÜŞMEDEN PİSTTEN İNİŞ ŞOVU «")
+                .replace("🔥", "★")
+                .replace("✨", "★")
+                .replace("🎃", "★")
+            )
             mini_draw = ImageDraw.Draw(walk_frame)
-            mini_draw.rounded_rectangle((S(45), S(90), S(885), S(165)), radius=S(36), fill=(10, 10, 14, 228))
-            mini_draw.text((S(465), S(128)), walk_badge, fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
+            _draw_auto_pill_badge(
+                draw=mini_draw,
+                center_x=W // 2,
+                center_y=S(122),
+                text=walk_badge,
+                font=font_badge,
+                fill_rgba=(10, 10, 14, 232),
+                text_rgba=(255, 255, 255, 255),
+                pad_x=S(38),
+                pad_y=S(20),
+                radius=S(34),
+                outline_rgba=(255, 110, 30, 210),
+                outline_width=S(2),
+            )
 
-            mini_draw.rounded_rectangle((S(55), S(1595), S(1025), S(1755)), radius=S(30), fill=(255, 255, 255, 240))
+            mini_draw.rounded_rectangle(
+                (S(48), S(1595), W - S(48), S(1755)),
+                radius=S(30),
+                fill=(255, 255, 255, 244),
+                outline=(25, 25, 30, 255),
+                width=S(2),
+            )
             mini_draw.text(
-                (S(540), S(1632)),
+                (W // 2, S(1632)),
                 walk_summary_line,
                 fill=(12, 12, 16, 255),
                 font=font_price,
                 anchor="mm",
             )
             mini_draw.text(
-                (S(540), S(1680)),
+                (W // 2, S(1680)),
                 "» Ürün linkleri açıklamada, ilk yorumda & guzelai.com'da! «",
-                fill=(65, 45, 30, 255),
+                fill=(165, 52, 20, 255),
                 font=font_sub,
                 anchor="mm",
             )
             mini_draw.text(
-                (S(540), S(1724)),
+                (W // 2, S(1724)),
                 "Reklam / iş birliği içermez • Kombin önerisidir (zorunlu #reklam)",
-                fill=(105, 105, 112, 255),
+                fill=(95, 95, 102, 255),
                 font=font_legal,
                 anchor="mm",
             )
 
-            if t < collage_end_sec + 0.45:
-                tr = (t - collage_end_sec) / 0.45
+            if t < collage_end_sec + 0.12:
+                tr = (t - collage_end_sec) / 0.12
                 final_frame = Image.blend(canvas.convert("RGB"), walk_frame.convert("RGB"), ease_in_out_cubic(tr))
             else:
                 final_frame = walk_frame.convert("RGB")
@@ -441,10 +578,10 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         "-preset", "slow",
         "-profile:v", "high",
         "-level:v", "5.1",
-        "-crf", "15",
-        "-b:v", "16M",
-        "-maxrate", "20M",
-        "-bufsize", "32M",
+        "-crf", "14",
+        "-b:v", "18M",
+        "-maxrate", "24M",
+        "-bufsize", "36M",
         "-pix_fmt", "yuv420p",
         "-color_primaries", "bt709",
         "-color_trc", "bt709",
