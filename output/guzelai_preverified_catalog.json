@@ -1,0 +1,889 @@
+{
+  "engine": "GuzelAI Catalog-First Single Source of Truth (rembg + ColorThief + MMFashion/Polyvore)",
+  "total_outfits": 4,
+  "total_verified_unique_products": 17,
+  "verified_products": {
+    "1099303505": {
+      "sku": "1099303505",
+      "brand": "TRENDYOL KOLEKSİYON",
+      "full_name": "Kadın İçi Peluş (Shearling) Detaylı Kemerli Koyu Kahve Deri Mont & Ceket",
+      "price": "1.399₺",
+      "color": "Kahve / Krem Peluş",
+      "dominant_rgb": [
+        184,
+        179,
+        169
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1099303505",
+      "store_url": "https://www.trendyol.com/genel-markalar/ici-pelus-detayli-kemerli-deri-ceket-p-1099303505",
+      "image_url": "https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251208/17/87612bea-c651-3510-86e1-9223384152ea/1_org_zoom.jpg"
+    },
+    "835985416": {
+      "sku": "835985416",
+      "brand": "VOGUE EYEWEAR",
+      "full_name": "Vogue VO5586S W44 87 53 Siyah Çerçeveli Kadın Güneş Gözlüğü",
+      "price": "2.150₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        100,
+        95,
+        95
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/835985416",
+      "store_url": "https://www.trendyol.com/vogue/vo5586s-w44-87-53-kadin-gunes-gozlugu-p-835985416",
+      "image_url": "https://cdn.dsmcdn.com/ty1740/prod/QC_ENRICHMENT/20250901/13/0df06205-e313-38d9-9c4f-16867a222bf1/1_org_zoom.jpg"
+    },
+    "903567167": {
+      "sku": "903567167",
+      "brand": "MODASPARK",
+      "full_name": "MODASPARK Bordo Bisiklet Yaka Fitilli Oversize Kadın Triko Kazak",
+      "price": "309,05₺",
+      "color": "Bordo",
+      "dominant_rgb": [
+        0,
+        0,
+        0
+      ],
+      "image_http_200": false,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/903567167",
+      "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+      "image_url": "https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg"
+    },
+    "866458994": {
+      "sku": "866458994",
+      "brand": "RITNICE",
+      "full_name": "Ritnice Kadın Rena Kemerli Likralı Yüksek Bel Pileli Antrasit Palazzo Pantolon",
+      "price": "789₺",
+      "color": "Antrasit",
+      "dominant_rgb": [
+        0,
+        0,
+        0
+      ],
+      "image_http_200": false,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/866458994",
+      "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+      "image_url": "https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg"
+    },
+    "8682166106158": {
+      "sku": "8682166106158",
+      "brand": "BAGMORI",
+      "full_name": "Bagmori Siyah Kemer Toka Aksesuarlı Askılı Kadın Deri Çanta",
+      "price": "799,90₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        37,
+        37,
+        32
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/8682166106158",
+      "store_url": "https://www.bagmori.com/products/siyah-aksesuarli-askili-mini-canta",
+      "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106158-1_e433841d-5e61-4178-b279-b69075a8dec9.jpg?v=1784880657"
+    },
+    "994497307": {
+      "sku": "994497307",
+      "brand": "ADIDAS",
+      "full_name": "adidas Handball Spezial Kadın Bordo Süet Sneaker Spor Ayakkabı",
+      "price": "4.499,40₺",
+      "color": "Bordo / Beyaz / Gum",
+      "dominant_rgb": [
+        81,
+        41,
+        54
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/994497307",
+      "store_url": "https://www.trendyol.com/adidas/handball-spezial-kadin-bordo-ayakkabi-p-994497307",
+      "image_url": "https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg"
+    },
+    "1075561987": {
+      "sku": "1075561987",
+      "brand": "GENEL MARKALAR",
+      "full_name": "Genel Markalar Kadın Oversize Deri Ceket – Fermuarlı Kemer Detaylı Siyah Ceket",
+      "price": "850₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        52,
+        53,
+        55
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1075561987",
+      "store_url": "https://www.trendyol.com/genel-markalar/kadin-oversize-deri-ceket-oversize-relax-fit-fermuarli-kemer-detayli-gunluk-kadin-ceket-p-1075561987",
+      "image_url": "https://cdn.dsmcdn.com/ty1738/prod/QC_ENRICHMENT/20250828/19/4cd3482d-36de-38b9-874b-5d4276c1627e/1_org_zoom.jpg"
+    },
+    "697446548": {
+      "sku": "697446548",
+      "brand": "VOGUE",
+      "full_name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+      "price": "1.400₺",
+      "color": "Koyu Kahve / Siyah",
+      "dominant_rgb": [
+        0,
+        0,
+        0
+      ],
+      "image_http_200": false,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/697446548",
+      "store_url": "https://www.trendyol.com/vogue/5496si-w65613-54-kadin-p-697446548",
+      "image_url": "https://cdn.dsmcdn.com/ty871/product/media/images/20230509/17/343728268/932211145/1/1_org_zoom.jpg"
+    },
+    "1090399394": {
+      "sku": "1090399394",
+      "brand": "WORLD FASHION TRENDS",
+      "full_name": "World Fashion Trends Siyah Kadın Dik Yaka Toka Detaylı Kuşaklı Toparlayıcı Kalıp Elbise",
+      "price": "477,48₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        27,
+        27,
+        25
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1090399394",
+      "store_url": "https://www.trendyol.com/world-fashion-trends/siyah-kadin-dik-yaka-toka-detayli-kusakli-toparlayici-kalip-mini-elbise-p-1090399394",
+      "image_url": "https://cdn.dsmcdn.com/ty1815/prod/QC_PREP/20260122/18/39503553-0288-39bd-9948-9e69040a687c/1_org_zoom.jpg"
+    },
+    "969514957": {
+      "sku": "969514957",
+      "brand": "ECEYLÜL MODA",
+      "full_name": "ECEYLÜL MODA Kadın Siyah Scuba Krep Önü Pileli Yüksek Bel Palazzo Pantolon",
+      "price": "479,52₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        0,
+        0,
+        0
+      ],
+      "image_http_200": false,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/969514957",
+      "store_url": "https://www.trendyol.com/eceylul-moda/kadin-siyah-scuba-krep-onu-pileli-yuksek-bel-palazzo-pantolon-kisa-sureligine-lansman-fiyati-p-969514957",
+      "image_url": "https://cdn.dsmcdn.com/ty1751/prod/QC_PREP/20250911/14/c070a331-2085-351d-92be-d649d46ee888/1_org_zoom.jpg"
+    },
+    "988558235": {
+      "sku": "988558235",
+      "brand": "NEVNIHAL",
+      "full_name": "Nevnihal Fermuarlı ve Astarlı Yumuşak Deri Günlük Geniş Kadın Siyah Çanta",
+      "price": "489₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        0,
+        0,
+        0
+      ],
+      "image_http_200": false,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/988558235",
+      "store_url": "https://www.trendyol.com/nevnihal/fermuarli-ve-astarli-yumusak-deri-gunluk-genis-kadin-canta-p-988558235",
+      "image_url": "https://cdn.dsmcdn.com/ty1756/prod/QC_ENRICHMENT/20250923/12/b99749b8-5bd2-3d13-b122-ab543866c963/1_org_zoom.jpg"
+    },
+    "893278946": {
+      "sku": "893278946",
+      "brand": "ADIDAS",
+      "full_name": "adidas Samba OG W Kadın Sneaker Spor Ayakkabı IE5836",
+      "price": "3.999,50₺",
+      "color": "Siyah / Beyaz",
+      "dominant_rgb": [
+        187,
+        170,
+        156
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/893278946",
+      "store_url": "https://www.trendyol.com/adidas/samba-og-w-kadin-sneaker-ie5836-p-893278946",
+      "image_url": "https://cdn.dsmcdn.com/ty1839/prod/QC_ENRICHMENT/20260316/15/896e36a0-56f7-3989-9a35-3ef70e3558ac/1_org_zoom.jpg"
+    },
+    "1202930476": {
+      "sku": "1202930476",
+      "brand": "NIKA FASHION",
+      "full_name": "Nika Fashion Kadın Siyah Kaşe Kumaş Bomber Mont & Ceket",
+      "price": "911,32₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        49,
+        41,
+        38
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1202930476",
+      "store_url": "https://www.trendyol.com/nika-fashion/kadin-kase-kumas-bomber-ceket-p-1202930476",
+      "image_url": "https://cdn.dsmcdn.com/ty1961/prod/QC_PREP/20260922/18/acd64b6c-109d-3fad-8aea-be32af929454/1_org_zoom.jpg"
+    },
+    "1107126267": {
+      "sku": "1107126267",
+      "brand": "NILU MODA",
+      "full_name": "Nilu Moda Lüks Kristal Gold Örme Detaylı Siyah Kadın Güneş Gözlüğü",
+      "price": "264,28₺",
+      "color": "Siyah / Gold",
+      "dominant_rgb": [
+        217,
+        167,
+        137
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1107126267",
+      "store_url": "https://www.trendyol.com/nilu-moda/lux-kristal-gold-orme-detayli-siyah-kadin-gunes-gozlugu-p-1107126267",
+      "image_url": "https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg"
+    },
+    "1059131352": {
+      "sku": "1059131352",
+      "brand": "HOLA LADY",
+      "full_name": "Hola Lady Mavi Çizgili Uzun Kollu Vücuda Oturan Kadın Gömlek HL150",
+      "price": "560,72₺",
+      "color": "Mavi / Beyaz Çizgili",
+      "dominant_rgb": [
+        140,
+        152,
+        161
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/1059131352",
+      "store_url": "https://www.trendyol.com/hola-lady/mavi-cizgili-uzun-kollu-vucuda-oturan-gomlek-hl150-p-1059131352",
+      "image_url": "https://cdn.dsmcdn.com/ty1917/prod/QC_ENRICHMENT/20260503/12/ee6fc747-cc3f-3976-8a7d-48706ccfe26f/1_org_zoom.jpg"
+    },
+    "990568843": {
+      "sku": "990568843",
+      "brand": "JUDOUR BAGS",
+      "full_name": "Judour Bags Siyah Kadın Fularlı Fermuarlı Kapamalı Shopper El ve Omuz Çantası",
+      "price": "199₺",
+      "color": "Siyah",
+      "dominant_rgb": [
+        203,
+        193,
+        177
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/990568843",
+      "store_url": "https://www.trendyol.com/judour-bags/siyah-kadin-fularli-fermuarli-kapamali-shopper-el-ve-omuz-cantasi-p-990568843",
+      "image_url": "https://cdn.dsmcdn.com/ty1963/prod/QC_ENRICHMENT/20260925/16/24a9554e-13de-3977-87c3-71282050156c/1_org_zoom.jpg"
+    },
+    "334642100": {
+      "sku": "334642100",
+      "brand": "ADIDAS",
+      "full_name": "adidas Grand Court Cloudfoam Lifestyle Court Comfort Kadın Spor Ayakkabı",
+      "price": "2.633,08₺",
+      "color": "Beyaz / Siyah",
+      "dominant_rgb": [
+        117,
+        115,
+        110
+      ],
+      "image_http_200": true,
+      "color_verified": true,
+      "guzelai_url": "https://guzelai.com/go/334642100",
+      "store_url": "https://www.trendyol.com/adidas/grand-court-cloudfoam-lifestyle-court-comfort-kadin-spor-ayakkabi-p-334642100",
+      "image_url": "https://cdn.dsmcdn.com/ty1551/prod/QC/20240917/16/e35b8a25-4938-3ad5-92f5-ca5cff63c1d1/1_org_zoom.jpg"
+    }
+  },
+  "outfits": [
+    {
+      "id": "veor_uranis_bordo_kapsul_2k",
+      "collection_badge": "Örnek Kombin #1 • Mont & Kazak & Palazzo Kapsül Kombin",
+      "categories_included": [
+        "Mont / Deri Ceket",
+        "Triko Kazak",
+        "Palazzo Pantolon",
+        "Deri Çanta",
+        "Süet Sneaker",
+        "Güneş Gözlüğü"
+      ],
+      "preferred_music_id": "veor_uranis_da_da_da_2026",
+      "title": "Sokağa Çıkarken Herkesin Dönüp Baktığı O Bordo & Antrasit Kapsül Kombin 🔥✨",
+      "spoken_hook_text": "Sokağa çıkarken herkesin dönüp baktığı o kusursuz sonbahar kombinim!",
+      "viral_hook": "🛑 İçi peluş kemerli deri mont, bordo fitilli triko kazak, yüksek bel kemerli antrasit palazzo pantolon ve bordo Adidas Handball Spezial uyumu! Önce guzelai.com'da görselleri ve renkleri tek tek doğrulanmış 6 kadın parçası! 👇🔥",
+      "video_badge_collage": "» GUZELAI.COM DOĞRULANMIŞ KAPSÜL KOMBİN «",
+      "video_badge_walk": "» SOKAKTAKİ 2K DURUŞU EFSANE «",
+      "model_frames": [
+        "assets/veor_model_step1.jpg",
+        "assets/veor_model_step2.jpg",
+        "assets/veor_model_step3.jpg"
+      ],
+      "items": {
+        "outerwear": {
+          "id": "ty_1099303505",
+          "category_label": "Mont & Ceket",
+          "brand": "TRENDYOL KOLEKSİYON",
+          "price": "1.399₺",
+          "price_val": 1399.0,
+          "name": "İçi Peluş Detaylı Kemerli Koyu Kahve Deri Mont & Ceket",
+          "full_name": "Kadın İçi Peluş (Shearling) Detaylı Kemerli Koyu Kahve Deri Mont & Ceket",
+          "sku": "1099303505",
+          "color": "Kahve / Krem Peluş",
+          "store_url": "https://www.trendyol.com/genel-markalar/ici-pelus-detayli-kemerli-deri-ceket-p-1099303505",
+          "product_url": "https://guzelai.com/go/1099303505",
+          "guzelai_url": "https://guzelai.com/go/1099303505",
+          "image_url": "https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251208/17/87612bea-c651-3510-86e1-9223384152ea/1_org_zoom.jpg",
+          "local_asset": "assets/items/veor_01_jacket.png",
+          "fallback_asset": "assets/items/veor_01_jacket.png",
+          "dominant_rgb": [
+            184,
+            179,
+            169
+          ],
+          "color_verified": true
+        },
+        "cap": {
+          "id": "ty_835985416",
+          "category_label": "Gözlük & Aksesuar",
+          "brand": "VOGUE EYEWEAR",
+          "price": "2.150₺",
+          "price_val": 2150.0,
+          "name": "Vogue VO5586S W44 87 53 Siyah Kadın Güneş Gözlüğü",
+          "full_name": "Vogue VO5586S W44 87 53 Siyah Çerçeveli Kadın Güneş Gözlüğü",
+          "sku": "835985416",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/vogue/vo5586s-w44-87-53-kadin-gunes-gozlugu-p-835985416",
+          "product_url": "https://guzelai.com/go/835985416",
+          "guzelai_url": "https://guzelai.com/go/835985416",
+          "image_url": "https://cdn.dsmcdn.com/ty1740/prod/QC_ENRICHMENT/20250901/13/0df06205-e313-38d9-9c4f-16867a222bf1/1_org_zoom.jpg",
+          "local_asset": "assets/items/veor_02_cap.png",
+          "fallback_asset": "assets/items/veor_02_cap.png",
+          "dominant_rgb": [
+            100,
+            95,
+            95
+          ],
+          "color_verified": true
+        },
+        "top": {
+          "id": "ty_903567167",
+          "category_label": "Kazak & Triko",
+          "brand": "MODASPARK",
+          "price": "309,05₺",
+          "price_val": 309.05,
+          "name": "Kadın Bordo Bisiklet Yaka Fitilli Oversize Triko Kazak",
+          "full_name": "MODASPARK Bordo Bisiklet Yaka Fitilli Oversize Kadın Triko Kazak",
+          "sku": "903567167",
+          "color": "Bordo",
+          "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+          "product_url": "https://guzelai.com/go/903567167",
+          "guzelai_url": "https://guzelai.com/go/903567167",
+          "image_url": "https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg",
+          "local_asset": "assets/items/veor_03_top.png",
+          "fallback_asset": "assets/items/veor_03_top.png",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bottom": {
+          "id": "ty_866458994",
+          "category_label": "Pantolon",
+          "brand": "RITNICE",
+          "price": "789₺",
+          "price_val": 789.0,
+          "name": "Kadın Rena Kemerli Likralı Yüksek Bel Antrasit Palazzo Pantolon",
+          "full_name": "Ritnice Kadın Rena Kemerli Likralı Yüksek Bel Pileli Antrasit Palazzo Pantolon",
+          "sku": "866458994",
+          "color": "Antrasit",
+          "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+          "product_url": "https://guzelai.com/go/866458994",
+          "guzelai_url": "https://guzelai.com/go/866458994",
+          "image_url": "https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg",
+          "local_asset": "assets/items/veor_04_bottom.png",
+          "fallback_asset": "assets/items/veor_04_bottom.png",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bag": {
+          "id": "bagmori_8682166106158",
+          "category_label": "Çanta",
+          "brand": "BAGMORI",
+          "price": "799,90₺",
+          "price_val": 799.9,
+          "name": "Siyah Kemer Toka Aksesuarlı Deri El & Omuz Çantası",
+          "full_name": "Bagmori Siyah Kemer Toka Aksesuarlı Askılı Kadın Deri Çanta",
+          "sku": "8682166106158",
+          "color": "Siyah",
+          "store_url": "https://www.bagmori.com/products/siyah-aksesuarli-askili-mini-canta",
+          "product_url": "https://guzelai.com/go/8682166106158",
+          "guzelai_url": "https://guzelai.com/go/8682166106158",
+          "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106158-1_e433841d-5e61-4178-b279-b69075a8dec9.jpg?v=1784880657",
+          "local_asset": "assets/items/veor_05_bag.png",
+          "fallback_asset": "assets/items/veor_05_bag.png",
+          "dominant_rgb": [
+            37,
+            37,
+            32
+          ],
+          "color_verified": true
+        },
+        "shoes": {
+          "id": "ty_994497307",
+          "category_label": "Ayakkabı",
+          "brand": "ADIDAS",
+          "price": "4.499,40₺",
+          "price_val": 4499.4,
+          "name": "Adidas Handball Spezial Kadın Bordo Süet Sneaker",
+          "full_name": "adidas Handball Spezial Kadın Bordo Süet Sneaker Spor Ayakkabı",
+          "sku": "994497307",
+          "color": "Bordo / Beyaz / Gum",
+          "store_url": "https://www.trendyol.com/adidas/handball-spezial-kadin-bordo-ayakkabi-p-994497307",
+          "product_url": "https://guzelai.com/go/994497307",
+          "guzelai_url": "https://guzelai.com/go/994497307",
+          "image_url": "https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg",
+          "local_asset": "assets/items/veor_06_shoes.png",
+          "fallback_asset": "assets/items/veor_06_shoes.png",
+          "dominant_rgb": [
+            81,
+            41,
+            54
+          ],
+          "color_verified": true
+        }
+      }
+    },
+    {
+      "id": "guzelai_elbise_deri_ceket_kombin",
+      "collection_badge": "Örnek Kombin #2 • Elbise & Deri Ceket & Aksesuar Kombini",
+      "categories_included": [
+        "Elbise",
+        "Oversize Deri Ceket",
+        "Güneş Gözlüğü",
+        "Omuz Çantası",
+        "Sneaker"
+      ],
+      "preferred_music_id": "veor_uranis_da_da_da_2026",
+      "title": "Tek Parça Siyah Tokalı Elbise & Oversize Deri Ceketle Zahmetsiz Gece/Gündüz Şıklığı 🖤✨",
+      "viral_hook": "🛑 'Elbiseyle hem gündüz hem gece nasıl çıkılır?' diyenlere guzelai.com'da önceden doğrulanmış toka detaylı siyah elbise, oversize deri ceket ve aksesuar kombinimiz! 👇✨",
+      "items": {
+        "outerwear": {
+          "id": "ty_1075561987",
+          "category_label": "Deri Ceket & Mont",
+          "brand": "GENEL MARKALAR",
+          "price": "850₺",
+          "price_val": 850.0,
+          "name": "Kadın Oversize Siyah Deri Ceket – Kemer Detaylı",
+          "full_name": "Genel Markalar Kadın Oversize Deri Ceket – Fermuarlı Kemer Detaylı Siyah Ceket",
+          "sku": "1075561987",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/genel-markalar/kadin-oversize-deri-ceket-oversize-relax-fit-fermuarli-kemer-detayli-gunluk-kadin-ceket-p-1075561987",
+          "product_url": "https://guzelai.com/go/1075561987",
+          "guzelai_url": "https://guzelai.com/go/1075561987",
+          "image_url": "https://cdn.dsmcdn.com/ty1738/prod/QC_ENRICHMENT/20250828/19/4cd3482d-36de-38b9-874b-5d4276c1627e/1_org_zoom.jpg",
+          "dominant_rgb": [
+            52,
+            53,
+            55
+          ],
+          "color_verified": true
+        },
+        "cap": {
+          "id": "ty_697446548",
+          "category_label": "Gözlük & Aksesuar",
+          "brand": "VOGUE",
+          "price": "1.400₺",
+          "price_val": 1400.0,
+          "name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+          "full_name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+          "sku": "697446548",
+          "color": "Koyu Kahve / Siyah",
+          "store_url": "https://www.trendyol.com/vogue/5496si-w65613-54-kadin-p-697446548",
+          "product_url": "https://guzelai.com/go/697446548",
+          "guzelai_url": "https://guzelai.com/go/697446548",
+          "image_url": "https://cdn.dsmcdn.com/ty871/product/media/images/20230509/17/343728268/932211145/1/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "top": {
+          "id": "ty_1090399394",
+          "category_label": "Elbise",
+          "brand": "WORLD FASHION TRENDS",
+          "price": "477,48₺",
+          "price_val": 477.48,
+          "name": "Siyah Kadın Dik Yaka Toka Detaylı Kuşaklı Elbise",
+          "full_name": "World Fashion Trends Siyah Kadın Dik Yaka Toka Detaylı Kuşaklı Toparlayıcı Kalıp Elbise",
+          "sku": "1090399394",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/world-fashion-trends/siyah-kadin-dik-yaka-toka-detayli-kusakli-toparlayici-kalip-mini-elbise-p-1090399394",
+          "product_url": "https://guzelai.com/go/1090399394",
+          "guzelai_url": "https://guzelai.com/go/1090399394",
+          "image_url": "https://cdn.dsmcdn.com/ty1815/prod/QC_PREP/20260122/18/39503553-0288-39bd-9948-9e69040a687c/1_org_zoom.jpg",
+          "dominant_rgb": [
+            27,
+            27,
+            25
+          ],
+          "color_verified": true
+        },
+        "bottom": {
+          "id": "ty_969514957",
+          "category_label": "Alternatif Pantolon",
+          "brand": "ECEYLÜL MODA",
+          "price": "479,52₺",
+          "price_val": 479.52,
+          "name": "Kadın Siyah Önü Pileli Yüksek Bel Palazzo Pantolon",
+          "full_name": "ECEYLÜL MODA Kadın Siyah Scuba Krep Önü Pileli Yüksek Bel Palazzo Pantolon",
+          "sku": "969514957",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/eceylul-moda/kadin-siyah-scuba-krep-onu-pileli-yuksek-bel-palazzo-pantolon-kisa-sureligine-lansman-fiyati-p-969514957",
+          "product_url": "https://guzelai.com/go/969514957",
+          "guzelai_url": "https://guzelai.com/go/969514957",
+          "image_url": "https://cdn.dsmcdn.com/ty1751/prod/QC_PREP/20250911/14/c070a331-2085-351d-92be-d649d46ee888/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bag": {
+          "id": "ty_988558235",
+          "category_label": "Çanta",
+          "brand": "NEVNIHAL",
+          "price": "489₺",
+          "price_val": 489.0,
+          "name": "Kadın Fermuarlı Yumuşak Deri Siyah Omuz Çantası",
+          "full_name": "Nevnihal Fermuarlı ve Astarlı Yumuşak Deri Günlük Geniş Kadın Siyah Çanta",
+          "sku": "988558235",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/nevnihal/fermuarli-ve-astarli-yumusak-deri-gunluk-genis-kadin-canta-p-988558235",
+          "product_url": "https://guzelai.com/go/988558235",
+          "guzelai_url": "https://guzelai.com/go/988558235",
+          "image_url": "https://cdn.dsmcdn.com/ty1756/prod/QC_ENRICHMENT/20250923/12/b99749b8-5bd2-3d13-b122-ab543866c963/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "shoes": {
+          "id": "ty_893278946",
+          "category_label": "Ayakkabı",
+          "brand": "ADIDAS",
+          "price": "3.999,50₺",
+          "price_val": 3999.5,
+          "name": "Adidas Samba OG W Kadın Sneaker IE5836",
+          "full_name": "adidas Samba OG W Kadın Sneaker Spor Ayakkabı IE5836",
+          "sku": "893278946",
+          "color": "Siyah / Beyaz",
+          "store_url": "https://www.trendyol.com/adidas/samba-og-w-kadin-sneaker-ie5836-p-893278946",
+          "product_url": "https://guzelai.com/go/893278946",
+          "guzelai_url": "https://guzelai.com/go/893278946",
+          "image_url": "https://cdn.dsmcdn.com/ty1839/prod/QC_ENRICHMENT/20260316/15/896e36a0-56f7-3989-9a35-3ef70e3558ac/1_org_zoom.jpg",
+          "dominant_rgb": [
+            187,
+            170,
+            156
+          ],
+          "color_verified": true
+        }
+      }
+    },
+    {
+      "id": "guzelai_gomlek_kase_mont_palazzo",
+      "collection_badge": "Örnek Kombin #3 • Gömlek & Kaşe Mont & Palazzo Pantolon Kombini",
+      "categories_included": [
+        "Çizgili Gömlek",
+        "Kaşe Bomber Mont",
+        "Pileli Palazzo Pantolon",
+        "Fularlı Çanta",
+        "Sneaker",
+        "Gözlük"
+      ],
+      "preferred_music_id": "veor_uranis_da_da_da_2026",
+      "title": "Mavi Çizgili Gömlek, Siyah Kaşe Mont ve Pileli Palazzo ile Ofisten Sokağa Old Money Stil 👔✨",
+      "viral_hook": "🛑 Gömlek, kaşe mont ve yüksek bel palazzo pantolon üçlüsünün en kusursuz hali! guzelai.com vitrininde tüm görselleri ve mağaza stokları doğrulanmış 6 kadın parçası! 👇🔥",
+      "items": {
+        "outerwear": {
+          "id": "ty_1202930476",
+          "category_label": "Kaşe Mont & Ceket",
+          "brand": "NIKA FASHION",
+          "price": "911,32₺",
+          "price_val": 911.32,
+          "name": "Kadın Siyah Kaşe Kumaş Bomber Mont & Ceket",
+          "full_name": "Nika Fashion Kadın Siyah Kaşe Kumaş Bomber Mont & Ceket",
+          "sku": "1202930476",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/nika-fashion/kadin-kase-kumas-bomber-ceket-p-1202930476",
+          "product_url": "https://guzelai.com/go/1202930476",
+          "guzelai_url": "https://guzelai.com/go/1202930476",
+          "image_url": "https://cdn.dsmcdn.com/ty1961/prod/QC_PREP/20260922/18/acd64b6c-109d-3fad-8aea-be32af929454/1_org_zoom.jpg",
+          "dominant_rgb": [
+            49,
+            41,
+            38
+          ],
+          "color_verified": true
+        },
+        "cap": {
+          "id": "ty_1107126267",
+          "category_label": "Gözlük & Aksesuar",
+          "brand": "NILU MODA",
+          "price": "264,28₺",
+          "price_val": 264.28,
+          "name": "Lüks Kristal Gold Detaylı Siyah Kadın Güneş Gözlüğü",
+          "full_name": "Nilu Moda Lüks Kristal Gold Örme Detaylı Siyah Kadın Güneş Gözlüğü",
+          "sku": "1107126267",
+          "color": "Siyah / Gold",
+          "store_url": "https://www.trendyol.com/nilu-moda/lux-kristal-gold-orme-detayli-siyah-kadin-gunes-gozlugu-p-1107126267",
+          "product_url": "https://guzelai.com/go/1107126267",
+          "guzelai_url": "https://guzelai.com/go/1107126267",
+          "image_url": "https://cdn.dsmcdn.com/ty1857/prod/QC_ENRICHMENT/20260424/17/eb63b57a-4da8-3818-ae45-9cd0c858a7cd/1_org_zoom.jpg",
+          "dominant_rgb": [
+            217,
+            167,
+            137
+          ],
+          "color_verified": true
+        },
+        "top": {
+          "id": "ty_1059131352",
+          "category_label": "Gömlek",
+          "brand": "HOLA LADY",
+          "price": "560,72₺",
+          "price_val": 560.72,
+          "name": "Kadın Mavi Çizgili Uzun Kollu Gömlek HL150",
+          "full_name": "Hola Lady Mavi Çizgili Uzun Kollu Vücuda Oturan Kadın Gömlek HL150",
+          "sku": "1059131352",
+          "color": "Mavi / Beyaz Çizgili",
+          "store_url": "https://www.trendyol.com/hola-lady/mavi-cizgili-uzun-kollu-vucuda-oturan-gomlek-hl150-p-1059131352",
+          "product_url": "https://guzelai.com/go/1059131352",
+          "guzelai_url": "https://guzelai.com/go/1059131352",
+          "image_url": "https://cdn.dsmcdn.com/ty1917/prod/QC_ENRICHMENT/20260503/12/ee6fc747-cc3f-3976-8a7d-48706ccfe26f/1_org_zoom.jpg",
+          "dominant_rgb": [
+            140,
+            152,
+            161
+          ],
+          "color_verified": true
+        },
+        "bottom": {
+          "id": "ty_969514957",
+          "category_label": "Pantolon",
+          "brand": "ECEYLÜL MODA",
+          "price": "479,52₺",
+          "price_val": 479.52,
+          "name": "Kadın Siyah Önü Pileli Yüksek Bel Palazzo Pantolon",
+          "full_name": "ECEYLÜL MODA Kadın Siyah Scuba Krep Önü Pileli Yüksek Bel Palazzo Pantolon",
+          "sku": "969514957",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/eceylul-moda/kadin-siyah-scuba-krep-onu-pileli-yuksek-bel-palazzo-pantolon-kisa-sureligine-lansman-fiyati-p-969514957",
+          "product_url": "https://guzelai.com/go/969514957",
+          "guzelai_url": "https://guzelai.com/go/969514957",
+          "image_url": "https://cdn.dsmcdn.com/ty1751/prod/QC_PREP/20250911/14/c070a331-2085-351d-92be-d649d46ee888/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bag": {
+          "id": "ty_990568843",
+          "category_label": "Çanta",
+          "brand": "JUDOUR BAGS",
+          "price": "199₺",
+          "price_val": 199.0,
+          "name": "Kadın Siyah Fularlı Fermuarlı Deri El ve Omuz Çantası",
+          "full_name": "Judour Bags Siyah Kadın Fularlı Fermuarlı Kapamalı Shopper El ve Omuz Çantası",
+          "sku": "990568843",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/judour-bags/siyah-kadin-fularli-fermuarli-kapamali-shopper-el-ve-omuz-cantasi-p-990568843",
+          "product_url": "https://guzelai.com/go/990568843",
+          "guzelai_url": "https://guzelai.com/go/990568843",
+          "image_url": "https://cdn.dsmcdn.com/ty1963/prod/QC_ENRICHMENT/20260925/16/24a9554e-13de-3977-87c3-71282050156c/1_org_zoom.jpg",
+          "dominant_rgb": [
+            203,
+            193,
+            177
+          ],
+          "color_verified": true
+        },
+        "shoes": {
+          "id": "ty_334642100",
+          "category_label": "Ayakkabı",
+          "brand": "ADIDAS",
+          "price": "2.633,08₺",
+          "price_val": 2633.08,
+          "name": "Adidas Grand Court Cloudfoam Beyaz Kadın Sneaker",
+          "full_name": "adidas Grand Court Cloudfoam Lifestyle Court Comfort Kadın Spor Ayakkabı",
+          "sku": "334642100",
+          "color": "Beyaz / Siyah",
+          "store_url": "https://www.trendyol.com/adidas/grand-court-cloudfoam-lifestyle-court-comfort-kadin-spor-ayakkabi-p-334642100",
+          "product_url": "https://guzelai.com/go/334642100",
+          "guzelai_url": "https://guzelai.com/go/334642100",
+          "image_url": "https://cdn.dsmcdn.com/ty1551/prod/QC/20240917/16/e35b8a25-4938-3ad5-92f5-ca5cff63c1d1/1_org_zoom.jpg",
+          "dominant_rgb": [
+            117,
+            115,
+            110
+          ],
+          "color_verified": true
+        }
+      }
+    },
+    {
+      "id": "tesla_halloween_ramp_curly",
+      "collection_badge": "Örnek Kombin #4 • Tesla Dik Pist & Cadılar Bayramı Kombini",
+      "categories_included": [
+        "Oversize Deri Ceket",
+        "Bordo Triko Kazak",
+        "Antrasit Palazzo Pantolon",
+        "Deri Omuz Çantası",
+        "Adidas Samba",
+        "Vogue Gözlük"
+      ],
+      "preferred_music_id": "october_celesta_strings_beat_pov",
+      "title": "Tesla'nın dik pistinden bile düşmeden indiren o Cadılar Bayramı kombini 🎃🔥✨",
+      "viral_hook": "🛑 Kahvelerin ve pizzaların bile uçmadan indiği o meşhur dik pistte Cadılar Bayramı şovumuz! Siyah oversize deri ceket, bordo triko kazak ve antrasit palazzo pantolonla 6 kadın parçası! 👇🎃🔥",
+      "items": {
+        "outerwear": {
+          "id": "ty_1075561987",
+          "category_label": "Deri Ceket",
+          "brand": "GENEL MARKALAR",
+          "price": "850₺",
+          "price_val": 850.0,
+          "name": "Kadın Oversize Deri Ceket – Kemer Detaylı Siyah Ceket",
+          "full_name": "Genel Markalar Kadın Oversize Deri Ceket – Fermuarlı Kemer Detaylı Siyah Kadın Ceket",
+          "sku": "1075561987",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/genel-markalar/kadin-oversize-deri-ceket-oversize-relax-fit-fermuarli-kemer-detayli-gunluk-kadin-ceket-p-1075561987",
+          "product_url": "https://guzelai.com/go/1075561987",
+          "guzelai_url": "https://guzelai.com/go/1075561987",
+          "image_url": "https://cdn.dsmcdn.com/ty1738/prod/QC_ENRICHMENT/20250828/19/4cd3482d-36de-38b9-874b-5d4276c1627e/1_org_zoom.jpg",
+          "dominant_rgb": [
+            52,
+            53,
+            55
+          ],
+          "color_verified": true
+        },
+        "cap": {
+          "id": "ty_697446548",
+          "category_label": "Gözlük",
+          "brand": "VOGUE",
+          "price": "1.400₺",
+          "price_val": 1400.0,
+          "name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+          "full_name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+          "sku": "697446548",
+          "color": "Koyu Kahve / Siyah",
+          "store_url": "https://www.trendyol.com/vogue/5496si-w65613-54-kadin-p-697446548",
+          "product_url": "https://guzelai.com/go/697446548",
+          "guzelai_url": "https://guzelai.com/go/697446548",
+          "image_url": "https://cdn.dsmcdn.com/ty871/product/media/images/20230509/17/343728268/932211145/1/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "top": {
+          "id": "ty_903567167",
+          "category_label": "Kazak & Triko",
+          "brand": "MODASPARK",
+          "price": "309,05₺",
+          "price_val": 309.05,
+          "name": "Kadın Bordo Bisiklet Yaka Fitilli Oversize Triko Kazak",
+          "full_name": "MODASPARK Bordo Bisiklet Yaka Fitilli Oversize Kadın Triko Kazak",
+          "sku": "903567167",
+          "color": "Bordo",
+          "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+          "product_url": "https://guzelai.com/go/903567167",
+          "guzelai_url": "https://guzelai.com/go/903567167",
+          "image_url": "https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bottom": {
+          "id": "ty_866458994",
+          "category_label": "Palazzo Pantolon",
+          "brand": "RITNICE",
+          "price": "789₺",
+          "price_val": 789.0,
+          "name": "Kadın Rena Kemerli Likralı Yüksek Bel Antrasit Palazzo Pantolon",
+          "full_name": "Ritnice Kadın Rena Kemerli Likralı Yüksek Bel Pileli Antrasit Palazzo Pantolon",
+          "sku": "866458994",
+          "color": "Antrasit",
+          "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+          "product_url": "https://guzelai.com/go/866458994",
+          "guzelai_url": "https://guzelai.com/go/866458994",
+          "image_url": "https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "bag": {
+          "id": "ty_988558235",
+          "category_label": "Omuz Çantası",
+          "brand": "NEVNIHAL",
+          "price": "489₺",
+          "price_val": 489.0,
+          "name": "Kadın Fermuarlı Yumuşak Deri Siyah Omuz Çantası",
+          "full_name": "Nevnihal Fermuarlı ve Astarlı Yumuşak Deri Günlük Geniş Kadın Siyah Çanta",
+          "sku": "988558235",
+          "color": "Siyah",
+          "store_url": "https://www.trendyol.com/nevnihal/fermuarli-ve-astarli-yumusak-deri-gunluk-genis-kadin-canta-p-988558235",
+          "product_url": "https://guzelai.com/go/988558235",
+          "guzelai_url": "https://guzelai.com/go/988558235",
+          "image_url": "https://cdn.dsmcdn.com/ty1756/prod/QC_ENRICHMENT/20250923/12/b99749b8-5bd2-3d13-b122-ab543866c963/1_org_zoom.jpg",
+          "dominant_rgb": [
+            0,
+            0,
+            0
+          ],
+          "color_verified": true
+        },
+        "shoes": {
+          "id": "ty_893278946",
+          "category_label": "Sneaker",
+          "brand": "ADIDAS",
+          "price": "3.999,50₺",
+          "price_val": 3999.5,
+          "name": "Samba OG W Kadın Sneaker Ayakkabı IE5836",
+          "full_name": "adidas Samba OG W Kadın Sneaker Spor Ayakkabı IE5836",
+          "sku": "893278946",
+          "color": "Siyah / Beyaz",
+          "store_url": "https://www.trendyol.com/adidas/samba-og-w-kadin-sneaker-ie5836-p-893278946",
+          "product_url": "https://guzelai.com/go/893278946",
+          "guzelai_url": "https://guzelai.com/go/893278946",
+          "image_url": "https://cdn.dsmcdn.com/ty1839/prod/QC_ENRICHMENT/20260316/15/896e36a0-56f7-3989-9a35-3ef70e3558ac/1_org_zoom.jpg",
+          "dominant_rgb": [
+            187,
+            170,
+            156
+          ],
+          "color_verified": true
+        }
+      }
+    }
+  ]
+}
