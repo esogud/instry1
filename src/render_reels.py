@@ -167,12 +167,215 @@ def _draw_auto_pill_badge(
     draw.text((center_x, center_y), text, fill=text_rgba, font=font, anchor="mm")
 
 
+def _tr_upper(s: str) -> str:
+    return (s or "").replace("i", "İ").replace("ı", "I").upper()
+
+
+def _wrap_hook_lines(text: str, max_chars: int = 24) -> list:
+    """Splits a viral hook title into 2-3 punchy uppercase magazine cover lines."""
+    clean = (
+        (text or "")
+        .replace("🔥", "")
+        .replace("✨", "")
+        .replace("🤍", "")
+        .replace("🍂", "")
+        .replace("🎃", "")
+        .replace("👔", "")
+        .replace("★", "")
+        .strip()
+    )
+    if ":" in clean:
+        parts = [p.strip() for p in clean.split(":", 1) if p.strip()]
+        if len(parts) == 2 and len(parts[1]) >= 10:
+            clean = parts[1]
+    words = _tr_upper(clean).split()
+    lines = []
+    cur = []
+    for w in words:
+        if sum(len(x) for x in cur) + len(cur) + len(w) <= max_chars:
+            cur.append(w)
+        else:
+            if cur:
+                lines.append(" ".join(cur))
+            cur = [w]
+            if len(lines) == 2:
+                break
+    if cur and len(lines) < 3:
+        lines.append(" ".join(cur))
+    return lines[:3] or ["SONBAHAR KAPSÜL", "KOMBİN ÖNERİSİ"]
+
+
+def generate_hook_cover_photo(
+    outfit: dict,
+    model_frames: list,
+    prepared_items: list,
+    out_dir: str,
+) -> Image.Image:
+    """
+    2K QHD+ (1440x2560) çözünürlükte, hem Instagram/TikTok 9:16 tam ekranında hem de
+    profil ızgarasında (3:4 ve 1:1 merkez kırpma alanında) yüksek tıklanma oranı (CTR) sağlayan
+    Dergi Kapak Kalitesinde 'Viral Hook Kapak Fotoğrafı' (output/hook_cover.jpg) üretir.
+    """
+    if model_frames:
+        base = model_frames[0].copy().convert("RGBA")
+    else:
+        base = create_watermark_background("@guzelaicom")
+
+    # Üst ve alt sinematik karartma gradyanı (Merkezdeki model yüzünü/kombini açık bırakır, metin okunabilirliğini %100 yapar)
+    grad = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    gdraw = ImageDraw.Draw(grad)
+    for y in range(S(380)):
+        alpha = int(175 * (1.0 - (y / float(S(380)))) ** 1.4)
+        gdraw.line([(0, y), (W, y)], fill=(8, 8, 12, alpha))
+    for y in range(H - S(860), H):
+        prog = (y - (H - S(860))) / float(S(860))
+        alpha = int(225 * (prog ** 1.25))
+        gdraw.line([(0, y), (W, y)], fill=(8, 8, 12, alpha))
+    base = Image.alpha_composite(base, grad)
+    draw = ImageDraw.Draw(base)
+
+    font_kicker = get_font(23, bold=True)
+    font_cover_big = get_font(44, bold=True)
+    font_cover_sub = get_font(24, bold=True)
+    font_mini_price = get_font(20, bold=True)
+
+    # 1) Üst Merkez Tarih & Konsept Rozeti (Profil ızgarası üst sınırının içinde: Y = S(235))
+    cal_concept = outfit.get("calendar_concept", {})
+    top_tag = (
+        outfit.get("video_badge_collage")
+        or cal_concept.get("palette_name")
+        or "» PINTEREST OLD MONEY SONBAHAR KOMBİNİ «"
+    ).replace("🔥", "").replace("✨", "").replace("★", "").strip()
+    _draw_auto_pill_badge(
+        draw=draw,
+        center_x=W // 2,
+        center_y=S(235),
+        text=top_tag[:44],
+        font=font_kicker,
+        fill_rgba=(14, 14, 18, 235),
+        text_rgba=(242, 218, 178, 255),
+        pad_x=S(32),
+        pad_y=S(16),
+        radius=S(28),
+        outline_rgba=(242, 218, 178, 210),
+        outline_width=S(2),
+    )
+
+    # 2) Sağ Dikey Sütunda 4 Yüzen Mini Kombin Parça Kartı (Görsel + Fiyat Rozeti)
+    showcase_keys = ["outerwear", "top", "bottom", "bag"]
+    card_w, card_h = S(188), S(205)
+    card_x = W - card_w - S(34)
+    start_y = S(340)
+    gap_y = S(222)
+
+    for idx_c, k_name in enumerate(showcase_keys):
+        p_match = next((p for p in prepared_items if p["key"] == k_name), None)
+        if not p_match:
+            continue
+        cy = start_y + idx_c * gap_y
+        # Yarı saydam lüks krem kart kutusu
+        draw.rounded_rectangle(
+            (card_x, cy, card_x + card_w, cy + card_h),
+            radius=S(24),
+            fill=(252, 250, 246, 238),
+            outline=(218, 195, 158, 255),
+            width=S(3),
+        )
+        thumb = p_match["img"].copy()
+        thumb.thumbnail((card_w - S(22), card_h - S(56)), Image.Resampling.LANCZOS)
+        tx = card_x + (card_w - thumb.width) // 2
+        ty = cy + S(8) + (card_h - S(56) - thumb.height) // 2
+        base.paste(thumb, (tx, ty), thumb)
+
+        # Fiyat şeridi
+        price_txt = p_match["data"].get("price", "")
+        draw.rounded_rectangle(
+            (card_x + S(12), cy + card_h - S(44), card_x + card_w - S(12), cy + card_h - S(8)),
+            radius=S(12),
+            fill=(16, 16, 22, 248),
+        )
+        draw.text(
+            (card_x + card_w // 2, cy + card_h - S(26)),
+            price_txt,
+            fill=(242, 218, 178, 255),
+            font=font_mini_price,
+            anchor="mm",
+        )
+
+    # 3) Alt-Merkez (3:4 ve 1:1 Profil Izgarası Güvenli Alanı: Y = S(1300)..S(1685)) Viral Hook Başlık Kutusu
+    hook_lines = _wrap_hook_lines(
+        outfit.get("hook_title") or outfit.get("archetype_title") or "OLD MONEY SONBAHAR KOMBİNİ",
+        max_chars=22,
+    )
+    box_top = S(1300)
+    box_bot = S(1685)
+    draw.rounded_rectangle(
+        (S(46), box_top, W - S(46), box_bot),
+        radius=S(38),
+        fill=(12, 12, 16, 222),
+        outline=(242, 218, 178, 225),
+        width=S(3),
+    )
+
+    # Üst Altın Kicker Etiketi
+    total_price_str = outfit.get("total_price_str", "5.519,09₺")
+    _draw_auto_pill_badge(
+        draw=draw,
+        center_x=W // 2,
+        center_y=box_top + S(46),
+        text=f"» 6 PARÇA DOĞRULANMIŞ KOMBİN • {total_price_str} «",
+        font=font_kicker,
+        fill_rgba=(188, 142, 78, 255),
+        text_rgba=(12, 12, 16, 255),
+        pad_x=S(28),
+        pad_y=S(12),
+        radius=S(20),
+    )
+
+    # Ana Büyük Dergi Hook Başlığı (2 veya 3 satır)
+    line_start_y = box_top + S(122) if len(hook_lines) == 3 else box_top + S(142)
+    line_step = S(62)
+    for i_ln, ln_txt in enumerate(hook_lines):
+        ly = line_start_y + i_ln * line_step
+        draw.text(
+            (W // 2, ly),
+            ln_txt,
+            fill=(255, 255, 255, 255),
+            font=font_cover_big,
+            anchor="mm",
+        )
+
+    # Alt Çağrı (CTA) Bandı
+    _draw_auto_pill_badge(
+        draw=draw,
+        center_x=W // 2,
+        center_y=box_bot - S(48),
+        text="» TÜM LİNKLER & KODLAR: GUZELAI.COM «",
+        font=font_cover_sub,
+        fill_rgba=(230, 90, 127, 255),
+        text_rgba=(255, 255, 255, 255),
+        pad_x=S(30),
+        pad_y=S(14),
+        radius=S(22),
+    )
+
+    rgb_cover = base.convert("RGB")
+    cover_jpg_path = os.path.join(out_dir, "hook_cover.jpg")
+    cover_png_path = os.path.join(out_dir, "hook_cover.png")
+    rgb_cover.save(cover_jpg_path, "JPEG", quality=98, subsampling=0)
+    rgb_cover.save(cover_png_path, compress_level=1)
+    print(f"🖼️ [Viral Hook Kapak Fotoğrafı]: {cover_jpg_path} (1440x2560 2K QHD+) üretildi.")
+    return rgb_cover
+
+
 def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelaicom") -> dict:
     out_dir = os.path.dirname(output_mp4) or "."
     os.makedirs(out_dir, exist_ok=True)
     bg_base = create_watermark_background(watermark)
 
     # 6 Kıyafet Parçasının 2K (1440x2560) Çakışmasız Graph Motion Yerleşim ve Zamanlama Tablosu
+    # NOT: İlk 0.40sn'de (Frame 0..11) Viral Hook Kapak Fotoğrafı gösterilir, ardından
+    # t=0.40sn'de 1. parça zaten ekranda başlar (ASLA boş beyaz kare oluşmaz!).
     items_cfg = [
         {
             "key": "outerwear",
@@ -180,7 +383,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(460), S(490)),
             "start_xy": (S(-580), S(140)),
             "start_angle": -18.0,
-            "t_in": 0.22,
+            "t_in": 0.10,
             "label_xy": (S(275), S(742)),
         },
         {
@@ -189,7 +392,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(215), S(115)),
             "start_xy": (S(490), S(-220)),
             "start_angle": 22.0,
-            "t_in": 0.78,
+            "t_in": 0.65,
             "label_xy": (S(598), S(345)),
         },
         {
@@ -198,7 +401,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(375), S(395)),
             "start_xy": (S(1180), S(160)),
             "start_angle": 16.0,
-            "t_in": 1.34,
+            "t_in": 1.20,
             "label_xy": (S(832), S(635)),
         },
         {
@@ -207,7 +410,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(310), S(590)),
             "start_xy": (S(1220), S(750)),
             "start_angle": 10.0,
-            "t_in": 1.90,
+            "t_in": 1.75,
             "label_xy": (S(835), S(1328)),
         },
         {
@@ -216,7 +419,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(265), S(295)),
             "start_xy": (S(370), S(1980)),
             "start_angle": -15.0,
-            "t_in": 2.46,
+            "t_in": 2.30,
             "label_xy": (S(502), S(1022)),
         },
         {
@@ -225,7 +428,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             "target_size": (S(395), S(195)),
             "start_xy": (S(-420), S(1080)),
             "start_angle": 14.0,
-            "t_in": 3.02,
+            "t_in": 2.85,
             "label_xy": (S(265), S(1305)),
         },
     ]
@@ -246,6 +449,10 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
 
     # Yürüyen model karelerini 2K OLED kalitesinde hazırla
     model_frames = fetch_or_generate_model_frames(outfit, out_dir)
+
+    # Dergi Kalitesinde 2K Viral Hook Kapak Fotoğrafını (output/hook_cover.jpg) üret
+    hook_cover_rgb = generate_hook_cover_photo(outfit, model_frames, prepared_items, out_dir)
+    outfit["hook_cover_path"] = os.path.join(out_dir, "hook_cover.jpg")
 
     # Tesla + Cadılar Bayramı Eğimli Pist (Sky-Ramp) arka planı ve şeffaf tam boy model dekupe görseli
     ramp_bg_img = None
@@ -319,14 +526,25 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     for f_idx in range(total_frames):
         t = f_idx / FPS
 
+        # İLK 0.36 SANİYE (f_idx = 0..10): Viral Hook Kapak Fotoğrafı (Frame 0 ASLA boş beyaz olmaz!)
+        if f_idx <= 10:
+            zoom_c = 1.0 + 0.018 * (f_idx / 10.0)
+            cw_c = int(W / zoom_c)
+            ch_c = int(H / zoom_c)
+            cx_c = (W - cw_c) // 2
+            cy_c = (H - ch_c) // 2
+            cover_frame = hook_cover_rgb.crop((cx_c, cy_c, cx_c + cw_c, cy_c + ch_c)).resize((W, H), Image.Resampling.LANCZOS)
+            cover_frame.save(os.path.join(frames_dir, f"frame_{f_idx:04d}.jpg"), quality=98, subsampling=0)
+            continue
+
         if t <= collage_end_sec + 0.15:
             canvas = bg_base.copy()
             draw = ImageDraw.Draw(canvas)
 
             # Üst Başlık Bandı (Otomatik Boyutlanan Kapsül - Taşma Yapmaz)
-            header_alpha = int(min(1.0, t / 0.35) * 255)
+            header_alpha = 255
             collage_badge = (
-                outfit.get("video_badge_collage", "» CADILAR BAYRAMI PİST KOMBİNİM «")
+                outfit.get("video_badge_collage", "» PINTEREST OLD MONEY SONBAHAR KOMBİNİ «")
                 .replace("🔥", "★")
                 .replace("✨", "★")
                 .replace("🎃", "★")
@@ -588,6 +806,8 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         "-colorspace", "bt709",
         "-color_range", "tv",
         "-movflags", "+faststart",
+        "-metadata", "encoder=Apple QuickTime",
+        "-metadata", "comment=guzelai.com",
         "-c:a", "aac", "-b:a", "256k", "-ar", "44100", "-ac", "2",
         "-shortest",
         output_mp4,
