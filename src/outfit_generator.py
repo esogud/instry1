@@ -14,6 +14,11 @@ try:
 except ImportError:
     HAS_REMBG = False
 
+from calendar_concept_engine import (
+    get_active_calendar_concept,
+    score_online_item_for_concept,
+)
+
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
@@ -23,15 +28,17 @@ HEADERS = {
 # Canlı Trendyol Kategori Kaynakları (JSON-LD ItemList üzerinden anlık güncel ürün, fiyat, SKU ve link çeker)
 LIVE_TRENDYOL_FEEDS = {
     "outerwear": [
-        "https://www.trendyol.com/kadin-ceket-x-g1-c1030",
         "https://www.trendyol.com/kadin-trenckot-x-g1-c79",
+        "https://www.trendyol.com/kadin-ceket-x-g1-c1030",
+        "https://www.trendyol.com/kadin-kaban-x-g1-c55",
     ],
     "cap": [
         "https://www.trendyol.com/kadin-gunes-gozlugu-x-g1-c105",
     ],
     "top": [
-        "https://www.trendyol.com/kadin-sweatshirt-x-g1-c1179",
+        "https://www.trendyol.com/kadin-gomlek-x-g1-c75",
         "https://www.trendyol.com/kadin-kazak-x-g1-c1092",
+        "https://www.trendyol.com/kadin-sweatshirt-x-g1-c1179",
     ],
     "bottom": [
         "https://www.trendyol.com/kadin-pantolon-x-g1-c70",
@@ -42,6 +49,8 @@ LIVE_TRENDYOL_FEEDS = {
         "https://www.trendyol.com/kadin-canta-x-g1-c117",
     ],
     "shoes": [
+        "https://www.trendyol.com/kadin-klasik-topuklu-ayakkabi-x-g1-c107",
+        "https://www.trendyol.com/kadin-loafer-x-g1-c1365",
         "https://www.trendyol.com/adidas-kadin-sneaker-x-b33-g1-c1172",
         "https://www.trendyol.com/kadin-sneaker-x-g1-c1172",
     ],
@@ -49,6 +58,141 @@ LIVE_TRENDYOL_FEEDS = {
 
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
+    {
+        "id": "pinterest_oldmoney_camel_iceblue_ecru",
+        "preferred_music_id": "veor_uranis_da_da_da_2026",
+        "title": "Pinterest'te En Çok Kaydedilen Old Money Sonbahar Renk Kurgusu: Camel, Buz Mavisi & Ekru Zarafeti 🤍🍂✨",
+        "spoken_hook_text": "Pinterest'te gördüğüm an kaydettiğim o kusursuz Old Money sonbahar zarafeti!",
+        "viral_hook": "🛑 Camel kruvaze kuşaklı trençkot, buz mavisi çizgili gömlek, taba kemerli ekru pileli bol paça pantolon ve kahve gold tokalı çanta & slingback topuklu uyumu! Önce guzelai.com'da doğrulanan 6 parçalık Old Money sonbahar kombini! 👇🤍✨",
+        "seo_note": "📌 Not: Videodaki %100 Kadın Old Money kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_981976289",
+                "category_label": "Trençkot & Kaban",
+                "brand": "MODARK",
+                "price": "1.621,53₺",
+                "price_val": 1621.53,
+                "name": "Kadın Bej / Camel Kuşaklı Kruvaze Kısa Trençkot",
+                "full_name": "Modark Kadın Bej Kısa Rüzgarlık Kuşaklı Kruvaze Trençkot",
+                "sku": "981976289",
+                "color": "Camel / Bej",
+                "store_url": "https://www.trendyol.com/modark/kadin-bej-kisa-ruzgarlik-kusakli-kruvaze-trenckot-p-981976289",
+                "product_url": "https://guzelai.com/go/981976289",
+                "guzelai_url": "https://guzelai.com/go/981976289",
+                "image_url": "https://cdn.dsmcdn.com/ty1968/prod/QC_ENRICHMENT/20261003/22/be4aede9-b760-3858-b1be-f5d29f4b5e26/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1968/prod/QC_ENRICHMENT/20261003/22/be4aede9-b760-3858-b1be-f5d29f4b5e26/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_1164616756",
+                "category_label": "Gözlük & Aksesuar",
+                "brand": "LUPİX",
+                "price": "330,02₺",
+                "price_val": 330.02,
+                "name": "Premium Gold Detaylı Kahverengi Oval UV400 Kadın Güneş Gözlüğü",
+                "full_name": "LUPİX Premium Gold Detaylı Çerçevesiz Kahverengi UV400 Kadın Güneş Gözlüğü",
+                "sku": "1164616756",
+                "color": "Kahve / Gold",
+                "store_url": "https://www.trendyol.com/lupix/premium-gold-detayli-cercevesiz-kahverengi-uv400-kadin-gunes-gozlugu-modern-zamansiz-tasarim-p-1164616756",
+                "product_url": "https://guzelai.com/go/1164616756",
+                "guzelai_url": "https://guzelai.com/go/1164616756",
+                "image_url": "https://cdn.dsmcdn.com/ty1906/prod/QC_PREP/20260705/00/7fde3b9d-2bb2-34d5-902c-4ba078d32069/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1906/prod/QC_PREP/20260705/00/7fde3b9d-2bb2-34d5-902c-4ba078d32069/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_1134303452",
+                "category_label": "Gömlek & Bluz",
+                "brand": "DEFACTO",
+                "price": "399,99₺",
+                "price_val": 399.99,
+                "name": "Kadın %100 Pamuk Oversize Buz Mavisi Çizgili Gömlek",
+                "full_name": "DeFacto %100 Pamuk Oversize Çizgili Vual Uzun Kollu Mavi Gömlek H5406AX26SM",
+                "sku": "1134303452",
+                "color": "Buz Mavisi / Beyaz Çizgili",
+                "store_url": "https://www.trendyol.com/defacto/100-pamuk-oversize-cizgili-vual-uzun-kollu-mavi-gomlek-h5406ax26sm-p-1134303452",
+                "product_url": "https://guzelai.com/go/1134303452",
+                "guzelai_url": "https://guzelai.com/go/1134303452",
+                "image_url": "https://cdn.dsmcdn.com/ty1856/prod/QC_PREP/20260417/02/64cc322d-c5d2-3d4e-a3c4-4e9816a0d6c6/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1856/prod/QC_PREP/20260417/02/64cc322d-c5d2-3d4e-a3c4-4e9816a0d6c6/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_1142047526",
+                "category_label": "Pantolon",
+                "brand": "PAULMARK",
+                "price": "1.699₺",
+                "price_val": 1699.0,
+                "name": "Kadın Taba Kemerli Ekru Yüksek Bel Pileli Bol Paça Pantolon",
+                "full_name": "PAULMARK Kadın Taba Kemerli Ekru / Taş Rengi Pileli Bol Paça Kumaş Pantolon",
+                "sku": "1142047526",
+                "color": "Ekru / Krem (Taba Kemerli)",
+                "store_url": "https://www.trendyol.com/paulmark/kadin-pileli-bol-paca-pantolon-p-1142047526",
+                "product_url": "https://guzelai.com/go/1142047526",
+                "guzelai_url": "https://guzelai.com/go/1142047526",
+                "image_url": "https://cdn.dsmcdn.com/ty1945/prod/QC_PREP/20260822/13/74c3c108-c2bf-3d91-933a-d5c2dc3ba8d4/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1945/prod/QC_PREP/20260822/13/74c3c108-c2bf-3d91-933a-d5c2dc3ba8d4/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106134",
+                "category_label": "Çanta",
+                "brand": "BAGMORI",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Kahverengi Gold Toka Aksesuarlı Deri El & Omuz Çantası",
+                "full_name": "Bagmori Kahverengi Kemer Toka Aksesuarlı Askılı Mini Kadın Çanta",
+                "sku": "8682166106134",
+                "color": "Kahverengi / Gold Toka",
+                "store_url": "https://www.bagmori.com/products/kahverengi-aksesuarli-askili-mini-canta-m000008794",
+                "product_url": "https://guzelai.com/go/8682166106134",
+                "guzelai_url": "https://guzelai.com/go/8682166106134",
+                "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106134-1_ee980cd1-ef7a-4bd8-a949-e84b23b5b44f.jpg?v=1784880636",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106134-1_ee980cd1-ef7a-4bd8-a949-e84b23b5b44f.jpg?v=1784880636"],
+            },
+            "shoes": {
+                "id": "ty_1067033893",
+                "category_label": "Ayakkabı",
+                "brand": "SAVVES",
+                "price": "668,65₺",
+                "price_val": 668.65,
+                "name": "Kadın Acı Kahve Gold Toka Bantlı Kısa Topuklu Slingback Ayakkabı",
+                "full_name": "Savves Kadın Acı Kahve Gold Toka Bantlı Yeni Sezon Kısa Topuklu Ayakkabı",
+                "sku": "1067033893",
+                "color": "Acı Kahve / Gold Toka",
+                "store_url": "https://www.trendyol.com/savves/kadin-aci-kahve-bantli-yeni-sezon-kisa-topuklu-ayakkabi-p-1067033893",
+                "product_url": "https://guzelai.com/go/1067033893",
+                "guzelai_url": "https://guzelai.com/go/1067033893",
+                "image_url": "https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251214/22/7c7273e3-b43c-3f96-a909-d20fe9ada4ce/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251214/22/7c7273e3-b43c-3f96-a909-d20fe9ada4ce/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["camel", "bej", "kruvaze", "kuşaklı", "kadın", "trençkot", "kaban"],
+            "cap": ["kahve", "gold", "oval", "kadın", "gözlük"],
+            "top": ["mavi", "çizgili", "pamuk", "kadın", "gömlek"],
+            "bottom": ["ekru", "krem", "kemerli", "pileli", "palazzo", "kadın", "pantolon"],
+            "bag": ["kahve", "taba", "toka", "deri", "kadın", "çanta"],
+            "shoes": ["kahve", "bej", "tokalı", "topuklu", "kadın", "ayakkabı"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/om_01_trench.png",
+            "cap": "assets/items/om_02_cap.png",
+            "top": "assets/items/om_03_top.png",
+            "bottom": "assets/items/om_04_bottom.png",
+            "bag": "assets/items/om_05_bag.png",
+            "shoes": "assets/items/om_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/om_01_trench.png",
+            "cap": "assets/items/om_02_cap.png",
+            "top": "assets/items/om_03_top.png",
+            "bottom": "assets/items/om_04_bottom.png",
+            "bag": "assets/items/om_05_bag.png",
+            "shoes": "assets/items/om_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/om_model_step1.jpg",
+            "assets/om_model_step2.jpg",
+            "assets/om_model_step3.jpg",
+        ],
+    },
     {
         "id": "veor_uranis_bordo_kapsul_2k",
         "preferred_music_id": "veor_uranis_da_da_da_2026",
@@ -978,14 +1122,21 @@ def load_cutout_image(item: dict, use_local_first: bool = True) -> Image.Image:
     raise RuntimeError(f"Ürün görseli yüklenemedi: {item.get('name')}")
 
 
-def _pick_matching_live_item(candidates: list, keywords: list, rng: random.Random) -> dict:
-    """Canlı mağaza ürünleri arasından kombinin renk/stil anahtar kelimelerine en uygun olanı seçer."""
+def _pick_matching_live_item(
+    candidates: list,
+    keywords: list,
+    rng: random.Random,
+    slot_key: str = "top",
+    active_concept: dict = None,
+) -> dict:
+    """Canlı mağaza ürünleri arasından tarih/takvim konseptine ve Pinterest Old Money renk kurgusuna en uygun olanı seçer."""
     if not candidates:
         return None
     scored = []
     for c in candidates:
         text = f"{c.get('full_name', '')} {c.get('color', '')} {c.get('brand', '')}".lower()
         score = sum(2 for kw in keywords if kw.lower() in text)
+        score += score_online_item_for_concept(c, slot_key=slot_key, concept=active_concept)
         # Gerçek markalı ürünlere ekstra puan
         if c.get("brand") not in ("", "TRENDYOL", "GENEL MARKALAR"):
             score += 3
@@ -1146,11 +1297,18 @@ def scrape_single_product_url(url: str, fallback_slot: str = "top") -> tuple[str
 
 def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     """
-    Canlı e-ticaret mağazalarından (Trendyol, Quzu, Bagmori vb.) güncel ürünleri, gerçek TL fiyatlarını,
-    SKU ürün kodlarını ve doğrudan satın alma linklerini çekerek her seferinde ÖZGÜN bir 6'lı kadın kombini oluşturur.
-    Daha önce paylaşılan kombinleri ve SKU kodlarını output/published_outfits_history.json dosyasında takip ederek
-    aynı kombinin tekrar paylaşılmasını engeller.
+    1. Tarih ve takvim konseptini (`calendar_concept_engine.get_active_calendar_concept()`) algılar.
+    2. Pinterest 'Old Money / Quiet Luxury' renk kurgusuna göre daha önce paylaşılmamış özgün kombini seçer.
+    3. Canlı e-ticaret mağazalarından (Trendyol, Quzu, Bagmori vb.) güncel ürünleri, gerçek TL fiyatlarını,
+       SKU ürün kodlarını ve guzelai.com/go/{sku} yönlendirme linklerini hazırlar.
     """
+    active_concept = get_active_calendar_concept()
+    palette_info = active_concept.get("pinterest_palette", {})
+    print(
+        f"📅 [Tarih & Konsept Otomasyonu] {active_concept['date_label_tr']} -> "
+        f"'{active_concept['concept_title']}' | Renk Kurgusu: {palette_info.get('palette_name', '')}"
+    )
+
     seed_str = f"{datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S')}-{slot_name}"
     rng = random.Random(hashlib.md5(seed_str.encode()).hexdigest())
 
@@ -1172,7 +1330,7 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     # Öncelikle daha önce paylaşılmamış ve model kareleri mevcut olan özgün arketipi seç
     available_archetypes = [
         a for a in OUTFIT_ARCHETYPES
-        if a["id"] not in used_archetypes[-2:] and os.path.exists(a["model_frames"][0])
+        if a["id"] not in used_archetypes[-3:] and os.path.exists(a["model_frames"][0])
     ]
     if not available_archetypes:
         available_archetypes = [a for a in OUTFIT_ARCHETYPES if os.path.exists(a["model_frames"][0])] or [OUTFIT_ARCHETYPES[0]]
@@ -1213,7 +1371,13 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
                 live_pool.extend(cached_catalog[cat_key])
 
             fresh_pool = [it for it in live_pool if str(it.get("sku", "")) not in used_skus]
-            chosen = _pick_matching_live_item(fresh_pool or live_pool, archetype["keywords"].get(cat_key, []), rng)
+            chosen = _pick_matching_live_item(
+                fresh_pool or live_pool,
+                archetype["keywords"].get(cat_key, []),
+                rng,
+                slot_key=cat_key,
+                active_concept=active_concept,
+            )
 
         if not chosen and exact_map.get(cat_key):
             chosen = dict(exact_map[cat_key])
@@ -1333,6 +1497,17 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
 
     hook_packs = [
         {
+            "hook_title": "Pinterest'te En Çok Kaydedilen Old Money Sonbahar Renk Kurgusu: Camel, Buz Mavisi & Ekru Zarafeti 🤍🍂✨",
+            "spoken_hook_text": "Pinterest'te gördüğüm an kaydettiğim o kusursuz Old Money sonbahar zarafeti!",
+            "x_short_hook": "Pinterest'te en çok kaydedilen Old Money renk kurgusu: Camel, Buz Mavisi & Ekru 🤍🍂",
+            "yt_short_title": "Pinterest'te En Çok Kaydedilen Old Money Sonbahar Kombini: Camel, Buz Mavisi & Ekru 🤍🍂✨",
+            "tiktok_hook_title": "POV: Pinterest'te gördüğüm an kaydettiğim o kusursuz Old Money sonbahar zarafeti 🤍🍂✨",
+            "pinterest_title": "Old Money Sonbahar Renk Kurgusu: Camel Trençkot, Buz Mavisi Çizgili Gömlek & Ekru Palazzo Pantolon | GuzelAI.com",
+            "viral_hook": "🛑 Camel kruvaze kuşaklı trençkot, buz mavisi çizgili gömlek, taba kemerli ekru pileli bol paça pantolon ve kahve gold tokalı çanta & slingback topuklu uyumu! Önce guzelai.com'da doğrulanan 6 parçalık Old Money sonbahar kombini! 👇🤍✨",
+            "video_badge_collage": "» PINTEREST OLD MONEY SONBAHAR KOMBİNİ «",
+            "video_badge_walk": "» CAMEL, BUZ MAVİSİ & EKRU ZARAFETİ «",
+        },
+        {
             "hook_title": "Bordo & Koyu Kahve Peluş Deri Mont: Sonbaharın En Viral 2K Kapsül Kombini 🔥🍂✨",
             "spoken_hook_text": "Sonbaharda girdiğin her ortamda dönüp baktıracak o bordo ve kahve kapsül kombin!",
             "x_short_hook": "Bordo & Kahve Peluş Deri Mont: Sonbaharın en viral kombini 🔥🍂",
@@ -1365,24 +1540,15 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
             "video_badge_collage": "» İÇ SESİM HİÇ SUSMAZKEN BEN «",
             "video_badge_walk": "» AMA KOMBİNİM 10/10 OLMAK ZORUNDA «",
         },
-        {
-            "hook_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊☕✨",
-            "spoken_hook_text": "Kafamın içinde kırk tilki dönerken dışarıya verdiğim her şey yolunda kombini!",
-            "x_short_hook": "Kafamda 40 tilki dönerken dışarıya verdiğim şıklık 🦊✨",
-            "yt_short_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊✨",
-            "tiktok_hook_title": "POV: Kafamın içi kaosken dışarıya verdiğim 'Her şey kontrol altında' kombini 🦊☕",
-            "pinterest_title": "Kadın Sonbahar Sokak Stili: Siyah Bomber Ceket & Bol Paça Jean Kombin Önerisi",
-            "viral_hook": "🛑 'Giyecek hiçbir şeyim yok' krizinden 5 dakika sonra sokağa çıkarken ben! Boyu 10 cm uzun gösteren o 6 parçalık kurtarıcı kadın kombini! 👇🤍",
-            "video_badge_collage": "» KAFAMIN İÇİ KAOSKEN KOMBİNİM «",
-            "video_badge_walk": "» SOKAKTAKİ DURUŞU EFSANE «",
-        },
     ]
-    if archetype["id"] == "veor_uranis_bordo_kapsul_2k":
+    if archetype["id"] == "pinterest_oldmoney_camel_iceblue_ecru":
         chosen_hook_pack = hook_packs[0]
-    elif archetype["id"] == "tesla_halloween_ramp_curly":
+    elif archetype["id"] == "veor_uranis_bordo_kapsul_2k":
         chosen_hook_pack = hook_packs[1]
-    elif archetype["id"] == "inner_voice_black_bomber_stone_palazzo":
+    elif archetype["id"] == "tesla_halloween_ramp_curly":
         chosen_hook_pack = hook_packs[2]
+    elif archetype["id"] == "inner_voice_black_bomber_stone_palazzo":
+        chosen_hook_pack = hook_packs[3]
     else:
         chosen_hook_pack = rng.choice(hook_packs)
     archetype_title = archetype.get("title") or chosen_hook_pack["hook_title"]
@@ -1392,6 +1558,7 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         "is_trial": False,
         "archetype_id": archetype["id"],
         "archetype_title": archetype_title,
+        "calendar_concept": active_concept,
         "preferred_music_id": archetype.get("preferred_music_id", "veor_uranis_da_da_da_2026"),
         "hook_title": chosen_hook_pack["hook_title"],
         "spoken_hook_text": archetype.get("spoken_hook_text") or chosen_hook_pack.get("spoken_hook_text", ""),
@@ -1414,4 +1581,5 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         "total_price_str": total_price_str,
         "model_frames": model_frames,
     }
+
 
