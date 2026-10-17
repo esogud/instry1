@@ -129,21 +129,21 @@ async def _synthesize_tts_clip_async(text: str, voice: str, rate: str, pitch: st
 
 def _generate_spoken_clip(
     text: str,
-    voice: str,
-    rate: str = "+18%",
-    pitch: str = "+2Hz",
-    max_duration: float = 2.5,
+    voice: str = "tr-TR-EmelNeural",
+    rate: str = "+4%",
+    pitch: str = "+0Hz",
     cache_tag: str = "clip",
 ) -> np.ndarray:
     """
-    edge-tts kullanarak doğal Türkçe nöral konuşma üretir, başındaki/sonundaki sessizlikleri
-    kırpar ve sahne süresini aşmaması için gerekiyorsa zaman-sıkıştırma (time-stretch) uygular.
+    edge-tts kullanarak %100 doğal Türkçe nöral konuşma üretir.
+    Robotik/metalik ses bozulmasına (phase vocoder artifact) yol açan time_stretch KESİNLİKLE uygulanmaz;
+    doğal konuşma hızı ve temiz stüdyo EQ kullanılır.
     """
     if not HAS_EDGE_TTS or not text.strip():
         return np.zeros(0, dtype=np.float32)
 
     os.makedirs("output/_tts_cache", exist_ok=True)
-    h_key = hashlib.md5(f"{text}|{voice}|{rate}".encode("utf-8")).hexdigest()[:12]
+    h_key = hashlib.md5(f"v2|{text}|{voice}|{rate}".encode("utf-8")).hexdigest()[:12]
     mp3_path = os.path.join("output/_tts_cache", f"tts_{cache_tag}_{h_key}.mp3")
 
     try:
@@ -151,18 +151,11 @@ def _generate_spoken_clip(
             try:
                 asyncio.run(_synthesize_tts_clip_async(text, voice, rate, pitch, mp3_path))
             except Exception:
-                fallback_voice = "en-US-AvaMultilingualNeural" if "Emel" in voice else "tr-TR-EmelNeural"
-                asyncio.run(_synthesize_tts_clip_async(text, fallback_voice, rate, "+0Hz", mp3_path))
+                asyncio.run(_synthesize_tts_clip_async(text, "tr-TR-EmelNeural", "+4%", "+0Hz", mp3_path))
         y, _ = librosa.load(mp3_path, sr=SR, mono=True)
-        y_trim, _ = librosa.effects.trim(y, top_db=28)
+        y_trim, _ = librosa.effects.trim(y, top_db=30)
         if len(y_trim) < 100:
             return np.zeros(0, dtype=np.float32)
-
-        cur_dur = len(y_trim) / SR
-        if cur_dur > max_duration and max_duration > 0.4:
-            stretch_rate = min(1.32, cur_dur / max_duration)
-            y_trim = librosa.effects.time_stretch(y_trim, rate=stretch_rate)
-            y_trim = y_trim[: int(max_duration * SR)]
 
         return _apply_vocal_presence_eq(y_trim.astype(np.float32))
     except Exception as e:
@@ -170,11 +163,28 @@ def _generate_spoken_clip(
         return np.zeros(0, dtype=np.float32)
 
 
-# 10 Farklı Gerçek Çoklu-Enstrüman Stüdyo Kaydı + İki Kişilik Doğal Türkçe "İç Sesim / POV" Diyalog Hook Paketi
+# 10 Farklı Gerçek Çoklu-Enstrüman Stüdyo Kaydı + Sadece Giriş Hook & Kapanış CTA ("Detaylar guzelai.com'da")
+# (Ürünler tek tek okunmaz, ses tüm videoya yayılmaz; ortadaki ~6.5 saniye boyunca saf enstrüman müziği akar)
 MULTI_INSTRUMENT_PROFILES = [
     {
+        "id": "veor_uranis_da_da_da_2026",
+        "name": "Veor Uranis – Da Da Da Dadada (Viral Reels Hit)",
+        "instruments_desc": "Veor Uranis 'Da Da Da Dadada' Orijinal Viral Reels & TikTok Parçası (44.1 kHz Stereo Master)",
+        "bpm": 124,
+        "intro_track": "veor_uranis_da_da_da.wav",
+        "intro_offset": 19.2,
+        "walk_track": "veor_uranis_da_da_da.wav",
+        "walk_offset": 24.4,
+        "continuous_track": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [293.66, 349.23, 440.0, 523.25, 587.33, 659.25],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Sokağa çıkarken herkesin dönüp baktığı o kusursuz sonbahar kombinim!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
         "id": "milan_sax_bossa_guitar_inner_voice",
-        "name": "Milano Saksafon, Akustik Gitar & Bossa-Lounge (İç Sesim POV Hook)",
+        "name": "Milano Saksafon, Akustik Gitar & Bossa-Lounge",
         "instruments_desc": "Tenor Saksafon + Akustik Klasik Gitar + Kontrbas + Latin Perküsyon & Canlı Trompet",
         "bpm": 122,
         "intro_track": "bossa_antigua.mp3",
@@ -183,11 +193,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 56.5,
         "horn_accent": True,
         "pluck_scale_hz": [293.66, 349.23, 440.0, 523.25, 587.33, 659.25],
-        "voice_question": ("en-US-AvaMultilingualNeural", "+16%", "+2Hz"),
-        "voice_answer": ("tr-TR-EmelNeural", "+20%", "+2Hz"),
-        "dialogue_q": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim!",
-        "dialogue_a": "Kafamın içi kaos olabilir ama bu altı parçalık kombinim kusursuz olmak zorunda!",
-        "dialogue_walk": "Sokaktaki duruşuna bakın! Görselli mağaza linkleri açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "old_money_violin_orchestra_pov",
@@ -200,11 +208,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 0.4,
         "horn_accent": False,
         "pluck_scale_hz": [277.18, 329.63, 369.99, 440.0, 554.37, 659.25],
-        "voice_question": ("en-US-AndrewMultilingualNeural", "+16%", "+1Hz"),
-        "voice_answer": ("tr-TR-EmelNeural", "+20%", "+2Hz"),
-        "dialogue_q": "Kafamın içinde kırk tilki dönerken dışarıya verdiğim sakinlik şaka mı?",
-        "dialogue_a": "Çünkü giyecek hiçbir şeyim yok krizinden beş dakika sonra bu kombinle çıktım!",
-        "dialogue_walk": "Üzerindeki duruşu efsane! Kaybolmadan kaydet, tüm linkler guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Kafamın içinde kırk tilki dönerken dışarıya verdiğim sakinlik!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "nisantasi_funk_slapbass_brass_pov",
@@ -217,11 +223,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 19.0,
         "horn_accent": True,
         "pluck_scale_hz": [261.63, 311.13, 392.00, 466.16, 523.25, 622.25],
-        "voice_question": ("fr-FR-VivienneMultilingualNeural", "+16%", "+2Hz"),
-        "voice_answer": ("en-US-EmmaMultilingualNeural", "+18%", "+2Hz"),
-        "dialogue_q": "Modum sıfırken bile kombinim neden on üzerinden on olmak zorunda?",
-        "dialogue_a": "Çünkü terapi pahalı ama bu siyah kaşe bomber ve palazzo jean tam bir kurtarıcı!",
-        "dialogue_walk": "Duruşuna dikkat! Doğrulanmış mağaza linkleri açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Modum sıfırken bile kombinim on üzerinden on olmak zorunda!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "paris_cafe_accordion_strings_pov",
@@ -234,11 +238,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 18.0,
         "horn_accent": False,
         "pluck_scale_hz": [293.66, 369.99, 440.0, 493.88, 587.33, 739.99],
-        "voice_question": ("de-DE-SeraphinaMultilingualNeural", "+16%", "+2Hz"),
-        "voice_answer": ("tr-TR-EmelNeural", "+20%", "+3Hz"),
-        "dialogue_q": "Kimseyle konuşmak istemeyip yine de ortamdaki en şık kişi olma çabam!",
-        "dialogue_a": "İç sesim hiç susmasa da şu altı parçanın uyumu her şeyi unutturuyor!",
-        "dialogue_walk": "Gündüzden geceye tek kombin! Görselli ürün kartları guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Kimseyle konuşmak istemeyip yine de ortamdaki en şık kişi olma çabam!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "soho_lounge_sax_rhodes_pov",
@@ -251,11 +253,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 42.0,
         "horn_accent": True,
         "pluck_scale_hz": [246.94, 293.66, 369.99, 440.0, 493.88, 587.33],
-        "voice_question": ("en-US-AndrewMultilingualNeural", "+16%", "+1Hz"),
-        "voice_answer": ("en-US-AvaMultilingualNeural", "+18%", "+2Hz"),
-        "dialogue_q": "Beş dakikada hazırlanıp çıkacağım dedikten yarım saat sonra ben!",
-        "dialogue_a": "Ama kabul edin, bu ceket ve yüksek bel pantolon ikilisine kesinlikle değdi!",
-        "dialogue_walk": "Stoklar bitmeden yakala! Tüm görselli linkler açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Beş dakikada hazırlanıp çıkacağım dedikten yarım saat sonra ben!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "jazz_trumpet_grand_piano_pov",
@@ -268,11 +268,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 64.0,
         "horn_accent": True,
         "pluck_scale_hz": [261.63, 329.63, 392.0, 493.88, 523.25, 659.25],
-        "voice_question": ("en-US-EmmaMultilingualNeural", "+18%", "+2Hz"),
-        "voice_answer": ("tr-TR-EmelNeural", "+20%", "+2Hz"),
-        "dialogue_q": "İç sesimle tartışırken bir anda sokakta podyum yürüyüşüne geçtim!",
-        "dialogue_a": "Küçük bütçeyle podyum şıklığı yakalamanın formülü bu altı parçada gizli!",
-        "dialogue_walk": "Kıvırcık modelimizdeki duruşa bakın! Linkler guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "İç sesimle tartışırken bir anda sokakta podyum yürüyüşüne geçtim!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "autumn_acoustic_guitar_groove_pov",
@@ -285,11 +283,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 28.0,
         "horn_accent": False,
         "pluck_scale_hz": [293.66, 369.99, 440.0, 587.33, 659.25, 739.99],
-        "voice_question": ("tr-TR-EmelNeural", "+20%", "+3Hz"),
-        "voice_answer": ("en-US-AvaMultilingualNeural", "+18%", "+1Hz"),
-        "dialogue_q": "Aynı kıyafetlerle neden on santim daha uzun ve zarif görünüyor?",
-        "dialogue_a": "Çünkü sırrı taş rengi yüksek bel palazzo jean ve doğru ceket kesiminde!",
-        "dialogue_walk": "Sokakta herkesin dönüp baktığı o kombin! Linkler açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Giyecek hiçbir şeyim yok krizinden beş dakika sonra sokağa çıkarken ben!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "quiet_luxury_vibraphone_bass_pov",
@@ -302,11 +298,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 52.0,
         "horn_accent": False,
         "pluck_scale_hz": [261.63, 311.13, 392.0, 466.16, 587.33, 698.46],
-        "voice_question": ("fr-FR-RemyMultilingualNeural", "+16%", "+1Hz"),
-        "voice_answer": ("tr-TR-EmelNeural", "+20%", "+2Hz"),
-        "dialogue_q": "Dışarıdan sakin görünüyorum ama iç sesim sabahtan beri kombin seçiyor!",
-        "dialogue_a": "Sonunda herkesin linkini soracağı bu altı parçalık kadın kombininde karar kıldık!",
-        "dialogue_walk": "Üzerindeki duruşu şahane! Görselli linkler guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Dışarıdan sakin görünüyorum ama iç sesim bir dakika bile susmuyor!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "october_celesta_strings_beat_pov",
@@ -319,11 +313,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 2.0,
         "horn_accent": True,
         "pluck_scale_hz": [311.13, 369.99, 466.16, 554.37, 622.25, 739.99],
-        "voice_question": ("en-US-AvaMultilingualNeural", "+18%", "+3Hz"),
-        "voice_answer": ("en-US-EmmaMultilingualNeural", "+18%", "+2Hz"),
-        "dialogue_q": "Ekim ayında sabah soğuk öğlen sıcak havada ne giyeceğim diyenler!",
-        "dialogue_a": "İşte gün boyu kurtarıcı olan, tüm bakışları üzerine kilitleyen o altı parça!",
-        "dialogue_walk": "Kaybolmadan hemen kaydet! Tüm ürün linkleri açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Plan iptal olunca üzülmeyip yine de kombinimi sergilemeye çıktım!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
     {
         "id": "sunset_electric_guitar_chillwave_pov",
@@ -336,11 +328,9 @@ MULTI_INSTRUMENT_PROFILES = [
         "walk_offset": 68.0,
         "horn_accent": False,
         "pluck_scale_hz": [293.66, 349.23, 440.0, 523.25, 659.25, 783.99],
-        "voice_question": ("en-US-BrianMultilingualNeural", "+16%", "+1Hz"),
-        "voice_answer": ("en-US-AvaMultilingualNeural", "+18%", "+2Hz"),
-        "dialogue_q": "Nişantaşı sokaklarında herkesin dönüp baktığı o sonbahar kombini!",
-        "dialogue_a": "Siyah kaşe bomber, taş rengi palazzo jean ve fularlı çantayla kusursuz stil!",
-        "dialogue_walk": "Tüm parçaların doğrulanmış linkleri açıklamada ve guzelai nokta comda!",
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
 ]
 
@@ -348,7 +338,7 @@ MULTI_INSTRUMENT_PROFILES = [
 def _select_non_repeating_profile(seed_key: str) -> dict:
     """
     Son kullanılan müzik ve seslendirme profillerini takip ederek her videoda
-    farklı bir enstrüman grubu ve farklı bir doğal konuşma diyaloğu seçer.
+    farklı bir enstrüman grubu ve farklı bir doğal konuşma hook'u seçer.
     """
     recent_ids = []
     if os.path.exists(HISTORY_FILE):
@@ -385,11 +375,17 @@ def generate_viral_fashion_audio(
     outfit: dict = None,
 ) -> dict:
     """
-    Açık kaynaklı çoklu-enstrüman stüdyo kayıtları (Saksafon, Akustik/Elektro Gitar, Keman Orkestrası,
-    Akordeon, Kuyruklu Piyano, Funk Slap Bas, Caz Trompet, Vibrafon) + edge-tts İki Kişilik Doğal
-    Türkçe Diyalog Hook seslendirmesini (Sidechain Ducking ile) birleştirir.
+    Açık kaynaklı çoklu-enstrüman stüdyo kayıtları + SADECE girişte kısa doğal Türkçe Hook cümlesi
+    (0.12s - ~2.2s) ve kapanışta 'Detaylar güzelai.com'da' çağrısı (~8.8s - ~10.3s) üretir.
+    Ortadaki ~6.5 saniye boyunca seslendirme yapılmaz; ürünler tek tek okunmaz; enstrüman müziği
+    tam stüdyo kalitesinde nefes alır.
     """
-    profile = _select_non_repeating_profile(seed_key)
+    pref_id = (outfit or {}).get("preferred_music_id")
+    if pref_id:
+        matched = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] == pref_id]
+        profile = dict(matched[0]) if matched else dict(_select_non_repeating_profile(seed_key))
+    else:
+        profile = dict(_select_non_repeating_profile(seed_key))
     h = int(hashlib.md5(f"{seed_key}_{profile['id']}".encode("utf-8")).hexdigest()[:8], 16)
     rng = np.random.default_rng(h)
 
@@ -400,33 +396,37 @@ def generate_viral_fashion_audio(
     intro_path = os.path.join(MUSIC_LIB_DIR, profile["intro_track"])
     walk_path = os.path.join(MUSIC_LIB_DIR, profile["walk_track"])
 
-    intro_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], transition_sec + 0.5)
-    walk_stereo = _load_stereo_segment(walk_path, profile["walk_offset"], (duration - transition_sec) + 0.6)
-
     music_stereo = np.zeros((n_samples, 2), dtype=np.float32)
-    music_stereo[:trans_idx] = intro_stereo[:trans_idx] * 0.78
+    if profile.get("continuous_track"):
+        full_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], duration + 0.6)
+        music_stereo[:trans_idx] = full_stereo[:trans_idx] * 0.86
+        music_stereo[trans_idx:] = full_stereo[trans_idx:n_samples] * 0.98
+    else:
+        intro_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], transition_sec + 0.5)
+        walk_stereo = _load_stereo_segment(walk_path, profile["walk_offset"], (duration - transition_sec) + 0.6)
+        music_stereo[:trans_idx] = intro_stereo[:trans_idx] * 0.82
 
-    # Sahne geçişinde (5.15s - 5.65s) pürüzsüz crossfade + 2. sahnede tam stüdyo enerjisi
-    cf_samples = int(0.35 * SR)
-    walk_len = n_samples - trans_idx
-    music_stereo[trans_idx:] = walk_stereo[:walk_len] * 0.96
+        # Sahne geçişinde (5.15s - 5.65s) pürüzsüz crossfade + 2. sahnede tam stüdyo enerjisi
+        cf_samples = int(0.35 * SR)
+        walk_len = n_samples - trans_idx
+        music_stereo[trans_idx:] = walk_stereo[:walk_len] * 0.96
 
-    if trans_idx > cf_samples and walk_len > cf_samples:
-        fade_out_curve = np.linspace(1.0, 0.0, cf_samples, dtype=np.float32)[:, None]
-        fade_in_curve = np.linspace(0.0, 1.0, cf_samples, dtype=np.float32)[:, None]
-        music_stereo[trans_idx - cf_samples : trans_idx] = (
-            intro_stereo[trans_idx - cf_samples : trans_idx] * 0.78 * fade_out_curve
-            + walk_stereo[:cf_samples] * 0.96 * fade_in_curve
-        )
+        if trans_idx > cf_samples and walk_len > cf_samples:
+            fade_out_curve = np.linspace(1.0, 0.0, cf_samples, dtype=np.float32)[:, None]
+            fade_in_curve = np.linspace(0.0, 1.0, cf_samples, dtype=np.float32)[:, None]
+            music_stereo[trans_idx - cf_samples : trans_idx] = (
+                intro_stereo[trans_idx - cf_samples : trans_idx] * 0.82 * fade_out_curve
+                + walk_stereo[:cf_samples] * 0.96 * fade_in_curve
+            )
 
     # Sahne geçişinde gerçek caz trompet/nefesli vurgusu (Horn Drop Accent)
     if profile.get("horn_accent"):
         trumpet_path = os.path.join(MUSIC_LIB_DIR, "trumpet.ogg")
-        horn_seg = _load_stereo_segment(trumpet_path, 0.0, 1.65)
+        horn_seg = _load_stereo_segment(trumpet_path, 0.0, 1.45)
         h_len = len(horn_seg)
         if trans_idx + h_len < n_samples:
             h_env = np.sin(np.pi * np.linspace(0, 1, h_len, dtype=np.float32))[:, None]
-            music_stereo[trans_idx : trans_idx + h_len] += horn_seg * h_env * 0.36
+            music_stereo[trans_idx : trans_idx + h_len] += horn_seg * h_env * 0.32
 
     # 2. KIYAFET PARÇALARI UÇARKEN AKUSTİK TEL (KARPLUS-STRONG) & HAVA EFEKTİ
     sfx_stereo = np.zeros((n_samples, 2), dtype=np.float32)
@@ -434,71 +434,57 @@ def generate_viral_fashion_audio(
         scale_hz = profile["pluck_scale_hz"]
         for idx, pt in enumerate(item_pop_times):
             note_hz = scale_hz[idx % len(scale_hz)]
-            pluck_sfx = _karplus_strong_pluck(note_hz, duration=0.28, rng=rng)
-            pan = -0.38 if idx % 2 == 0 else 0.38
-            _mix_at(sfx_stereo, pluck_sfx, max(0.0, pt + 0.16), pan=pan, gain=0.72)
+            pluck_sfx = _karplus_strong_pluck(note_hz, duration=0.26, rng=rng)
+            pan = -0.32 if idx % 2 == 0 else 0.32
+            _mix_at(sfx_stereo, pluck_sfx, max(0.0, pt + 0.16), pan=pan, gain=0.58)
 
-    # 3. DOĞAL TÜRKÇE KARŞILIKLI KONUŞMA (DİYALOG HOOK) SESLENDİRMESİ (edge-tts)
+    # 3. SADECE GİRİŞ HOOK CÜMLESİ (0.12s - ~2.2s) VE KAPANIŞ "Detaylar guzelai.com'da" (~8.8s - ~10.3s)
     vocal_track = np.zeros((n_samples, 2), dtype=np.float32)
     vocal_envelope = np.zeros(n_samples, dtype=np.float32)
 
-    vq_name, vq_rate, vq_pitch = profile["voice_question"]
-    va_name, va_rate, va_pitch = profile["voice_answer"]
+    v_name, v_rate, v_pitch = profile.get("voice_hook", ("tr-TR-EmelNeural", "+4%", "+0Hz"))
+    custom_hook_voice = (outfit or {}).get("spoken_hook_text") or profile["intro_hook_text"]
+    outro_cta_text = profile.get("outro_cta_text", "Detaylar güzelai nokta com'da.")
 
-    clip_q = _generate_spoken_clip(
-        profile["dialogue_q"], voice=vq_name, rate=vq_rate, pitch=vq_pitch, max_duration=2.05, cache_tag="q"
-    )
-    clip_a = _generate_spoken_clip(
-        profile["dialogue_a"], voice=va_name, rate=va_rate, pitch=va_pitch, max_duration=2.85, cache_tag="a"
-    )
-    clip_w = _generate_spoken_clip(
-        profile["dialogue_walk"], voice=va_name, rate=va_rate, pitch=va_pitch, max_duration=3.55, cache_tag="w"
-    )
+    clip_intro = _generate_spoken_clip(custom_hook_voice, voice=v_name, rate=v_rate, pitch=v_pitch, cache_tag="intro_hook")
+    clip_outro = _generate_spoken_clip(outro_cta_text, voice=v_name, rate=v_rate, pitch=v_pitch, cache_tag="outro_cta")
 
-    # Diyalog 1: Merak Uyandıran Soru (0.10s -> ~2.10s, hafif sol pan)
-    t_q_start = 0.10
-    if len(clip_q) > 0:
-        _mix_at(vocal_track, clip_q, t_q_start, pan=-0.10, gain=1.05)
-        q_s = int(t_q_start * SR)
-        q_e = min(n_samples, q_s + len(clip_q))
-        vocal_envelope[q_s:q_e] = 1.0
-        t_a_start = min(2.25, t_q_start + (len(clip_q) / SR) + 0.12)
-    else:
-        t_a_start = 0.25
+    # Giriş Hook (0.14s -> maksimum 2.55s)
+    t_intro_start = 0.14
+    intro_dur_sec = 0.0
+    if len(clip_intro) > 0:
+        max_intro_samples = int(2.45 * SR)
+        clip_intro = clip_intro[:max_intro_samples]
+        _mix_at(vocal_track, clip_intro, t_intro_start, pan=0.0, gain=1.06)
+        i_s = int(t_intro_start * SR)
+        i_e = min(n_samples, i_s + len(clip_intro))
+        vocal_envelope[i_s:i_e] = 1.0
+        intro_dur_sec = (i_e - i_s) / SR
 
-    # Diyalog 2: Stilist Cevabı & Kombin Sırrı (2.15s -> ~5.05s, hafif sağ pan)
-    if len(clip_a) > 0:
-        max_a_samples = max(0, int((transition_sec - 0.18 - t_a_start) * SR))
-        clip_a_fit = clip_a[:max_a_samples] if max_a_samples > 0 else clip_a
-        _mix_at(vocal_track, clip_a_fit, t_a_start, pan=0.10, gain=1.08)
-        a_s = int(t_a_start * SR)
-        a_e = min(n_samples, a_s + len(clip_a_fit))
-        vocal_envelope[a_s:a_e] = 1.0
-
-    # Diyalog 3: Model Yürüyüş Sahnesi Hook & Link Çağrısı (5.70s -> ~9.25s, merkez)
-    t_w_start = transition_sec + 0.32
-    if len(clip_w) > 0:
-        _mix_at(vocal_track, clip_w, t_w_start, pan=0.0, gain=1.08)
-        w_s = int(t_w_start * SR)
-        w_e = min(n_samples, w_s + len(clip_w))
-        vocal_envelope[w_s:w_e] = 1.0
+    # Kapanış CTA ("Detaylar güzelai.com'da", videonun son ~2.1 saniyesinde: ~8.85s -> ~10.35s)
+    outro_dur_sec = len(clip_outro) / SR if len(clip_outro) > 0 else 0.0
+    t_outro_start = max(transition_sec + 3.1, duration - outro_dur_sec - 0.65)
+    if len(clip_outro) > 0:
+        _mix_at(vocal_track, clip_outro, t_outro_start, pan=0.0, gain=1.06)
+        o_s = int(t_outro_start * SR)
+        o_e = min(n_samples, o_s + len(clip_outro))
+        vocal_envelope[o_s:o_e] = 1.0
 
     # 4. AKILLI SIDECHAIN SES DUCKING:
-    # Konuşma varken enstrüman müziği yumuşakça %36 seviyesine çekilir (konuşma net duyulur),
-    # konuşma aralarında, geçiş patlamasında (5.1s-5.7s) ve son 1.8 saniyede enstrümanlar %100 parlar!
-    smooth_vox_mask = gaussian_filter1d(vocal_envelope, sigma=int(0.085 * SR))
+    # Sadece girişteki ~2sn hook ve sondaki ~1.4sn kapanış sırasında müzik hafifçe %42'ye çekilir;
+    # 2.3sn ile 8.8sn arasındaki 6.5 saniye boyunca enstrüman müziği %100 saf ve kesintisiz çalar!
+    smooth_vox_mask = gaussian_filter1d(vocal_envelope, sigma=int(0.09 * SR))
     smooth_vox_mask = np.clip(smooth_vox_mask, 0.0, 1.0)
-    ducking_gain = (1.0 - 0.64 * smooth_vox_mask)[:, None]
+    ducking_gain = (1.0 - 0.58 * smooth_vox_mask)[:, None]
 
-    # Toplam Miksaj (Enstrümanlar + Akustik Tel Efektleri + İki Kişilik Doğal Türkçe Seslendirme)
     stereo = music_stereo * ducking_gain + sfx_stereo + vocal_track
 
     # 5. Yumuşak Giriş / Çıkış (Fade-in & Fade-out) ve Stüdyo Mastering Limiter
     t_full = np.linspace(0, duration, n_samples, endpoint=False)
     fade_in = np.clip(t_full / 0.12, 0.0, 1.0)
-    fade_out = np.clip((duration - t_full) / 0.65, 0.0, 1.0)
+    fade_out = np.clip((duration - t_full) / 0.55, 0.0, 1.0)
     master_env = (fade_in * fade_out)[:, None]
-    stereo = _soft_clip(stereo * master_env, drive=1.25)
+    stereo = _soft_clip(stereo * master_env, drive=1.22)
 
     peak = np.max(np.abs(stereo))
     if peak > 0:
@@ -512,8 +498,21 @@ def generate_viral_fashion_audio(
         wf.setframerate(SR)
         wf.writeframes(pcm16.tobytes())
 
+    voice_ratio = float(np.mean(vocal_envelope > 0.1))
+    middle_voice_ratio = float(np.mean(vocal_envelope[int(2.7 * SR) : int(8.5 * SR)] > 0.1))
+    profile["dialogue_q"] = custom_hook_voice
+    profile["dialogue_a"] = ""
+    profile["dialogue_walk"] = "Detaylar guzelai.com'da!"
+    profile["audio_quality_metrics"] = {
+        "intro_hook_duration_sec": round(intro_dur_sec, 2),
+        "outro_cta_start_sec": round(t_outro_start, 2),
+        "outro_cta_duration_sec": round(outro_dur_sec, 2),
+        "total_voice_ratio": round(voice_ratio, 3),
+        "middle_music_only_voice_ratio": round(middle_voice_ratio, 4),
+    }
+
     print(
-        f"[Çoklu-Enstrüman & Doğal Konuşma Motoru] '{profile['name']}' "
-        f"[{profile['instruments_desc']}] + İki Kişilik Türkçe Sesli Hook üretildi -> {output_wav}"
+        f"[Çoklu-Enstrüman & Doğal Hook Motoru] '{profile['name']}' "
+        f"| Giriş Hook ({intro_dur_sec:.1f}sn) + 6.5sn Saf Enstrüman + Kapanış CTA ({outro_dur_sec:.1f}sn) -> {output_wav}"
     )
     return profile
