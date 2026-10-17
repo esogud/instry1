@@ -220,6 +220,29 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     font_sub = get_font(24, bold=True)
     font_legal = get_font(19, bold=False)
 
+    # Her bir ürün için görselli ürün link kartı (output/item_card_{key}.jpg) üret
+    for p in prepared_items:
+        try:
+            cw, ch = 800, 1000
+            card_bg = Image.new("RGBA", (cw, ch), (249, 247, 243, 255))
+            cdraw = ImageDraw.Draw(card_bg)
+            cdraw.rounded_rectangle((30, 30, cw - 30, 95), radius=24, fill=(14, 14, 18, 255))
+            cdraw.text((cw // 2, 62), f"{p['data'].get('brand', 'MAĞAZA')} • DOĞRULANMIŞ ÜRÜN", fill=(255, 255, 255, 255), font=font_price, anchor="mm")
+            p_img = p["img"].copy()
+            p_img.thumbnail((580, 580), Image.Resampling.LANCZOS)
+            card_bg.paste(p_img, ((cw - p_img.width) // 2, 130 + (580 - p_img.height) // 2), p_img)
+            cdraw.rounded_rectangle((35, 735, cw - 35, 965), radius=28, fill=(14, 14, 18, 248))
+            p_name = str(p["data"].get("name", ""))[:38]
+            cdraw.text((cw // 2, 780), p_name, fill=(255, 255, 255, 255), font=font_sub, anchor="mm")
+            cdraw.text((cw // 2, 835), f"FİYAT: {p['data'].get('price', '')}  |  KOD: {p['data'].get('sku', '-')}", fill=(242, 218, 178, 255), font=font_price, anchor="mm")
+            cdraw.text((cw // 2, 890), "» Görselli Link: guzelai.com/#kombinler «", fill=(210, 210, 220, 255), font=font_sub, anchor="mm")
+            cdraw.text((cw // 2, 935), "Reklam/iş birliği içermez • Kombin önerisidir (zorunlu #reklam)", fill=(165, 165, 175, 255), font=font_legal, anchor="mm")
+            card_path = os.path.join(out_dir, f"item_card_{p['key']}.jpg")
+            card_bg.convert("RGB").save(card_path, quality=94)
+            p["data"]["visual_card_path"] = card_path
+        except Exception as ce:
+            print(f"[Görsel Ürün Kartı Uyarısı] {p['key']}: {ce}")
+
     total_duration = 11.0
     total_frames = int(total_duration * FPS)
     collage_end_sec = 5.4
@@ -245,10 +268,11 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             canvas = bg_base.copy()
             draw = ImageDraw.Draw(canvas)
 
-            # Üst Başlık Bandı (True OLED Black)
+            # Üst Başlık Bandı (True OLED Black - Viral Curiosity Hook)
             header_alpha = int(min(1.0, t / 0.4) * 255)
-            draw.rounded_rectangle((S(220), S(80), S(860), S(152)), radius=S(36), fill=(10, 10, 14, header_alpha))
-            draw.text((S(540), S(116)), "GÜNÜN KOMBİNİ • LİNKLİ", fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
+            collage_badge = outfit.get("video_badge_collage", "★ 50.000₺ GİBİ DURAN O KOMBİN ★").replace("🔥", "★").replace("✨", "★")
+            draw.rounded_rectangle((S(140), S(80), S(940), S(152)), radius=S(36), fill=(10, 10, 14, header_alpha))
+            draw.text((S(540), S(116)), collage_badge, fill=(255, 255, 255, header_alpha), font=font_header, anchor="mm")
 
             # 1) Önce tüm kıyafet görsellerini çiz
             active_labels = []
@@ -293,14 +317,14 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
                 draw.rounded_rectangle((S(85), by, S(995), by + S(138)), radius=S(48), fill=(10, 10, 14, 250))
                 draw.text(
                     (S(540), by + S(35)),
-                    f"TOPLAM KOMBİN: {total_price_str}  •  KAYDET",
+                    f"TOPLAM: {total_price_str} • KAYBOLMADAN KAYDET!",
                     fill=(255, 255, 255, 255),
                     font=font_badge,
                     anchor="mm",
                 )
                 draw.text(
                     (S(540), by + S(76)),
-                    "» LİNKLER AÇIKLAMADA, YORUMDA & THREADS'TE «",
+                    "» LİNKLER AÇIKLAMADA, YORUMDA & GUZELAI.COM'DA «",
                     fill=(242, 218, 178, 255),
                     font=font_sub,
                     anchor="mm",
@@ -316,7 +340,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             if abs(t - 5.0) < (0.5 / FPS):
                 canvas.convert("RGB").save(os.path.join(out_dir, "kombin_collage.png"), compress_level=1)
 
-        # 2. BÖLÜM: 2K Sokakta / Mekanda Yürüyen Model (5.4sn - 11.0sn)
+        # 2. BÖLÜM: Sokakta / Mekanda Yürüyen Model (5.4sn - 11.0sn)
         if t >= collage_end_sec:
             walk_t = t - collage_end_sec
             walk_dur = total_duration - collage_end_sec
@@ -343,9 +367,10 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             else:
                 walk_frame = bg_base.copy()
 
+            walk_badge = outfit.get("video_badge_walk", "» 4. PARÇANIN DURUŞUNA BAKIN «").replace("🔥", "★").replace("✨", "★")
             mini_draw = ImageDraw.Draw(walk_frame)
-            mini_draw.rounded_rectangle((S(45), S(90), S(620), S(165)), radius=S(36), fill=(10, 10, 14, 228))
-            mini_draw.text((S(332), S(128)), "KOMBİNİN DURUŞU • 2K UHD", fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
+            mini_draw.rounded_rectangle((S(45), S(90), S(885), S(165)), radius=S(36), fill=(10, 10, 14, 228))
+            mini_draw.text((S(465), S(128)), walk_badge, fill=(255, 255, 255, 255), font=font_badge, anchor="mm")
 
             mini_draw.rounded_rectangle((S(55), S(1595), S(1025), S(1755)), radius=S(30), fill=(255, 255, 255, 240))
             mini_draw.text(
@@ -357,7 +382,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             )
             mini_draw.text(
                 (S(540), S(1680)),
-                "» Ürün linkleri açıklamada, ilk yorumda & Threads'te! «",
+                "» Ürün linkleri açıklamada, ilk yorumda & guzelai.com'da! «",
                 fill=(65, 45, 30, 255),
                 font=font_sub,
                 anchor="mm",
@@ -381,7 +406,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         # 4:4:4 Tam Chroma (subsampling=0) ve %98 Kalite ile Kayıpsız Ara Kare Kaydı
         final_frame.save(os.path.join(frames_dir, f"frame_{f_idx:04d}.jpg"), quality=98, subsampling=0)
 
-    # Viral Moda / Kombin Reels Müziği + Hareket Ses Efektlerini Üret
+    # Viral Moda / Kombin Reels Çoklu-Enstrüman Müziği + İki Kişilik Doğal Türkçe Sesli Hook Üret
     wav_path = os.path.join(out_dir, "viral_fashion_track.wav")
     pop_times = [c["t_in"] for c in items_cfg]
     music_info = generate_viral_fashion_audio(
@@ -390,6 +415,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         seed_key=outfit.get("timestamp", "default"),
         item_pop_times=pop_times,
         transition_sec=collage_end_sec,
+        outfit=outfit,
     )
     outfit["music_info"] = music_info
 
@@ -430,5 +456,23 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         output_mp4,
     ]
     subprocess.run(cmd, check=True)
-    print(f"[BAŞARILI] 2K QHD+ (1440x2560) Samsung OLED Master Reels videosu üretildi: {output_mp4}")
+    print(f"[BAŞARILI] Graph-Motion Master Reels videosu üretildi: {output_mp4}")
+
+    # WhatsApp Kanalı, GuzelAI.com Web Vitrini, Facebook ve X için hızlı yüklenen Evrensel Graph-Motion Video (720x1280)
+    gm_short_mp4 = os.path.join(out_dir, "graphmotion_short.mp4")
+    cmd_short = [
+        ffmpeg_bin, "-y",
+        "-i", output_mp4,
+        "-vf", "scale=720:1280",
+        "-c:v", "libx264",
+        "-preset", "fast",
+        "-profile:v", "main",
+        "-crf", "23",
+        "-pix_fmt", "yuv420p",
+        "-movflags", "+faststart",
+        "-c:a", "aac", "-b:a", "128k",
+        gm_short_mp4,
+    ]
+    subprocess.run(cmd_short, check=False)
+    print(f"[BAŞARILI] Tüm kanallar (WhatsApp & Web dahil) için Kısa Graph-Motion Video hazırlandı: {gm_short_mp4}")
     return music_info
