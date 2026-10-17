@@ -1,25 +1,33 @@
-name: Otomatik Instagram Kombin Reels (Günde 3 Kez)
+name: GuzelAI.com 7/24 Otonom Medya, SEO & Kombin Reels Sistemi (Bulut + Yerel)
 
 on:
-  workflow_dispatch: # Yalnızca manuel tetikleme (Yerel güvenli cihaz otomasyonu aktif olduğu için bulut cron kapalıdır)
+  schedule:
+    # Türkiye Saati (UTC+3) Prime-Time Keşfet Kuşakları: 12:00 (Öğle), 18:00 (İş Çıkışı), 21:00 (Akşam Prime-Time)
+    - cron: '0 9,15,18 * * *'
+  workflow_dispatch:
     inputs:
       slot_name:
-        description: 'Paylaşım Kuşağı (sabah / oglen / aksam)'
+        description: 'Paylaşım Kuşağı (sabah / oglen / aksam / otomatik)'
         required: false
-        default: 'deneme'
+        default: 'otomatik'
       dry_run:
         description: 'Sadece videoyu üret, Instagrama yükleme (true/false)'
         required: false
-        default: 'true'
+        default: 'false'
+
+permissions:
+  contents: write
 
 jobs:
   create-and-publish-reel:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
 
     steps:
       - name: 📥 Proje Dosyalarını Çek
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
 
       - name: 🐍 Python 3.11 Kurulumu
         uses: actions/setup-python@v5
@@ -32,50 +40,53 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-dejavu-core fonts-liberation libgl1
 
-      - name: 📦 Python Paketlerini Yükle (Ücretsiz / Açık Kaynak)
+      - name: 📦 Python Paketlerini Yükle
         run: |
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 👗 Günlük Kombin Oluştur + Graph Motion & Yürüyen Model Reels Üret
+      - name: 👗 Tarih & Konsept Otomasyonu + 2K QHD+ Reels + Hook Kapak + GuzelAI.com Vitrin Güncellemesi
         env:
           IG_WATERMARK: ${{ vars.IG_WATERMARK || '@guzelaicom' }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
           SLOT_NAME: ${{ github.event.inputs.slot_name || 'otomatik' }}
         run: |
           python src/main.py --output output/daily_kombin_reel.mp4
 
-      - name: 📤 Videoyu ve Threads Link Zincirini Artifacts Olarak Kaydet
+      - name: 📤 2K Reels, Hook Kapak ve Kalite Raporunu Artifacts Olarak Kaydet
         uses: actions/upload-artifact@v4
         with:
-          name: kombin-reels-${{ github.run_number }}
+          name: kombin-reels-2k-${{ github.run_number }}
           path: |
             output/daily_kombin_reel.mp4
+            output/hook_cover.jpg
             output/kombin_collage.png
             output/model_street.png
             output/caption.txt
             output/comment_links.txt
-            output/threads_post.txt
-            output/threads_thread.json
-            output/telegram_post.html
-            output/telegram_post.json
-            output/pinterest_pin.txt
-            output/pinterest_pin.json
+            output/quality_check_report.json
             output/outfit_links.json
           retention-days: 7
 
-      - name: 📱 Instagram Reels, Threads & Telegram Olarak Otomatik Paylaş
+      - name: 📱 Instagram (@guzelaicom) & GuzelAI.com Canlı Yayın (Tekil & Doğrulanmış)
         if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
-          IG_USERNAME: ${{ secrets.IG_USERNAME }}
+          IG_USERNAME: ${{ secrets.IG_USERNAME || 'guzelaicom' }}
           IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
           IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
-          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-          THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+          GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
-          python src/telegram_publisher.py --outfit-json output/outfit_links.json --publish
+
+      - name: 💾 Yayınlanan Kombin Geçmişini Depoya Kaydet (Tekrar Paylaşım Koruması)
+        if: ${{ always() }}
+        run: |
+          git config user.name "GuzelAI Media Bot"
+          git config user.email "bot@guzelai.com"
+          git add output/published_history.json output/instagram_uploaded_history.json 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "chore(history): sync published outfit & model history [skip ci]" && git push)
