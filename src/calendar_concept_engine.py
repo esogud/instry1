@@ -248,4 +248,14 @@ def score_online_item_for_concept(
         if sf.lower() in haystack:
             score += 2
 
+    # Moda Tasarımı Uzmanı: Inditex, H&M, Lüks Çanta, Ray-Ban & Saat Marka Öncelik Puanı
+    preferred_brands = (
+        "zara", "h&m", "stradivarius", "bershka", "pull&bear", "massimo dutti", "oysho",
+        "mango", "ipekyol", "quzu", "calvin klein", "tommy hilfiger", "pierre cardin",
+        "ray-ban", "vogue", "casio", "daniel klein", "u.s. polo assn.",
+    )
+    if any(pb in haystack for pb in preferred_brands):
+        score += 5
+
     return score
+
