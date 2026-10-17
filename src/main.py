@@ -15,59 +15,105 @@ from threads_publisher import (
     TR_LEGAL_NOTICE_SHORT,
     save_threads_outputs,
 )
+from telegram_publisher import save_telegram_outputs
+from pinterest_publisher import save_pinterest_outputs
+from youtube_publisher import save_youtube_outputs
+from x_publisher import save_x_outputs
+from whatsapp_publisher import save_whatsapp_outputs
+from facebook_publisher import save_facebook_outputs
+from tiktok_uploader import save_tiktok_outputs
+from website_publisher import publish_to_guzelai_website
 
 
 def build_caption(outfit: dict) -> str:
     items = outfit["items"]
     total_str = outfit.get("total_price_str", "")
     music_name = outfit.get("music_info", {}).get("name", "Runway Deep House Mix")
+    hook_title = (
+        outfit.get("hook_title")
+        or outfit.get("archetype_title")
+        or "5.000₺ Bütçeyle 50.000₺'lik 'Old Money' Görünmenin Sırrı! (4. Parçaya Dikkat) 🔥"
+    )
+    viral_hook = outfit.get(
+        "viral_hook",
+        "🛑 SAKIN GEÇME! Girdiğin her ortamda 'Üzerindekileri hangi lüks markadan aldın?' dedirten, boyu 10 cm daha uzun gösteren o 6 parçalık Old Money sırrı çözüldü! 👇✨",
+    )
+    seo_note = outfit.get(
+        "seo_note",
+        "📌 Not: Görseldeki kadın kombin parçalarının stokta olan birebir veya en yakın %100 Kadın mağaza muadil (benzer) ürün linkleri doğrulanarak aşağıda listelenmiştir:",
+    )
 
     lines = [
-        f"Günün Kombin Önerisi: {outfit.get('archetype_title', 'Sokak Stili')} ✨",
+        f"🔥 {hook_title}",
+        "",
+        viral_hook,
+        "🎃 Ekim Sonbahar & Cadılar Bayramı (Halloween) Gece/Gündüz Davet Şıklığı | Old Money Kadın Stil Kodları",
         "Sizce bu kombin 10 üzerinden kaç? Yorumlara yazın 👇🤍",
         "",
-        "🛍️ KOMBİN FİYAT & ÜRÜN DETAYLARI:",
-        f"🧥 Ceket/Üst: {items['outerwear']['brand']} - {items['outerwear']['name']} ({items['outerwear']['price']}) [Kod: {items['outerwear'].get('sku', '-')}]",
-        f"🕶️ Aksesuar: {items['cap']['brand']} - {items['cap']['name']} ({items['cap']['price']}) [Kod: {items['cap'].get('sku', '-')}]",
-        f"👕 İç/Üst: {items['top']['brand']} - {items['top']['name']} ({items['top']['price']}) [Kod: {items['top'].get('sku', '-')}]",
-        f"👖 Alt: {items['bottom']['brand']} - {items['bottom']['name']} ({items['bottom']['price']}) [Kod: {items['bottom'].get('sku', '-')}]",
+        "🌐 GÖRSELLİ & DOĞRULANMIŞ E-TİCARET LİNK VİTRİNİ:",
+        "👉 https://guzelai.com/#kombinler",
+        "",
+        seo_note,
+        "",
+        "🛍️ KOMBİN FİYAT & ÜRÜN DETAYLARI (%100 KADIN KOLEKSİYONU):",
+        f"⌚ Saat/Üst: {items['outerwear']['brand']} - {items['outerwear']['name']} ({items['outerwear']['price']}) [Kod: {items['outerwear'].get('sku', '-')}]",
+        f"✨ Küpe/Aksesuar: {items['cap']['brand']} - {items['cap']['name']} ({items['cap']['price']}) [Kod: {items['cap'].get('sku', '-')}]",
+        f"👚 Gömlek/Üst: {items['top']['brand']} - {items['top']['name']} ({items['top']['price']}) [Kod: {items['top'].get('sku', '-')}]",
+        f"👖 Pantolon/Alt: {items['bottom']['brand']} - {items['bottom']['name']} ({items['bottom']['price']}) [Kod: {items['bottom'].get('sku', '-')}]",
         f"👜 Çanta: {items['bag']['brand']} - {items['bag']['name']} ({items['bag']['price']}) [Kod: {items['bag'].get('sku', '-')}]",
-        f"👟 Ayakkabı: {items['shoes']['brand']} - {items['shoes']['name']} ({items['shoes']['price']}) [Kod: {items['shoes'].get('sku', '-')}]",
+        f"👠 Ayakkabı: {items['shoes']['brand']} - {items['shoes']['name']} ({items['shoes']['price']}) [Kod: {items['shoes'].get('sku', '-')}]",
         "",
         f"💰 TOPLAM KOMBİN: {total_str}",
         "",
-        "🔗 DOĞRUDAN ÜRÜN LİNKLERİ:",
-        f"🧥 Ceket/Üst Linki: {items['outerwear']['product_url']}",
-        f"🕶️ Aksesuar Linki: {items['cap']['product_url']}",
-        f"👕 İç/Üst Linki: {items['top']['product_url']}",
-        f"👖 Alt Giyim Linki: {items['bottom']['product_url']}",
+        "🔗 DOĞRUDAN MAĞAZA ÜRÜN LİNKLERİ (BİREBİR / BENZER MUADİL):",
+        f"⌚ Saat/Üst Linki: {items['outerwear']['product_url']}",
+        f"✨ Aksesuar Linki: {items['cap']['product_url']}",
+        f"👚 Gömlek/Üst Linki: {items['top']['product_url']}",
+        f"👖 Pantolon Linki: {items['bottom']['product_url']}",
         f"👜 Çanta Linki: {items['bag']['product_url']}",
-        f"👟 Ayakkabı Linki: {items['shoes']['product_url']}",
+        f"👠 Ayakkabı Linki: {items['shoes']['product_url']}",
         "",
-        "🧵 Tıklanabilir doğrudan ürün linkleri Threads profilimizde: https://www.threads.net/@guzelaicom",
-        f"🎵 Müzik: {music_name}",
+        "🌐 Görselli Doğrulanmış Mağaza Linkleri: https://guzelai.com/#kombinler",
+        "💬 WhatsApp Kombin Kanalımız: https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016",
+        "𝕏 X (Twitter) Kombin Zinciri: https://x.com/guzelaicom",
+        "▶️ YouTube Shorts Kanalımız: https://www.youtube.com/@guzelaicom",
+        f"🎵 Enstrüman & Müzik: {music_name} ({outfit.get('music_info', {}).get('instruments_desc', 'Çoklu Enstrüman Stüdyo Kaydı')})",
+        f"🎙️ Sesli Hook: \"{outfit.get('music_info', {}).get('dialogue_q', '')} — {outfit.get('music_info', {}).get('dialogue_a', '')}\"",
         "📌 Kaydetmeyi ve kombin arkadaşına göndermeyi unutma!",
         "",
         TR_LEGAL_NOTICE_FULL,
         "",
-        "#kombin #günlükkombin #kombinönerileri #negiysem #sokakmodası #trendyolkombin #zarakombin #kesfet #reelsinstagram #ootdtr",
+        "#kadınkombin #kombinönerileri #oldmoneystil #sonbaharkombini #cadılarbayramı #halloweenkombin #ekimstili #palazzopantolon #satengömlek #trendyolkombin #ofisşıklığı #negiysem #kesfet #reelsinstagram #ootdtr",
     ]
     return "\n".join(lines)
 
 
 def build_links_comment(outfit: dict) -> str:
     items = outfit["items"]
+    viral_hook = outfit.get(
+        "viral_hook",
+        "🛑 Bu 6'lı kadın kombinini kaybetmemek için hemen kaydet! 👇✨",
+    )
+    seo_note = outfit.get(
+        "seo_note",
+        "📌 Görseldeki kombinin stokta olan birebir veya en yakın %100 Kadın mağaza muadil (benzer) ürün linkleri:",
+    )
     lines = [
-        "🛍️ KOMBİNDEKİ ÜRÜNLERİN GÜNCEL LİNKLERİ VE KODLARI 👇",
+        viral_hook,
+        "🛍️ KOMBİNDEKİ KADIN ÜRÜNLERİNİN DOĞRULANMIŞ MAĞAZA LİNKLERİ (BENZER MUADİL) 👇",
+        "🌐 Görselli Doğrulanmış Mağaza Vitrini: https://guzelai.com/#kombinler",
+        seo_note,
         "",
-        f"🧥 Ceket/Üst ({items['outerwear']['price']}): {items['outerwear']['product_url']}",
-        f"🕶️ Aksesuar ({items['cap']['price']}): {items['cap']['product_url']}",
-        f"👕 İç/Üst ({items['top']['price']}): {items['top']['product_url']}",
-        f"👖 Alt Giyim ({items['bottom']['price']}): {items['bottom']['product_url']}",
+        f"⌚ Saat/Üst ({items['outerwear']['price']}): {items['outerwear']['product_url']}",
+        f"✨ Aksesuar ({items['cap']['price']}): {items['cap']['product_url']}",
+        f"👚 Gömlek/Üst ({items['top']['price']}): {items['top']['product_url']}",
+        f"👖 Pantolon ({items['bottom']['price']}): {items['bottom']['product_url']}",
         f"👜 Çanta ({items['bag']['price']}): {items['bag']['product_url']}",
-        f"👟 Ayakkabı ({items['shoes']['price']}): {items['shoes']['product_url']}",
+        f"👠 Ayakkabı ({items['shoes']['price']}): {items['shoes']['product_url']}",
         "",
-        "🧵 Tıklanabilir link zinciri: https://www.threads.net/@guzelaicom",
+        "💬 WhatsApp Kanalı: https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016",
+        "𝕏 X (Twitter): https://x.com/guzelaicom",
+        "▶️ YouTube Shorts: https://www.youtube.com/@guzelaicom",
         TR_LEGAL_NOTICE_SHORT,
     ]
     return "\n".join(lines)
@@ -100,6 +146,14 @@ def main():
         json.dump(outfit, f, ensure_ascii=False, indent=2)
 
     save_threads_outputs(outfit, out_dir=out_dir)
+    save_telegram_outputs(outfit, out_dir=out_dir)
+    save_pinterest_outputs(outfit, out_dir=out_dir)
+    save_youtube_outputs(outfit, out_dir=out_dir)
+    save_x_outputs(outfit, out_dir=out_dir)
+    save_whatsapp_outputs(outfit, out_dir=out_dir)
+    save_facebook_outputs(outfit, out_dir=out_dir)
+    save_tiktok_outputs(outfit, out_dir=out_dir)
+    publish_to_guzelai_website(outfit, out_dir=out_dir)
 
     print(f"[BAŞARILI] Açıklama, yasal uyarı ve doğrudan ürün linkleri hazırlandı: {caption_path}")
 
