@@ -32,10 +32,13 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
+import shutil
+
 GUZELAI_REPO = "thezencirs/guzelai"
 GUZELAI_SHOWCASE_URL = "https://guzelai.com/#kombinler"
 WHATSAPP_CHANNEL_URL = "https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016"
-GH_EXE = r"C:\Users\zenci\.gemini\antigravity\scratch\tools\gh\bin\gh.exe"
+_WIN_GH = r"C:\Users\zenci\.gemini\antigravity\scratch\tools\gh\bin\gh.exe"
+GH_EXE = _WIN_GH if os.path.exists(_WIN_GH) else (shutil.which("gh") or "gh")
 
 CATEGORY_META = [
     ("outerwear", "Mont & Ceket", "🧥"),
@@ -287,7 +290,7 @@ def build_verified_kombin_entry(
 
 def _gh_put_file(repo_path: str, content_bytes: bytes, commit_message: str) -> bool:
     """Creates or updates a file in thezencirs/guzelai via GitHub Contents API."""
-    if not os.path.exists(GH_EXE):
+    if not (os.path.exists(GH_EXE) or shutil.which(GH_EXE)):
         print(f"[UYARI] gh CLI bulunamadı: {GH_EXE}")
         return False
 
@@ -338,7 +341,7 @@ def _gh_put_file(repo_path: str, content_bytes: bytes, commit_message: str) -> b
 
 def _get_existing_go_files() -> set:
     """Returns the set of filenames (e.g. '981976289.html') already present in `public/go` on GitHub."""
-    if not os.path.exists(GH_EXE):
+    if not (os.path.exists(GH_EXE) or shutil.which(GH_EXE)):
         return set()
     try:
         raw = subprocess.check_output(
