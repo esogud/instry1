@@ -50,6 +50,265 @@ LIVE_TRENDYOL_FEEDS = {
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
     {
+        "id": "veor_uranis_bordo_kapsul_2k",
+        "preferred_music_id": "veor_uranis_da_da_da_2026",
+        "title": "Sokağa çıkarken herkesin dönüp baktığı o bordo & antrasit kapsül kombin 🔥✨",
+        "spoken_hook_text": "Sokağa çıkarken herkesin dönüp baktığı o kusursuz sonbahar kombinim!",
+        "viral_hook": "🛑 İçi peluş kemerli deri mont, bordo fitilli triko kazak, yüksek bel kemerli antrasit palazzo pantolon ve bordo Adidas Handball Spezial uyumu! Önce guzelai.com'da görselleri ve renkleri tek tek doğrulanmış 6 kadın parçası! 👇🔥",
+        "seo_note": "📌 Not: Videodaki %100 Kadın kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_1099303505",
+                "category_label": "Mont & Ceket",
+                "brand": "TRENDYOL KOLEKSİYON",
+                "price": "1.399₺",
+                "price_val": 1399.0,
+                "name": "İçi Peluş Detaylı Kemerli Koyu Kahve Deri Mont & Ceket",
+                "full_name": "Kadın İçi Peluş (Shearling) Detaylı Kemerli Koyu Kahve Deri Mont & Ceket",
+                "sku": "1099303505",
+                "color": "Kahve / Krem Peluş",
+                "store_url": "https://www.trendyol.com/genel-markalar/ici-pelus-detayli-kemerli-deri-ceket-p-1099303505",
+                "product_url": "https://guzelai.com/go/1099303505",
+                "guzelai_url": "https://guzelai.com/go/1099303505",
+                "image_url": "https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251208/17/87612bea-c651-3510-86e1-9223384152ea/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1799/prod/QC_PREP/20251208/17/87612bea-c651-3510-86e1-9223384152ea/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_835985416",
+                "category_label": "Gözlük & Aksesuar",
+                "brand": "VOGUE EYEWEAR",
+                "price": "2.150₺",
+                "price_val": 2150.0,
+                "name": "Vogue VO5586S W44 87 53 Siyah Kadın Güneş Gözlüğü",
+                "full_name": "Vogue VO5586S W44 87 53 Siyah Çerçeveli Kadın Güneş Gözlüğü",
+                "sku": "835985416",
+                "color": "Siyah",
+                "store_url": "https://www.trendyol.com/vogue/vo5586s-w44-87-53-kadin-gunes-gozlugu-p-835985416",
+                "product_url": "https://guzelai.com/go/835985416",
+                "guzelai_url": "https://guzelai.com/go/835985416",
+                "image_url": "https://cdn.dsmcdn.com/ty1740/prod/QC_ENRICHMENT/20250901/13/0df06205-e313-38d9-9c4f-16867a222bf1/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1740/prod/QC_ENRICHMENT/20250901/13/0df06205-e313-38d9-9c4f-16867a222bf1/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_903567167",
+                "category_label": "Kazak & Triko",
+                "brand": "MODASPARK",
+                "price": "309,05₺",
+                "price_val": 309.05,
+                "name": "Kadın Bordo Bisiklet Yaka Fitilli Oversize Triko Kazak",
+                "full_name": "MODASPARK Bordo Bisiklet Yaka Fitilli Oversize Kadın Triko Kazak",
+                "sku": "903567167",
+                "color": "Bordo",
+                "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+                "product_url": "https://guzelai.com/go/903567167",
+                "guzelai_url": "https://guzelai.com/go/903567167",
+                "image_url": "https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_866458994",
+                "category_label": "Pantolon",
+                "brand": "RITNICE",
+                "price": "789₺",
+                "price_val": 789.0,
+                "name": "Kadın Rena Kemerli Likralı Yüksek Bel Antrasit Palazzo Pantolon",
+                "full_name": "Ritnice Kadın Rena Kemerli Likralı Yüksek Bel Pileli Antrasit Palazzo Pantolon",
+                "sku": "866458994",
+                "color": "Antrasit",
+                "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+                "product_url": "https://guzelai.com/go/866458994",
+                "guzelai_url": "https://guzelai.com/go/866458994",
+                "image_url": "https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106158",
+                "category_label": "Çanta",
+                "brand": "BAGMORI",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Siyah Kemer Toka Aksesuarlı Deri El & Omuz Çantası",
+                "full_name": "Bagmori Siyah Kemer Toka Aksesuarlı Askılı Kadın Deri Çanta",
+                "sku": "8682166106158",
+                "color": "Siyah",
+                "store_url": "https://www.bagmori.com/products/siyah-aksesuarli-askili-mini-canta",
+                "product_url": "https://guzelai.com/go/8682166106158",
+                "guzelai_url": "https://guzelai.com/go/8682166106158",
+                "image_url": "https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106158-1_e433841d-5e61-4178-b279-b69075a8dec9.jpg?v=1784880657",
+                "image_urls": ["https://cdn.shopify.com/s/files/1/0023/2138/3537/files/8682166106158-1_e433841d-5e61-4178-b279-b69075a8dec9.jpg?v=1784880657"],
+            },
+            "shoes": {
+                "id": "ty_994497307",
+                "category_label": "Ayakkabı",
+                "brand": "ADIDAS",
+                "price": "4.499,40₺",
+                "price_val": 4499.40,
+                "name": "Adidas Handball Spezial Kadın Bordo Süet Sneaker",
+                "full_name": "adidas Handball Spezial Kadın Bordo Süet Sneaker Spor Ayakkabı",
+                "sku": "994497307",
+                "color": "Bordo / Beyaz / Gum",
+                "store_url": "https://www.trendyol.com/adidas/handball-spezial-kadin-bordo-ayakkabi-p-994497307",
+                "product_url": "https://guzelai.com/go/994497307",
+                "guzelai_url": "https://guzelai.com/go/994497307",
+                "image_url": "https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1773/prod/QC_PREP/20251015/15/79e6780b-45ee-3203-93e2-d72ac87fab56/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["peluş", "deri", "kemerli", "kadın", "mont", "ceket"],
+            "cap": ["vogue", "siyah", "kadın", "gözlük"],
+            "top": ["bordo", "fitilli", "oversize", "kadın", "kazak", "triko"],
+            "bottom": ["antrasit", "kemerli", "pileli", "palazzo", "kadın", "pantolon"],
+            "bag": ["siyah", "deri", "kemer", "kadın", "çanta"],
+            "shoes": ["spezial", "adidas", "bordo", "kadın", "sneaker"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/veor_01_jacket.png",
+            "cap": "assets/items/veor_02_cap.png",
+            "top": "assets/items/veor_03_top.png",
+            "bottom": "assets/items/veor_04_bottom.png",
+            "bag": "assets/items/veor_05_bag.png",
+            "shoes": "assets/items/veor_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/veor_01_jacket.png",
+            "cap": "assets/items/veor_02_cap.png",
+            "top": "assets/items/veor_03_top.png",
+            "bottom": "assets/items/veor_04_bottom.png",
+            "bag": "assets/items/veor_05_bag.png",
+            "shoes": "assets/items/veor_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/veor_model_step1.jpg",
+            "assets/veor_model_step2.jpg",
+            "assets/veor_model_step3.jpg",
+        ],
+    },
+    {
+        "id": "tesla_halloween_ramp_curly",
+        "title": "Tesla'nın dik pistinden bile düşmeden indiren o Cadılar Bayramı kombini 🎃🔥✨",
+        "spoken_hook_text": "Cadılar Bayramı gecesi bu dik pistten bile düşmeden kombinimle iniyorum!",
+        "viral_hook": "🛑 Kahvelerin ve pizzaların bile uçmadan indiği o meşhur dik pistte Cadılar Bayramı şovumuz! Siyah oversize deri ceket, bordo triko kazak ve antrasit palazzo pantolonla yerçekimine meydan okuyan 6 kadın parçası! 👇🎃🔥",
+        "seo_note": "📌 Not: Videodaki %100 Kadın kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
+        "ramp_empty_bg": "assets/tesla_halloween_empty_ramp.jpg",
+        "ramp_model_cutout": "assets/tesla_ramp_model_cutout.png",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_1075561987",
+                "brand": "GENEL MARKALAR",
+                "price": "850₺",
+                "price_val": 850.0,
+                "name": "Kadın Oversize Deri Ceket – Kemer Detaylı Siyah Ceket",
+                "full_name": "Genel Markalar Kadın Oversize Deri Ceket – Fermuarlı Kemer Detaylı Siyah Kadın Ceket",
+                "sku": "1075561987",
+                "color": "Siyah",
+                "store_url": "https://www.trendyol.com/genel-markalar/kadin-oversize-deri-ceket-oversize-relax-fit-fermuarli-kemer-detayli-gunluk-kadin-ceket-p-1075561987",
+                "product_url": "https://guzelai.com/go/1075561987",
+                "image_url": "https://cdn.dsmcdn.com/ty1807/prod/QC_PREP/20251228/14/8e144cb4-03f2-35aa-8ef8-fa7ef4b099f2/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1807/prod/QC_PREP/20251228/14/8e144cb4-03f2-35aa-8ef8-fa7ef4b099f2/1_org_zoom.jpg"],
+            },
+            "cap": {
+                "id": "ty_697446548",
+                "brand": "VOGUE",
+                "price": "1.400₺",
+                "price_val": 1400.0,
+                "name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+                "full_name": "Vogue 5496SI W65613 54 Kadın Güneş Gözlüğü",
+                "sku": "697446548",
+                "color": "Koyu Kahve / Siyah",
+                "store_url": "https://www.trendyol.com/vogue/5496si-w65613-54-kadin-p-697446548",
+                "product_url": "https://guzelai.com/go/697446548",
+                "image_url": "https://cdn.dsmcdn.com/ty871/product/media/images/20230509/17/343728268/932211145/1/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty871/product/media/images/20230509/17/343728268/932211145/1/1_org_zoom.jpg"],
+            },
+            "top": {
+                "id": "ty_903567167",
+                "brand": "MODASPARK",
+                "price": "309,05₺",
+                "price_val": 309.05,
+                "name": "Kadın Bordo Bisiklet Yaka Fitilli Oversize Triko Kazak",
+                "full_name": "MODASPARK Bordo Bisiklet Yaka Fitilli Oversize Kadın Triko Kazak",
+                "sku": "903567167",
+                "color": "Bordo",
+                "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+                "product_url": "https://guzelai.com/go/903567167",
+                "image_url": "https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1632/prod/QC/20250202/15/9830164e-8f57-3365-952e-d77fd145269c/1_org_zoom.jpg"],
+            },
+            "bottom": {
+                "id": "ty_866458994",
+                "brand": "RITNICE",
+                "price": "789₺",
+                "price_val": 789.0,
+                "name": "Kadın Rena Kemerli Likralı Yüksek Bel Antrasit Palazzo Pantolon",
+                "full_name": "Ritnice Kadın Rena Kemerli Likralı Yüksek Bel Pileli Antrasit Palazzo Pantolon",
+                "sku": "866458994",
+                "color": "Antrasit",
+                "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+                "product_url": "https://guzelai.com/go/866458994",
+                "image_url": "https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1590/prod/QC/20241023/12/4dc22706-3140-3522-8f6d-be4bc517e649/1_org_zoom.jpg"],
+            },
+            "bag": {
+                "id": "ty_988558235",
+                "brand": "NEVNIHAL",
+                "price": "489₺",
+                "price_val": 489.0,
+                "name": "Kadın Fermuarlı Yumuşak Deri Siyah Omuz Çantası",
+                "full_name": "Nevnihal Fermuarlı ve Astarlı Yumuşak Deri Günlük Geniş Kadın Siyah Çanta",
+                "sku": "988558235",
+                "color": "Siyah",
+                "store_url": "https://www.trendyol.com/nevnihal/fermuarli-ve-astarli-yumusak-deri-gunluk-genis-kadin-canta-p-988558235",
+                "product_url": "https://guzelai.com/go/988558235",
+                "image_url": "https://cdn.dsmcdn.com/ty1756/prod/QC_ENRICHMENT/20250923/12/b99749b8-5bd2-3d13-b122-ab543866c963/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1756/prod/QC_ENRICHMENT/20250923/12/b99749b8-5bd2-3d13-b122-ab543866c963/1_org_zoom.jpg"],
+            },
+            "shoes": {
+                "id": "ty_893278946",
+                "brand": "ADIDAS",
+                "price": "3.999,50₺",
+                "price_val": 3999.50,
+                "name": "Samba OG W Kadın Sneaker Ayakkabı IE5836",
+                "full_name": "adidas Samba OG W Kadın Sneaker Spor Ayakkabı IE5836",
+                "sku": "893278946",
+                "color": "Siyah / Beyaz / Gum",
+                "store_url": "https://www.trendyol.com/adidas/samba-og-w-kadin-sneaker-ie5836-p-893278946",
+                "product_url": "https://guzelai.com/go/893278946",
+                "image_url": "https://cdn.dsmcdn.com/ty1627/prod/QC/20250120/05/b5a2ef4e-77c7-3029-9f21-6c8f3eb8a8ab/1_org_zoom.jpg",
+                "image_urls": ["https://cdn.dsmcdn.com/ty1627/prod/QC/20250120/05/b5a2ef4e-77c7-3029-9f21-6c8f3eb8a8ab/1_org_zoom.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["siyah", "deri", "oversize", "kadın", "ceket"],
+            "cap": ["vogue", "siyah", "kahve", "kadın", "gözlük"],
+            "top": ["bordo", "dik yaka", "boğazlı", "kadın", "kazak", "triko"],
+            "bottom": ["antrasit", "siyah", "pileli", "palazzo", "kadın", "pantolon"],
+            "bag": ["siyah", "deri", "kadın", "omuz", "çanta"],
+            "shoes": ["samba", "adidas", "kadın", "sneaker"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/th_01_jacket.png",
+            "cap": "assets/items/th_02_cap.png",
+            "top": "assets/items/th_03_top.png",
+            "bottom": "assets/items/th_04_bottom.png",
+            "bag": "assets/items/th_05_bag.png",
+            "shoes": "assets/items/th_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/th_01_jacket.png",
+            "cap": "assets/items/th_02_cap.png",
+            "top": "assets/items/th_03_top.png",
+            "bottom": "assets/items/th_04_bottom.png",
+            "bag": "assets/items/th_05_bag.png",
+            "shoes": "assets/items/th_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/tesla_halloween_step1.jpg",
+            "assets/tesla_halloween_step2.jpg",
+            "assets/tesla_halloween_step3.jpg",
+        ],
+    },
+    {
         "id": "inner_voice_black_bomber_stone_palazzo",
         "title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ (Ama kombinimden asla ödün vermem)",
         "viral_hook": "🛑 Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey kontrol altında' imajı! Siyah kaşe bomber ceket ve taş rengi palazzo jean uyumuyla gün boyu kurtarıcı 6 kadın parçası! 👇🔥",
@@ -657,20 +916,20 @@ def _remove_white_bg_and_crop(img: Image.Image) -> Image.Image:
         rgba = Image.open(BytesIO(out_bytes)).convert("RGBA")
     else:
         rgba = img.convert("RGBA")
-        datas = rgba.getdata()
-        new_data = []
-        for r, g, b, a in datas:
-            # Çok açık beyaz pikselleri yumuşak geçişle şeffaf yap
-            lum = (r + g + b) / 3.0
-            spread = max(r, g, b) - min(r, g, b)
-            if lum > 244 and spread < 14:
-                new_data.append((r, g, b, 0))
-            elif lum > 234 and spread < 18:
-                alpha = int((244 - lum) / 10.0 * 255)
-                new_data.append((r, g, b, max(0, min(255, alpha))))
-            else:
-                new_data.append((r, g, b, a))
-        rgba.putdata(new_data)
+
+    datas = rgba.getdata()
+    new_data = []
+    for r, g, b, a in datas:
+        lum = (r + g + b) / 3.0
+        spread = max(r, g, b) - min(r, g, b)
+        if lum > 242 and spread < 15:
+            new_data.append((r, g, b, 0))
+        elif lum > 232 and spread < 19:
+            alpha_w = int((242 - lum) / 10.0 * 255)
+            new_data.append((r, g, b, min(a, max(0, min(255, alpha_w)))))
+        else:
+            new_data.append((r, g, b, a))
+    rgba.putdata(new_data)
 
     # Şeffaf olmayan alanı (alpha > 20) bulup kenar boşluklarını kırp
     alpha = rgba.split()[3]
@@ -939,14 +1198,7 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     for cat_key in ["outerwear", "cap", "top", "bottom", "bag", "shoes"]:
         chosen = None
         if not force_live_scrape and exact_map.get(cat_key):
-            candidate = dict(exact_map[cat_key])
-            if str(candidate.get("sku", "")) not in used_skus:
-                try:
-                    chk = requests.get(candidate["product_url"], headers=HEADERS, timeout=8)
-                    if chk.status_code == 200:
-                        chosen = candidate
-                except Exception:
-                    pass
+            chosen = dict(exact_map[cat_key])
 
         if not chosen:
             mapped_cat = cat_map.get(cat_key, cat_key)
@@ -975,10 +1227,20 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
                 "name": f"Yeni Sezon Kadın {cat_key.title()}",
                 "full_name": f"Yeni Sezon Kadın {cat_key.title()}",
                 "sku": "202601",
-                "product_url": "https://www.trendyol.com/butik/liste/1/kadin",
+                "store_url": "https://www.trendyol.com/butik/liste/1/kadin",
+                "product_url": "https://guzelai.com/#kombinler",
                 "image_url": "",
                 "image_urls": [],
             }
+
+        # Tüm linkleri guzelai.com/go/{sku} üzerinden yönlendir (trafik guzelai.com'a gelir, oradan mağazaya yönlenir)
+        sku_str = str(chosen.get("sku", "")).strip()
+        raw_url = chosen.get("store_url") or chosen.get("product_url") or ""
+        if "guzelai.com/go/" not in raw_url and raw_url:
+            chosen["store_url"] = raw_url
+        if sku_str and sku_str != "-":
+            chosen["guzelai_url"] = f"https://guzelai.com/go/{sku_str}"
+            chosen["product_url"] = f"https://guzelai.com/go/{sku_str}"
 
         if not force_live_scrape:
             chosen["local_asset"] = archetype["cutout_assets"].get(cat_key)
@@ -990,7 +1252,7 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
             used_skus.add(str(chosen["sku"]))
         print(
             f"  ✓ [{cat_key.upper()}] {chosen['brand']} - {chosen['name']} ({chosen['price']}) "
-            f"-> {chosen['product_url']}"
+            f"-> {chosen['product_url']} (Mağaza: {chosen.get('store_url', '')})"
         )
 
     # Paylaşılan kombin geçmişini kaydet (bir sonraki çalışmada aynı kombinin seçilmesini önler)
@@ -1071,7 +1333,30 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
 
     hook_packs = [
         {
+            "hook_title": "Bordo & Koyu Kahve Peluş Deri Mont: Sonbaharın En Viral 2K Kapsül Kombini 🔥🍂✨",
+            "spoken_hook_text": "Sonbaharda girdiğin her ortamda dönüp baktıracak o bordo ve kahve kapsül kombin!",
+            "x_short_hook": "Bordo & Kahve Peluş Deri Mont: Sonbaharın en viral kombini 🔥🍂",
+            "yt_short_title": "Bordo & Koyu Kahve Peluş Deri Mont: Sonbaharın En Viral 2K Kapsül Kombini 🔥🍂✨",
+            "tiktok_hook_title": "POV: Sonbaharda girdiğin her ortamda dönüp baktıracak o bordo & kahve kombin 🔥🍂",
+            "pinterest_title": "Koyu Kahve Peluş Deri Mont, Bordo Triko Kazak & Antrasit Palazzo Pantolon Kombini | GuzelAI.com",
+            "viral_hook": "🛑 Bordo triko kazak, içi peluş koyu kahve deri mont, kemerli antrasit palazzo pantolon ve bordo Adidas Spezial uyumu! Önce guzelai.com'da doğrulanan 6 parçalık 2K kapsül kombin! 👇🔥",
+            "video_badge_collage": "» GÜZELAİ.COM DOĞRULANMIŞ 2K KOMBİN «",
+            "video_badge_walk": "» BORDO & KAHVE SOKAK STİLİ DURUŞU «",
+        },
+        {
+            "hook_title": "Tesla'nın dik pistinden bile düşmeden indiren o Cadılar Bayramı kombini 🎃🔥✨",
+            "spoken_hook_text": "Cadılar Bayramı gecesi bu dik pistten bile düşmeden kombinimle iniyorum!",
+            "x_short_hook": "Bu dik pistten bile düşmeden indiren Cadılar Bayramı kombini 🎃🔥",
+            "yt_short_title": "Tesla'nın dik pistinden bile düşmeden indiren o Cadılar Bayramı kombini 🎃🔥✨",
+            "tiktok_hook_title": "POV: Kahvelerin uçmadığı o dik pistten Cadılar Bayramı kombinimle düşmeden iniyorum 🎃🔥",
+            "pinterest_title": "Cadılar Bayramı Siyah Deri Ceket & Bordo Triko & Palazzo Pantolon Kadın Kombini | GuzelAI.com",
+            "viral_hook": "🛑 Kahvelerin ve pizzaların bile uçmadan indiği o meşhur dik pistte Cadılar Bayramı şovumuz! Siyah oversize deri ceket, bordo dik yaka triko ve antrasit palazzo pantolonla yerçekimine meydan okuyan 6 kadın parçası! 👇🎃🔥",
+            "video_badge_collage": "» CADILAR BAYRAMI PİST KOMBİNİM «",
+            "video_badge_walk": "» DÜŞMEDEN PİSTTEN İNİŞ ŞOVU «",
+        },
+        {
             "hook_title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ (Ama kombinimden asla ödün vermem)",
+            "spoken_hook_text": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim ama kombinimden ödün vermem!",
             "x_short_hook": "İç sesim bir dk bile susmadığı için gün boyu böyleyim 😭✨",
             "yt_short_title": "İç sesim bir dakika bile susmadığı için gün boyu böyleyim 😭✨ Kombin Sırrı",
             "tiktok_hook_title": "POV: İç sesim bir dakika bile susmadığı için gün boyu sokakta böyle geziyorum 😭✨",
@@ -1082,6 +1367,7 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         },
         {
             "hook_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊☕✨",
+            "spoken_hook_text": "Kafamın içinde kırk tilki dönerken dışarıya verdiğim her şey yolunda kombini!",
             "x_short_hook": "Kafamda 40 tilki dönerken dışarıya verdiğim şıklık 🦊✨",
             "yt_short_title": "Kafamın içinde 40 tilki dönerken dışarıya verdiğim 'Her şey yolunda' kombini 🦊✨",
             "tiktok_hook_title": "POV: Kafamın içi kaosken dışarıya verdiğim 'Her şey kontrol altında' kombini 🦊☕",
@@ -1090,26 +1376,25 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
             "video_badge_collage": "» KAFAMIN İÇİ KAOSKEN KOMBİNİM «",
             "video_badge_walk": "» SOKAKTAKİ DURUŞU EFSANE «",
         },
-        {
-            "hook_title": "Modum sıfırken bile kombinim 10/10 olmak zorunda çünkü terapi pahalı 💅🔥",
-            "x_short_hook": "Modum sıfırken bile kombinim 10/10 olmak zorunda 💅🔥",
-            "yt_short_title": "Modum sıfırken bile kombinim 10/10 olmak zorunda çünkü terapi pahalı 💅🔥",
-            "tiktok_hook_title": "POV: Modum sıfırken bile kombinim 10 üzerinden 10 olmak zorunda 💅✨",
-            "pinterest_title": "2026 Sonbahar Kadın Kombin Fikirleri: Siyah Ceket, Palazzo Jean & Sneaker",
-            "viral_hook": "🛑 Kimseyle konuşmak istemeyip yine de ortamdaki en şık kişi olma çabam! Sokakta herkesin dönüp baktığı o 6 kadın parçası! 👇✨",
-            "video_badge_collage": "» MODUM SIFIR AMA KOMBİNİM 10/10 «",
-            "video_badge_walk": "» ÜZERİNDEKİ DURUŞA DİKKAT «",
-        },
     ]
-    chosen_hook_pack = hook_packs[0] if archetype["id"] == "inner_voice_black_bomber_stone_palazzo" else rng.choice(hook_packs)
-    archetype_title = chosen_hook_pack["hook_title"]
+    if archetype["id"] == "veor_uranis_bordo_kapsul_2k":
+        chosen_hook_pack = hook_packs[0]
+    elif archetype["id"] == "tesla_halloween_ramp_curly":
+        chosen_hook_pack = hook_packs[1]
+    elif archetype["id"] == "inner_voice_black_bomber_stone_palazzo":
+        chosen_hook_pack = hook_packs[2]
+    else:
+        chosen_hook_pack = rng.choice(hook_packs)
+    archetype_title = archetype.get("title") or chosen_hook_pack["hook_title"]
 
     return {
         "slot": slot_name,
         "is_trial": False,
         "archetype_id": archetype["id"],
         "archetype_title": archetype_title,
+        "preferred_music_id": archetype.get("preferred_music_id", "veor_uranis_da_da_da_2026"),
         "hook_title": chosen_hook_pack["hook_title"],
+        "spoken_hook_text": archetype.get("spoken_hook_text") or chosen_hook_pack.get("spoken_hook_text", ""),
         "x_short_hook": chosen_hook_pack["x_short_hook"],
         "yt_short_title": chosen_hook_pack["yt_short_title"],
         "tiktok_hook_title": chosen_hook_pack["tiktok_hook_title"],
@@ -1117,9 +1402,11 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         "viral_hook": chosen_hook_pack["viral_hook"],
         "video_badge_collage": chosen_hook_pack["video_badge_collage"],
         "video_badge_walk": chosen_hook_pack["video_badge_walk"],
+        "ramp_empty_bg": archetype.get("ramp_empty_bg"),
+        "ramp_model_cutout": archetype.get("ramp_model_cutout"),
         "seo_note": archetype.get(
             "seo_note",
-            "📌 Not: Videodaki %100 Kadın kombin parçalarının canlı taranmış mağaza ve benzer muadil ürün linkleri aşağıda doğrulanarak listelenmiştir:",
+            "📌 Not: Videodaki %100 Kadın kombin parçaları önce guzelai.com üzerinde görsel ve renk olarak doğrulanmış olup tüm ürün linkleri guzelai.com/go/ üzerinden doğrudan ilgili mağazaya yönlendirilmektedir:",
         ),
         "timestamp": datetime.utcnow().isoformat(),
         "items": items,
@@ -1127,3 +1414,4 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         "total_price_str": total_price_str,
         "model_frames": model_frames,
     }
+
