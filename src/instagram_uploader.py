@@ -79,6 +79,25 @@ def upload_via_instagrapi(
     meta_path = out_dir / "outfit_links.json"
     ig_hist_path = out_dir / "instagram_uploaded_history.json"
 
+    # 1.5 Yayın Öncesi %100 İhlal Doğurmaz Raporu & Viral Müzik Denetimi Zorunluluğu
+    try:
+        from kombin_agent_swarm import run_prepublish_compliance_auditor, run_tiktok_viral_music_scout
+
+        music_rep = run_tiktok_viral_music_scout()
+        comp_cert = run_prepublish_compliance_auditor()
+        if not comp_cert.get("zero_violation_guaranteed", False):
+            print(
+                f"[İHLAL KORUMA ENGELİ] Yayın Öncesi Denetim Ajanı onay vermedi: {comp_cert.get('verdict')} "
+                f"({comp_cert.get('passed_checks')}). Paylaşım durduruldu."
+            )
+            return ""
+        print(
+            f"🛡️ [YAYIN ÖNCESİ ONAY] {comp_cert.get('verdict')} ({comp_cert.get('passed_checks')}) | "
+            f"🎵 Müzik: {music_rep.get('selected_track_for_next_post', {}).get('track_name', '')}"
+        )
+    except Exception as ce:
+        print(f"[Uyumluluk Denetimi Uyarısı] {ce}")
+
     # 2. En az 4 saatlik paylaşım aralığı (Rate-Limit / Cooldown Koruması)
     min_interval_sec = int(os.environ.get("IG_MIN_INTERVAL_SEC", str(4 * 3600)))
     last_upload_ts = 0.0
