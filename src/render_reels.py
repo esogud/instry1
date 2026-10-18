@@ -614,7 +614,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
                 )
                 draw.text(
                     (W // 2, by + S(78)),
-                    "» LİNKLER AÇIKLAMADA, YORUMDA & GUZELAI.COM'DA «",
+                    "» ÜRÜN KODLARI AÇIKLAMADA • LİNKLER GUZELAI.COM'DA «",
                     fill=(242, 218, 178, 255),
                     font=font_sub,
                     anchor="mm",
@@ -630,39 +630,38 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             if abs(t - 4.8) < (0.5 / FPS):
                 canvas.convert("RGB").save(os.path.join(out_dir, "kombin_collage.png"), compress_level=1)
 
-        # 2. BÖLÜM: Tesla Eğimli Pist (Sky-Ramp) 3 Aşamalı Fotogerçekçi Graph-Motion Kamera Takibi (5.2sn - 11.0sn)
-        # ÇİFT POZLAMA (Image.blend) VE 2B YAPIŞTIRMA HALESİ TAMAMEN KALDIRILDI (%100 DOĞAL SİNEMATİK GEÇİŞ)
+        # 2. BÖLÜM: Sokakta Özgüvenli Yürüyüş 3 Aşamalı Fotogerçekçi Graph-Motion Kamera Takibi (5.2sn - 11.0sn)
         if t >= collage_end_sec:
             walk_t = t - collage_end_sec
             walk_dur = total_duration - collage_end_sec  # 5.8s toplam (5.2s -> 11.0s)
 
             if len(model_frames) >= 3:
                 if walk_t < 1.9:
-                    # Aşama 1 (5.2s - 7.1s): Pistin dik üst virajından iniş (Dinamik Graph-Motion dikey kamera takibi)
+                    # Aşama 1 (5.2s - 7.1s): Yolda özgüvenli ilk yürüyüş adımı (Baştan ayağa tam boy podyum takibi)
                     active_model = model_frames[0]
                     local_u = max(0.0, min(1.0, walk_t / 1.9))
                     eased_u = ease_in_out_cubic(local_u)
-                    zoom = 1.26 - 0.22 * eased_u
-                    crop_w = int(W / zoom)
-                    crop_h = int(H / zoom)
-                    cx = int((W - crop_w) * (0.54 - 0.04 * eased_u))
-                    cy = int((H - crop_h) * (0.18 + 0.32 * eased_u))
-                elif walk_t < 3.8:
-                    # Aşama 2 (7.1s - 9.0s): Pistin alt virajında güçlü yürüyüş adımı (Yakın plan sinematik takip)
-                    active_model = model_frames[1]
-                    local_u = max(0.0, min(1.0, (walk_t - 1.9) / 1.9))
-                    eased_u = ease_in_out_cubic(local_u)
-                    zoom = 1.01 + 0.06 * eased_u
+                    zoom = 1.08 - 0.06 * eased_u
                     crop_w = int(W / zoom)
                     crop_h = int(H / zoom)
                     cx = (W - crop_w) // 2
-                    cy = int((H - crop_h) * (0.35 + 0.25 * eased_u))
+                    cy = int((H - crop_h) * (0.35 + 0.15 * eased_u))
+                elif walk_t < 3.8:
+                    # Aşama 2 (7.1s - 9.0s): Yolda dinamik ikinci yürüyüş adımı (Ritim senkronlu Graph-Motion kamera)
+                    active_model = model_frames[1]
+                    local_u = max(0.0, min(1.0, (walk_t - 1.9) / 1.9))
+                    eased_u = ease_in_out_cubic(local_u)
+                    zoom = 1.02 + 0.06 * eased_u
+                    crop_w = int(W / zoom)
+                    crop_h = int(H / zoom)
+                    cx = (W - crop_w) // 2
+                    cy = int((H - crop_h) * (0.45 + 0.10 * eased_u))
                 else:
-                    # Aşama 3 (9.0s - 11.0s): Pist sonu Cadılar Bayramı balkabağı sahnesinde final duruşu ("Detaylar güzelai nokta com'da")
+                    # Aşama 3 (9.0s - 11.0s): Kameraya doğru özgüvenli son yürüyüş adımı
                     active_model = model_frames[2]
                     local_u = max(0.0, min(1.0, (walk_t - 3.8) / 2.0))
                     eased_u = ease_in_out_cubic(local_u)
-                    zoom = 1.01 + 0.05 * eased_u
+                    zoom = 1.07 - 0.05 * eased_u
                     crop_w = int(W / zoom)
                     crop_h = int(H / zoom)
                     cx = (W - crop_w) // 2
@@ -691,7 +690,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
                 walk_frame = bg_base.copy()
 
             walk_badge = (
-                outfit.get("video_badge_walk", "» DÜŞMEDEN PİSTTEN İNİŞ ŞOVU «")
+                outfit.get("video_badge_walk", "» SOKAKTA ÖZGÜVENLİ OLD MONEY YÜRÜYÜŞÜ «")
                 .replace("🔥", "★")
                 .replace("✨", "★")
                 .replace("🎃", "★")
@@ -728,7 +727,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
             )
             mini_draw.text(
                 (W // 2, S(1680)),
-                "» Ürün linkleri açıklamada, ilk yorumda & guzelai.com'da! «",
+                "» Ürün kodları açıklamada • Mağaza linkleri guzelai.com'da! «",
                 fill=(165, 52, 20, 255),
                 font=font_sub,
                 anchor="mm",
@@ -752,7 +751,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         # 4:4:4 Tam Chroma (subsampling=0) ve %98 Kalite ile Kayıpsız Ara Kare Kaydı
         final_frame.save(os.path.join(frames_dir, f"frame_{f_idx:04d}.jpg"), quality=98, subsampling=0)
 
-    # Viral Moda / Kombin Reels Çoklu-Enstrüman Müziği + İki Kişilik Doğal Türkçe Sesli Hook Üret
+    # Kusursuz 44.1 kHz Stereo Stüdyo Master Müziği Üret
     wav_path = os.path.join(out_dir, "viral_fashion_track.wav")
     pop_times = [c["t_in"] for c in items_cfg]
     music_info = generate_viral_fashion_audio(
@@ -768,7 +767,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
     # 2K QHD+ (1440x2560) Samsung OLED Master Kodlama:
     # - BT.709 tam renk uzayı ve kontrast bayrakları
     # - Luma/Chroma unsharp mask filtresi (unsharp=5:5:0.55:3:3:0.0)
-    # - Yüksek profil H.264 (CRF 15, ~18 Mbps tavan bit hızı)
+    # - Yüksek profil H.264 (CRF 14, ~18 Mbps) + 320 kbps AAC Stereo Ses
     import shutil
     ffmpeg_bin = shutil.which("ffmpeg")
     if not ffmpeg_bin:
@@ -799,7 +798,7 @@ def render_kombin_reel(outfit: dict, output_mp4: str, watermark: str = "@guzelai
         "-movflags", "+faststart",
         "-metadata", "encoder=Apple QuickTime",
         "-metadata", "comment=guzelai.com",
-        "-c:a", "aac", "-b:a", "256k", "-ar", "44100", "-ac", "2",
+        "-c:a", "aac", "-b:a", "320k", "-ar", "44100", "-ac", "2",
         "-shortest",
         output_mp4,
     ]
