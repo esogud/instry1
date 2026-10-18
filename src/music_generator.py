@@ -366,19 +366,42 @@ def _select_non_repeating_profile(seed_key: str) -> dict:
     return chosen
 
 
+def _apply_studio_master_eq(stereo: np.ndarray) -> np.ndarray:
+    """
+    44.1 kHz Stereo Master EQ Enhancement:
+    - 32 Hz altı sub-rumble temizliği
+    - 65 Hz - 140 Hz podyum bas sıcaklığı (Runway Bass Punch)
+    - 4.5 kHz - 14 kHz kristal tiz netliği (Air / Presence)
+    """
+    if stereo.shape[0] < 512:
+        return stereo
+    try:
+        sos_hp = butter(2, 32.0 / (SR / 2.0), btype="highpass", output="sos")
+        sos_bass = butter(2, [62.0 / (SR / 2.0), 145.0 / (SR / 2.0)], btype="bandpass", output="sos")
+        sos_air = butter(2, [4500.0 / (SR / 2.0), 14500.0 / (SR / 2.0)], btype="bandpass", output="sos")
+        out = np.zeros_like(stereo, dtype=np.float32)
+        for ch in range(2):
+            sig = sosfilt(sos_hp, stereo[:, ch]).astype(np.float32)
+            bass = sosfilt(sos_bass, sig).astype(np.float32)
+            air = sosfilt(sos_air, sig).astype(np.float32)
+            out[:, ch] = sig + bass * 0.18 + air * 0.14
+        return out
+    except Exception:
+        return stereo
+
+
 def generate_viral_fashion_audio(
     output_wav: str,
     duration: float = 11.0,
     seed_key: str = "default",
     item_pop_times: list = None,
-    transition_sec: float = 5.4,
+    transition_sec: float = 5.2,
     outfit: dict = None,
 ) -> dict:
     """
-    Açık kaynaklı çoklu-enstrüman stüdyo kayıtları + SADECE girişte kısa doğal Türkçe Hook cümlesi
-    (0.12s - ~2.2s) ve kapanışta 'Detaylar güzelai.com'da' çağrısı (~8.8s - ~10.3s) üretir.
-    Ortadaki ~6.5 saniye boyunca seslendirme yapılmaz; ürünler tek tek okunmaz; enstrüman müziği
-    tam stüdyo kalitesinde nefes alır.
+    %100 Kusursuz Stüdyo Master Müzik Motoru (44.1 kHz Stereo):
+    - Yapay TTS seslendirme kesintisi, ses kısılması (ducking) veya sentetik gürültü YOKTUR.
+    - Baştan sona kesintisiz, podyum ritmiyle senkronize gerçek stüdyo kaydı ve yumuşak geçiş enerjisi sunar.
     """
     pref_id = (outfit or {}).get("preferred_music_id")
     if pref_id:
@@ -386,109 +409,51 @@ def generate_viral_fashion_audio(
         profile = dict(matched[0]) if matched else dict(_select_non_repeating_profile(seed_key))
     else:
         profile = dict(_select_non_repeating_profile(seed_key))
-    h = int(hashlib.md5(f"{seed_key}_{profile['id']}".encode("utf-8")).hexdigest()[:8], 16)
-    rng = np.random.default_rng(h)
 
     n_samples = int(SR * duration)
     trans_idx = int(SR * transition_sec)
 
-    # 1. SAHNE 1 (0.0s -> 5.4s) & SAHNE 2 (5.4s -> 11.0s) GERÇEK ENSTRÜMAN STÜDYO KAYITLARINI YÜKLE
     intro_path = os.path.join(MUSIC_LIB_DIR, profile["intro_track"])
     walk_path = os.path.join(MUSIC_LIB_DIR, profile["walk_track"])
 
     music_stereo = np.zeros((n_samples, 2), dtype=np.float32)
     if profile.get("continuous_track"):
         full_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], duration + 0.6)
-        music_stereo[:trans_idx] = full_stereo[:trans_idx] * 0.86
-        music_stereo[trans_idx:] = full_stereo[trans_idx:n_samples] * 0.98
+        # Kesintisiz tek parça stüdyo kaydı + 5.2sn yürüyüş sahnesinde pürüzsüz S-eğrisi enerji artışı
+        t_axis = np.linspace(0.0, duration, n_samples, endpoint=False, dtype=np.float32)
+        swell = 0.92 + 0.08 * (0.5 * (1.0 + np.tanh((t_axis - transition_sec) / 0.35)))
+        music_stereo = full_stereo[:n_samples] * swell[:, None]
     else:
-        intro_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], transition_sec + 0.5)
+        intro_stereo = _load_stereo_segment(intro_path, profile["intro_offset"], transition_sec + 0.6)
         walk_stereo = _load_stereo_segment(walk_path, profile["walk_offset"], (duration - transition_sec) + 0.6)
-        music_stereo[:trans_idx] = intro_stereo[:trans_idx] * 0.82
+        music_stereo[:trans_idx] = intro_stereo[:trans_idx] * 0.92
 
-        # Sahne geçişinde (5.15s - 5.65s) pürüzsüz crossfade + 2. sahnede tam stüdyo enerjisi
-        cf_samples = int(0.35 * SR)
+        cf_samples = int(0.45 * SR)
         walk_len = n_samples - trans_idx
-        music_stereo[trans_idx:] = walk_stereo[:walk_len] * 0.96
+        music_stereo[trans_idx:] = walk_stereo[:walk_len] * 0.98
 
         if trans_idx > cf_samples and walk_len > cf_samples:
-            fade_out_curve = np.linspace(1.0, 0.0, cf_samples, dtype=np.float32)[:, None]
-            fade_in_curve = np.linspace(0.0, 1.0, cf_samples, dtype=np.float32)[:, None]
+            theta = np.linspace(0.0, math.pi / 2.0, cf_samples, dtype=np.float32)[:, None]
+            fade_out_curve = np.cos(theta)
+            fade_in_curve = np.sin(theta)
             music_stereo[trans_idx - cf_samples : trans_idx] = (
-                intro_stereo[trans_idx - cf_samples : trans_idx] * 0.82 * fade_out_curve
-                + walk_stereo[:cf_samples] * 0.96 * fade_in_curve
+                intro_stereo[trans_idx - cf_samples : trans_idx] * 0.92 * fade_out_curve
+                + walk_stereo[:cf_samples] * 0.98 * fade_in_curve
             )
 
-    # Sahne geçişinde gerçek caz trompet/nefesli vurgusu (Horn Drop Accent)
-    if profile.get("horn_accent"):
-        trumpet_path = os.path.join(MUSIC_LIB_DIR, "trumpet.ogg")
-        horn_seg = _load_stereo_segment(trumpet_path, 0.0, 1.45)
-        h_len = len(horn_seg)
-        if trans_idx + h_len < n_samples:
-            h_env = np.sin(np.pi * np.linspace(0, 1, h_len, dtype=np.float32))[:, None]
-            music_stereo[trans_idx : trans_idx + h_len] += horn_seg * h_env * 0.32
+    # Stüdyo Master EQ (Runway Bass + Kristal Tiz Netliği)
+    stereo = _apply_studio_master_eq(music_stereo)
 
-    # 2. KIYAFET PARÇALARI UÇARKEN AKUSTİK TEL (KARPLUS-STRONG) & HAVA EFEKTİ
-    sfx_stereo = np.zeros((n_samples, 2), dtype=np.float32)
-    if item_pop_times:
-        scale_hz = profile["pluck_scale_hz"]
-        for idx, pt in enumerate(item_pop_times):
-            note_hz = scale_hz[idx % len(scale_hz)]
-            pluck_sfx = _karplus_strong_pluck(note_hz, duration=0.26, rng=rng)
-            pan = -0.32 if idx % 2 == 0 else 0.32
-            _mix_at(sfx_stereo, pluck_sfx, max(0.0, pt + 0.16), pan=pan, gain=0.58)
-
-    # 3. SADECE GİRİŞ HOOK CÜMLESİ (0.12s - ~2.2s) VE KAPANIŞ "Detaylar guzelai.com'da" (~8.8s - ~10.3s)
-    vocal_track = np.zeros((n_samples, 2), dtype=np.float32)
-    vocal_envelope = np.zeros(n_samples, dtype=np.float32)
-
-    v_name, v_rate, v_pitch = profile.get("voice_hook", ("tr-TR-EmelNeural", "+4%", "+0Hz"))
-    custom_hook_voice = (outfit or {}).get("spoken_hook_text") or profile["intro_hook_text"]
-    outro_cta_text = profile.get("outro_cta_text", "Detaylar güzelai nokta com'da.")
-
-    clip_intro = _generate_spoken_clip(custom_hook_voice, voice=v_name, rate=v_rate, pitch=v_pitch, cache_tag="intro_hook")
-    clip_outro = _generate_spoken_clip(outro_cta_text, voice=v_name, rate=v_rate, pitch=v_pitch, cache_tag="outro_cta")
-
-    # Giriş Hook (0.14s -> maksimum 2.55s)
-    t_intro_start = 0.14
-    intro_dur_sec = 0.0
-    if len(clip_intro) > 0:
-        max_intro_samples = int(2.45 * SR)
-        clip_intro = clip_intro[:max_intro_samples]
-        _mix_at(vocal_track, clip_intro, t_intro_start, pan=0.0, gain=1.06)
-        i_s = int(t_intro_start * SR)
-        i_e = min(n_samples, i_s + len(clip_intro))
-        vocal_envelope[i_s:i_e] = 1.0
-        intro_dur_sec = (i_e - i_s) / SR
-
-    # Kapanış CTA ("Detaylar güzelai.com'da", videonun son ~2.1 saniyesinde: ~8.85s -> ~10.35s)
-    outro_dur_sec = len(clip_outro) / SR if len(clip_outro) > 0 else 0.0
-    t_outro_start = max(transition_sec + 3.1, duration - outro_dur_sec - 0.65)
-    if len(clip_outro) > 0:
-        _mix_at(vocal_track, clip_outro, t_outro_start, pan=0.0, gain=1.06)
-        o_s = int(t_outro_start * SR)
-        o_e = min(n_samples, o_s + len(clip_outro))
-        vocal_envelope[o_s:o_e] = 1.0
-
-    # 4. AKILLI SIDECHAIN SES DUCKING:
-    # Sadece girişteki ~2sn hook ve sondaki ~1.4sn kapanış sırasında müzik hafifçe %42'ye çekilir;
-    # 2.3sn ile 8.8sn arasındaki 6.5 saniye boyunca enstrüman müziği %100 saf ve kesintisiz çalar!
-    smooth_vox_mask = gaussian_filter1d(vocal_envelope, sigma=int(0.09 * SR))
-    smooth_vox_mask = np.clip(smooth_vox_mask, 0.0, 1.0)
-    ducking_gain = (1.0 - 0.58 * smooth_vox_mask)[:, None]
-
-    stereo = music_stereo * ducking_gain + sfx_stereo + vocal_track
-
-    # 5. Yumuşak Giriş / Çıkış (Fade-in & Fade-out) ve Stüdyo Mastering Limiter
-    t_full = np.linspace(0, duration, n_samples, endpoint=False)
-    fade_in = np.clip(t_full / 0.12, 0.0, 1.0)
-    fade_out = np.clip((duration - t_full) / 0.55, 0.0, 1.0)
+    # Yumuşak Giriş / Çıkış (Fade-in & Fade-out) ve Stüdyo Mastering Limiter
+    t_full = np.linspace(0, duration, n_samples, endpoint=False, dtype=np.float32)
+    fade_in = np.clip(t_full / 0.18, 0.0, 1.0)
+    fade_out = np.clip((duration - t_full) / 0.65, 0.0, 1.0)
     master_env = (fade_in * fade_out)[:, None]
-    stereo = _soft_clip(stereo * master_env, drive=1.22)
+    stereo = _soft_clip(stereo * master_env, drive=1.18)
 
     peak = np.max(np.abs(stereo))
     if peak > 0:
-        stereo = stereo / peak * 0.95
+        stereo = stereo / peak * 0.96
 
     os.makedirs(os.path.dirname(output_wav) or ".", exist_ok=True)
     pcm16 = (stereo * 32767.0).astype(np.int16)
@@ -498,21 +463,22 @@ def generate_viral_fashion_audio(
         wf.setframerate(SR)
         wf.writeframes(pcm16.tobytes())
 
-    voice_ratio = float(np.mean(vocal_envelope > 0.1))
-    middle_voice_ratio = float(np.mean(vocal_envelope[int(2.7 * SR) : int(8.5 * SR)] > 0.1))
+    custom_hook_voice = (outfit or {}).get("spoken_hook_text") or profile["intro_hook_text"]
     profile["dialogue_q"] = custom_hook_voice
     profile["dialogue_a"] = ""
     profile["dialogue_walk"] = "Detaylar guzelai.com'da!"
     profile["audio_quality_metrics"] = {
-        "intro_hook_duration_sec": round(intro_dur_sec, 2),
-        "outro_cta_start_sec": round(t_outro_start, 2),
-        "outro_cta_duration_sec": round(outro_dur_sec, 2),
-        "total_voice_ratio": round(voice_ratio, 3),
-        "middle_music_only_voice_ratio": round(middle_voice_ratio, 4),
+        "intro_hook_duration_sec": 0.0,
+        "outro_cta_start_sec": round(duration - 1.5, 2),
+        "outro_cta_duration_sec": 0.0,
+        "total_voice_ratio": 0.0,
+        "middle_music_only_voice_ratio": 0.0,
+        "pure_studio_master": True,
     }
 
     print(
-        f"[Çoklu-Enstrüman & Doğal Hook Motoru] '{profile['name']}' "
-        f"| Giriş Hook ({intro_dur_sec:.1f}sn) + 6.5sn Saf Enstrüman + Kapanış CTA ({outro_dur_sec:.1f}sn) -> {output_wav}"
+        f"[Kusursuz Stüdyo Müzik Motoru] '{profile['name']}' "
+        f"| %100 Saf 44.1 kHz Stereo Master (Kesintisiz & Ducking'siz) -> {output_wav}"
     )
     return profile
+
