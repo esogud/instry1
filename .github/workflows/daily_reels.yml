@@ -66,14 +66,18 @@ jobs:
           retention-days: 7
 
       - name: 📱 Resmi Graph API Kontrolü (Bulut IP Güvenli Mod)
-        if: ${{ github.event.inputs.dry_run == 'false' && secrets.IG_ACCESS_TOKEN != '' }}
+        if: ${{ github.event.inputs.dry_run == 'false' }}
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
           IG_ENABLE_UPLOAD: '1'
         run: |
-          python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
+          if [ -n "$IG_ACCESS_TOKEN" ]; then
+            python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
+          else
+            echo "Bulut IP Koruması: Resmi IG_ACCESS_TOKEN tanımlı değil, Türkiye IP oturumu korundu."
+          fi
 
       - name: 💾 Yayınlanan Kombin Geçmişini Depoya Kaydet (Tekrar Paylaşım Koruması)
         if: ${{ always() }}
