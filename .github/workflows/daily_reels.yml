@@ -1,9 +1,6 @@
 name: GuzelAI.com 7/24 Otonom Medya, SEO & Kombin Reels Sistemi (Bulut + Yerel)
 
 on:
-  schedule:
-    # Türkiye Saati (UTC+3) Prime-Time Keşfet Kuşakları: 12:00 (Öğle), 18:00 (İş Çıkışı), 21:00 (Akşam Prime-Time)
-    - cron: '0 9,15,18 * * *'
   workflow_dispatch:
     inputs:
       slot_name:
@@ -11,9 +8,9 @@ on:
         required: false
         default: 'otomatik'
       dry_run:
-        description: 'Sadece videoyu üret, Instagrama yükleme (true/false)'
+        description: 'Bulut IP Koruması: Sadece 2K Reels + GuzelAI.com vitrin üret, Instagram yüklemesini yerel TR IPye bırak (true/false)'
         required: false
-        default: 'false'
+        default: 'true'
 
 permissions:
   contents: write
@@ -45,7 +42,7 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 👗 Tarih & Konsept Otomasyonu + 2K QHD+ Reels + Hook Kapak + GuzelAI.com Vitrin Güncellemesi
+      - name: 👗 Tarih & Konsept Otomasyonu + 2K QHD+ Graph-Motion Reels + GuzelAI.com Vitrin Güncellemesi
         env:
           IG_WATERMARK: ${{ vars.IG_WATERMARK || '@guzelaicom' }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
@@ -64,22 +61,17 @@ jobs:
             output/kombin_collage.png
             output/model_street.png
             output/caption.txt
-            output/comment_links.txt
             output/quality_check_report.json
             output/outfit_links.json
           retention-days: 7
 
-      - name: 📱 Instagram (@guzelaicom) & GuzelAI.com Canlı Yayın (Tekil & Doğrulanmış)
-        if: ${{ github.event.inputs.dry_run != 'true' }}
+      - name: 📱 Resmi Graph API Kontrolü (Bulut IP Güvenli Mod)
+        if: ${{ github.event.inputs.dry_run == 'false' && secrets.IG_ACCESS_TOKEN != '' }}
         env:
-          IG_USERNAME: ${{ secrets.IG_USERNAME || 'guzelaicom' }}
-          IG_PASSWORD: ${{ secrets.IG_PASSWORD }}
-          IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          IG_ENABLE_UPLOAD: '1'
         run: |
           python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
 
