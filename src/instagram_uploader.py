@@ -125,27 +125,39 @@ def upload_via_instagrapi(
             pass
 
     clean_username = username.lstrip("@").strip()
-    if not session_str:
-        print("[GÜVENLİK DURDURMASI] Geçerli oturum anahtarı (sessionid) bulunamadı. Otomatik şifre denemesi devre dışı.")
-        return ""
+    session_file_path = Path(r"C:\Users\zenci\.gemini\antigravity\scratch\ig_session.json")
+    direct_login_allowed = os.environ.get("IG_DIRECT_LOGIN", "0").strip() in ("1", "true", "yes")
 
     try:
-        if session_str.startswith("{"):
+        logged_in = False
+        if session_str and session_str.strip().startswith("{"):
             settings = json.loads(session_str)
-            cl.set_settings(settings)
-            sid = settings.get("cookies", {}).get("sessionid") or settings.get("authorization_data", {}).get("sessionid")
-            if not sid:
-                print("[GÜVENLİK DURDURMASI] JSON içinde sessionid bulunamadı.")
+            if settings.get("authorization_data", {}).get("sessionid"):
+                cl.set_settings(settings)
+                cl.init()
+                logged_in = True
+                print(f"[Instagram] Kayıtlı mobil Bearer oturumu ve sabit cihaz profili ile @{clean_username} hazır.")
+
+        if not logged_in:
+            if direct_login_allowed and password:
+                print(f"[Instagram] Sabit cihaz profiliyle @{clean_username} için doğrudan giriş yapılıyor...")
+                cl.login(clean_username, password)
+                full_settings = cl.get_settings()
+                session_file_path.write_text(json.dumps(full_settings, indent=2), encoding="utf-8")
+                device_profile_path.write_text(json.dumps(full_settings, indent=2), encoding="utf-8")
+                print(f"[Instagram] @{clean_username} doğrulandı ve kalıcı mobil oturum (Bearer IGT) kaydedildi.")
+            elif session_str:
+                cl.login_by_sessionid(unquote(session_str.strip()))
+                full_settings = cl.get_settings()
+                session_file_path.write_text(json.dumps(full_settings, indent=2), encoding="utf-8")
+                print(f"[Instagram] Sabit cihaz profili ve oturum anahtarı ile @{clean_username} doğrulandı.")
+            else:
+                print("[GÜVENLİK DURDURMASI] Geçerli oturum anahtarı bulunamadı ve IG_DIRECT_LOGIN kapalı.")
                 return ""
-            cl.login_by_sessionid(unquote(sid))
-        else:
-            cl.login_by_sessionid(unquote(session_str.strip()))
-        print(f"[Instagram] Sabit cihaz profili ve oturum anahtarı ile @{clean_username} doğrulandı.")
     except Exception as se:
-        # KESİNLİKLE otomatik şifre (cl.login / web ajax) denemesi yapılmaz!
         print(
-            f"[GÜVENLİK DURDURMASI] Oturum anahtarı reddedildi ({type(se).__name__}: {se}). "
-            "Hesabın kilitlenmemesi için otomatik şifre denemesi yapılmadı."
+            f"[GÜVENLİK DURDURMASI] Giriş/Oturum doğrulaması başarısız ({type(se).__name__}: {se}). "
+            "Hesabın korunması için tekrar deneme yapılmadı."
         )
         return ""
 
