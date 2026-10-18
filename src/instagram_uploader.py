@@ -59,43 +59,43 @@ def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_us
     return True
 
 
-def try_web_ajax_sessionid(cl, username: str, password: str) -> str:
-    s = requests.Session()
-    s.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        "Accept-Language": "tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7",
-        "X-IG-App-ID": "936619743392459",
-        "X-Requested-With": "XMLHttpRequest",
-        "Referer": "https://www.instagram.com/accounts/login/",
-        "Origin": "https://www.instagram.com",
-    })
-    r0 = s.get("https://www.instagram.com/accounts/login/", timeout=15)
-    csrf_match = re.search(r'"csrf_token":"([^"]+)"', r0.text)
-    csrf = s.cookies.get("csrftoken") or (csrf_match.group(1) if csrf_match else "")
-    s.headers["X-CSRFToken"] = csrf
-
-    enc = cl.password_encrypt(password)
-    r = s.post(
-        "https://www.instagram.com/api/v1/web/accounts/login/ajax/",
-        data={
-            "username": username,
-            "enc_password": enc,
-            "queryParams": "{}",
-            "optIntoOneTap": "false",
-        },
-        timeout=15,
-    )
-    return s.cookies.get("sessionid", "")
-
-
 def upload_via_instagrapi(
     video_path: str,
     caption: str,
     username: str,
-    password: str,
+    password: str = "",
     session_str: str = "",
     comment_text: str = "",
-) -> bool:
+) -> str:
+    # 1. Kısıt / Güvenlik Kilidi: Kullanıcı kısıt kalktıktan sonra IG_ENABLE_UPLOAD=1 açana kadar Instagram'a istek gönderme
+    if os.environ.get("IG_ENABLE_UPLOAD", "0") != "1":
+        print(
+            "[INSTAGRAM KORUMA MODU AKTİF] Hesap kısıtı kalkana ve IG_ENABLE_UPLOAD=1 "
+            "onayı verilene kadar Instagram API'sine hiçbir istek gönderilmez."
+        )
+        return ""
+
+    out_dir = Path(video_path).parent
+    meta_path = out_dir / "outfit_links.json"
+    ig_hist_path = out_dir / "instagram_uploaded_history.json"
+
+    # 2. En az 4 saatlik paylaşım aralığı (Rate-Limit / Cooldown Koruması)
+    min_interval_sec = int(os.environ.get("IG_MIN_INTERVAL_SEC", str(4 * 3600)))
+    last_upload_ts = 0.0
+    if ig_hist_path.exists():
+        try:
+            hobj_check = json.loads(ig_hist_path.read_text(encoding="utf-8"))
+            last_upload_ts = float(hobj_check.get("last_upload_timestamp", 0.0))
+        except Exception:
+            pass
+    if last_upload_ts > 0 and (time.time() - last_upload_ts) < min_interval_sec:
+        rem_min = int((min_interval_sec - (time.time() - last_upload_ts)) // 60)
+        print(
+            f"[HIZ SINIRI KORUMASI] Son Instagram paylaşımından bu yana 4 saat geçmedi "
+            f"(Kalan süre: {rem_min} dk). Spam koruması gereği paylaşım ertelendi."
+        )
+        return ""
+
     from instagrapi import Client
 
     cl = Client()
@@ -104,56 +104,52 @@ def upload_via_instagrapi(
     cl.set_country_code(90)
     cl.set_timezone_offset(3 * 3600)
 
+    # 3. Sabit Cihaz Kimliği (Her çalışmada rastgele Android telefon üretilmesini engeller)
+    device_profile_path = Path(r"C:\Users\zenci\.gemini\antigravity\scratch\ig_device_profile.json")
+    if device_profile_path.exists():
+        try:
+            saved_dev = json.loads(device_profile_path.read_text(encoding="utf-8"))
+            if "uuids" in saved_dev:
+                cl.set_uuids(saved_dev["uuids"])
+            if "device_settings" in saved_dev:
+                cl.set_device(saved_dev["device_settings"])
+        except Exception:
+            pass
+    else:
+        try:
+            device_profile_path.write_text(
+                json.dumps({"uuids": cl.uuids, "device_settings": cl.device_settings}, indent=2),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass
+
     clean_username = username.lstrip("@").strip()
-    print(
-        f"[instagrapi] Hazir: user=@{clean_username} | pass_len={len(password)} | "
-        f"app={cl.device_settings.get('app_version')}"
-    )
-
-    logged_in = False
-
-    if session_str:
-        try:
-            if session_str.startswith("{"):
-                settings = json.loads(session_str)
-                cl.set_settings(settings)
-                sid = settings.get("cookies", {}).get("sessionid") or settings.get("authorization_data", {}).get("sessionid")
-                if sid:
-                    cl.login_by_sessionid(unquote(sid))
-                else:
-                    cl.login(clean_username, password)
-            else:
-                cl.login_by_sessionid(unquote(session_str.strip()))
-            print(f"[instagrapi] Oturum anahtarı ile @{clean_username} hesabına giriş yapıldı!")
-            logged_in = True
-        except Exception as se:
-            print(f"[instagrapi] Oturum anahtarı ile giriş başarısız ({type(se).__name__}: {se}), diğer yöntemler deneniyor...")
-
-    if not logged_in and password:
-        try:
-            sid = try_web_ajax_sessionid(cl, clean_username, password)
-            if sid:
-                cl.login_by_sessionid(unquote(sid))
-                print(f"[instagrapi] Web AJAX sessionid ile @{clean_username} hesabına giriş yapıldı!")
-                logged_in = True
-        except Exception as we:
-            print(f"[Web AJAX Uyarısı] {type(we).__name__}: {we}")
-
-    if not logged_in and password:
-        try:
-            cl.login(clean_username, password)
-            print(f"[instagrapi] @{clean_username} hesabına mobil şifre ile giriş yapıldı!")
-            logged_in = True
-        except Exception as e:
-            print(f"[Instagram Giriş Uyarısı] {type(e).__name__}: {e}")
-
-    if not logged_in:
-        return False
+    if not session_str:
+        print("[GÜVENLİK DURDURMASI] Geçerli oturum anahtarı (sessionid) bulunamadı. Otomatik şifre denemesi devre dışı.")
+        return ""
 
     try:
-        out_dir = Path(video_path).parent
-        meta_path = out_dir / "outfit_links.json"
-        ig_hist_path = out_dir / "instagram_uploaded_history.json"
+        if session_str.startswith("{"):
+            settings = json.loads(session_str)
+            cl.set_settings(settings)
+            sid = settings.get("cookies", {}).get("sessionid") or settings.get("authorization_data", {}).get("sessionid")
+            if not sid:
+                print("[GÜVENLİK DURDURMASI] JSON içinde sessionid bulunamadı.")
+                return ""
+            cl.login_by_sessionid(unquote(sid))
+        else:
+            cl.login_by_sessionid(unquote(session_str.strip()))
+        print(f"[Instagram] Sabit cihaz profili ve oturum anahtarı ile @{clean_username} doğrulandı.")
+    except Exception as se:
+        # KESİNLİKLE otomatik şifre (cl.login / web ajax) denemesi yapılmaz!
+        print(
+            f"[GÜVENLİK DURDURMASI] Oturum anahtarı reddedildi ({type(se).__name__}: {se}). "
+            "Hesabın kilitlenmemesi için otomatik şifre denemesi yapılmadı."
+        )
+        return ""
+
+    try:
         cur_arch_id = ""
         cur_model_frame = ""
         if meta_path.exists():
@@ -226,6 +222,7 @@ def upload_via_instagrapi(
                         "published_archetypes": sorted(published_archs),
                         "published_models": sorted(published_models),
                         "reel_urls": last_urls,
+                        "last_upload_timestamp": time.time(),
                     },
                     ensure_ascii=False,
                     indent=2,
@@ -235,14 +232,7 @@ def upload_via_instagrapi(
         except Exception as he:
             print(f"[IG Geçmiş Kayıt Uyarısı] {he}")
 
-        # Ürün linklerini Reels'in ilk yorumuna da otomatik göm
-        if comment_text:
-            try:
-                cl.media_comment(media.pk, comment_text)
-                print("[BAŞARILI] Ürün linkleri ve yasal uyarı Reels'in ilk yorumuna otomatik olarak eklendi!")
-            except Exception as ce:
-                print(f"[Yorum Bilgilendirmesi] İlk yorum eklenemedi ({ce}), linkler zaten açıklamada yer alıyor.")
-
+        # NOT: Instagram spam filtresini tetikleyen 0.5sn'lik otomatik ilk yorum (media_comment) tamamen kaldırıldı!
         return reel_url
     except Exception as e:
         print(f"[Instagram Paylaşım Uyarısı] {type(e).__name__}: {e}")
@@ -378,7 +368,7 @@ def main():
     access_token = os.environ.get("IG_ACCESS_TOKEN", "").strip()
     ig_user_id = os.environ.get("IG_USER_ID", "").strip()
     username = os.environ.get("IG_USERNAME", "guzelaicom").strip()
-    password = os.environ.get("IG_PASSWORD", "K@rd3s.34-48/mugla").strip()
+    password = os.environ.get("IG_PASSWORD", "").strip()
     session_json = os.environ.get("IG_SESSION_JSON", "").strip()
 
     local_trusted_session = Path(r"C:\Users\zenci\.gemini\antigravity\scratch\ig_session.json")
