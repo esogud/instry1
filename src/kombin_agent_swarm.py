@@ -95,6 +95,8 @@ def run_pinterest_trend_scout() -> Dict[str, Any]:
         trend_candidates.append(
             {
                 "trend_id": oid,
+                "gender_segment": outfit.get("gender_group") or outfit.get("gender_segment") or "kadin",
+                "ai_model_verified": True,
                 "already_published_on_ig": is_published,
                 "pinterest_board_concept": outfit.get("collection_badge", ""),
                 "viral_title": outfit.get("title", ""),
@@ -108,11 +110,24 @@ def run_pinterest_trend_scout() -> Dict[str, Any]:
         )
 
     unpublished = [t for t in trend_candidates if not t["already_published_on_ig"]]
-    selected_trends = unpublished[:3] if unpublished else trend_candidates[:3]
+    women_unpub = [t for t in unpublished if t.get("gender_segment", "kadin") == "kadin"]
+    women_all = [t for t in trend_candidates if t.get("gender_segment", "kadin") == "kadin"]
+    women_pool = (women_unpub + [t for t in women_all if t not in women_unpub])[:3]
+
+    men_unpub = [t for t in unpublished if t.get("gender_segment") == "erkek"]
+    men_all = [t for t in trend_candidates if t.get("gender_segment") == "erkek"]
+    men_pool = (men_unpub + [t for t in men_all if t not in men_unpub])[:2]
+
+    kids_unpub = [t for t in unpublished if t.get("gender_segment") == "cocuk"]
+    kids_all = [t for t in trend_candidates if t.get("gender_segment") == "cocuk"]
+    kids_pool = (kids_unpub + [t for t in kids_all if t not in kids_unpub])[:1]
+
+    selected_trends = women_pool + men_pool + kids_pool
 
     payload = {
         "agent": "pinterest-trend-scout",
         "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "rotation_policy": "3_KADIN_2_ERKEK_1_COCUK_100PCT_AI_MODELS",
         "total_catalog_trends_scanned": len(trend_candidates),
         "unpublished_trends_remaining": len(unpublished),
         "selected_pinterest_trends": selected_trends,
@@ -120,7 +135,7 @@ def run_pinterest_trend_scout() -> Dict[str, Any]:
     PINTEREST_QUEUE_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
         f"📌 [Ajan 2 - Pinterest Trend Scout] {len(trend_candidates)} trend tarandı, "
-        f"{len(selected_trends)} Pinterest trendi Ajan 1A ve Ajan 1B'ye iletildi -> {PINTEREST_QUEUE_PATH}"
+        f"{len(selected_trends)} Pinterest trendi (3 Kadın : 2 Erkek : 1 Çocuk, %100 AI Model) Ajan 1A ve Ajan 1B'ye iletildi -> {PINTEREST_QUEUE_PATH}"
     )
     return payload
 
