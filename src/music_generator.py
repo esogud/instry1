@@ -335,10 +335,11 @@ MULTI_INSTRUMENT_PROFILES = [
 ]
 
 
-def _select_non_repeating_profile(seed_key: str) -> dict:
+def _select_non_repeating_profile(seed_key: str, preferred_id: str = None) -> dict:
     """
-    Son kullanılan müzik ve seslendirme profillerini takip ederek her videoda
-    farklı bir enstrüman grubu ve farklı bir doğal konuşma hook'u seçer.
+    Son kullanılan müzik profillerini takip ederek üst üste aynı müziğin kullanılmasını (Algoritmik Ses Tekrarı Cezası)
+    kesin olarak önler. Tercih edilen müzik son 4 paylaşımda kullanılmadıysa onu seçer; kullanıldıysa
+    otomatik olarak sıradaki en yüksek viral skorlu taze müziğe geçiş yapar.
     """
     recent_ids = []
     if os.path.exists(HISTORY_FILE):
@@ -348,12 +349,19 @@ def _select_non_repeating_profile(seed_key: str) -> dict:
         except Exception:
             recent_ids = []
 
-    available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-6:]]
-    if not available:
-        available = MULTI_INSTRUMENT_PROFILES
+    recent_window = recent_ids[-4:]
+    chosen = None
+    if preferred_id and preferred_id not in recent_window:
+        matched = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] == preferred_id]
+        if matched:
+            chosen = matched[0]
 
-    h = int(hashlib.md5(str(seed_key).encode("utf-8")).hexdigest()[:8], 16)
-    chosen = available[h % len(available)]
+    if chosen is None:
+        available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-5:]]
+        if not available:
+            available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-2:]] or MULTI_INSTRUMENT_PROFILES
+        h = int(hashlib.md5(str(seed_key).encode("utf-8")).hexdigest()[:8], 16)
+        chosen = available[h % len(available)]
 
     try:
         os.makedirs(os.path.dirname(HISTORY_FILE) or ".", exist_ok=True)
@@ -401,14 +409,11 @@ def generate_viral_fashion_audio(
     """
     %100 Kusursuz Stüdyo Master Müzik Motoru (44.1 kHz Stereo):
     - Yapay TTS seslendirme kesintisi, ses kısılması (ducking) veya sentetik gürültü YOKTUR.
+    - Üst üste aynı müziği asla tekrar etmez (Dinamik TikTok & Reels Viral Müzik Rotasyonu).
     - Baştan sona kesintisiz, podyum ritmiyle senkronize gerçek stüdyo kaydı ve yumuşak geçiş enerjisi sunar.
     """
     pref_id = (outfit or {}).get("preferred_music_id")
-    if pref_id:
-        matched = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] == pref_id]
-        profile = dict(matched[0]) if matched else dict(_select_non_repeating_profile(seed_key))
-    else:
-        profile = dict(_select_non_repeating_profile(seed_key))
+    profile = dict(_select_non_repeating_profile(seed_key, preferred_id=pref_id))
 
     n_samples = int(SR * duration)
     trans_idx = int(SR * transition_sec)
