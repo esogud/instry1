@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 import json
 import random
@@ -7,6 +8,11 @@ from io import BytesIO
 from datetime import datetime
 import requests
 from PIL import Image, ImageChops
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 try:
     from rembg import remove as rembg_remove
@@ -74,6 +80,284 @@ LIVE_TRENDYOL_FEEDS = {
 
 # Görsel Stil Arketipleri (Her arketip için temiz dekupe kıyafet yedekleri + sokakta yürüyen model kareleri)
 OUTFIT_ARCHETYPES = [
+    {
+        "id": "halloween_party_couple_vampiric_noir",
+        "gender_segment": "cift",
+        "ai_model_verified": True,
+        "preferred_music_id": "tiktok_halloween_party_couple_club_pov",
+        "title": "Cadılar Bayramı Parti Çift Kombini: Siyah Deri & Bordo Gece Şıklığı (%100 AI Çift) 🎃🥂🖤",
+        "spoken_hook_text": "Cadılar Bayramı partisine çift kombinimizle girdiğimiz an bütün bakışlar üzerimizde!",
+        "viral_hook": "🛑 Cadılar Bayramı gecesi için Konsept Ajanımız KOR ve TikTok Viral Müzik Ajanımız EFE iş birliğiyle hazırlanan %100 AI Kadın & Erkek Çift Parti Kombini! Kadın için kemerli deri ceket, siyah tokalı parti elbisesi ve bordo Adidas Spezial; Erkek için siyah süet bomber, gece yarısı bordo katman ve antrasit pantolon! 💬 Bu Cadılar Bayramı Çift Kombininde sizce Kadın stili (1-3-5) mi yoksa Erkek stili (2-4-6) mı daha iddialı? Yorumlara yazın! 👇🎃🥂✨",
+        "video_badge_collage": "» CADILAR BAYRAMI PARTİ ÇİFT KOMBİNİ «",
+        "video_badge_walk": "» KADIN & ERKEK PARTİ ŞIKLIĞI (%100 AI) «",
+        "seo_note": "📌 Not: Videodaki çift mankenler %100 Yapay Zeka (AI) üretimi sanal modellerdir. Cadılar Bayramı Parti Çift Kombini (Kadın & Erkek) parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_1186674687",
+                "category_label": "Kadın Parti Deri Ceket",
+                "brand": "STRADIVARIUS",
+                "price": "2.210₺",
+                "price_val": 2210.0,
+                "name": "Kadın Oversize Siyah Kemer Detaylı Deri Parti Ceketi",
+                "full_name": "Stradivarius Kadın Siyah Kemer Detaylı Oversize Suni Deri Biker Parti Ceketi",
+                "sku": "1186674687",
+                "color": "Gece Siyahı",
+                "store_url": "https://www.trendyol.com/stradivarius/suni-deri-gorunumlu-uzun-trenckot-p-1186674687",
+                "product_url": "https://guzelai.com/go/1186674687",
+                "guzelai_url": "https://guzelai.com/go/1186674687",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+            "cap": {
+                "id": "ty_872341011",
+                "category_label": "Erkek Parti Bomber Ceket",
+                "brand": "JACK & JONES",
+                "price": "1.899,99₺",
+                "price_val": 1899.99,
+                "name": "Erkek Siyah Süet / Deri Fermuarlı Parti Bomber Ceket",
+                "full_name": "Jack & Jones Erkek Siyah Süet Dokulu Fermuarlı Gece & Parti Bomber Ceket",
+                "sku": "872341011",
+                "color": "Mat Siyah",
+                "store_url": "https://www.trendyol.com/erkek-deri-ceket-x-g2-c108",
+                "product_url": "https://guzelai.com/go/872341011",
+                "guzelai_url": "https://guzelai.com/go/872341011",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+            "top": {
+                "id": "ty_1066894904",
+                "category_label": "Kadın Parti Elbisesi",
+                "brand": "QUZU",
+                "price": "849,99₺",
+                "price_val": 849.99,
+                "name": "Kadın Siyah Dik Yaka Gold Toka Detaylı Kuşaklı Parti Elbisesi",
+                "full_name": "Quzu Kadın Siyah Dik Yaka Kemer & Gold Toka Detaylı Gece/Parti Elbisesi",
+                "sku": "1066894904",
+                "color": "Siyah / Gold Toka",
+                "store_url": "https://www.trendyol.com/siyah-elbise-x-c56-s15",
+                "product_url": "https://guzelai.com/go/1066894904",
+                "guzelai_url": "https://guzelai.com/go/1066894904",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+            "bottom": {
+                "id": "ty_903567167",
+                "category_label": "Erkek Bordo Triko & Pantolon",
+                "brand": "MODASPARK & MAVI",
+                "price": "949,99₺",
+                "price_val": 949.99,
+                "name": "Erkek Gece Yarısı Bordo (Oxblood) Triko & Antrasit Parti Pantolonu",
+                "full_name": "Erkek Gece Yarısı Bordo Balıkçı Yaka Triko & Antrasit Kuplu Gece Pantolonu",
+                "sku": "872341014",
+                "color": "Gece Yarısı Bordo & Antrasit",
+                "store_url": "https://www.trendyol.com/erkek-pantolon-x-g2-c70",
+                "product_url": "https://guzelai.com/go/872341014",
+                "guzelai_url": "https://guzelai.com/go/872341014",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+            "bag": {
+                "id": "bagmori_8682166106158",
+                "category_label": "Kadın Parti Çantası & Gözlük",
+                "brand": "BAGMORI & VOGUE",
+                "price": "799,90₺",
+                "price_val": 799.90,
+                "name": "Siyah Gold Kemer Toka Aksesuarlı Deri Parti Omuz Çantası",
+                "full_name": "Bagmori Siyah Kemer Toka Aksesuarlı Deri Gece & Parti El/Omuz Çantası",
+                "sku": "8682166106158",
+                "color": "Siyah / Gold",
+                "store_url": "https://www.bagmori.com/products/siyah-aksesuarli-askili-mini-canta",
+                "product_url": "https://guzelai.com/go/8682166106158",
+                "guzelai_url": "https://guzelai.com/go/8682166106158",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+            "shoes": {
+                "id": "ty_994497307",
+                "category_label": "Çift Parti Sneaker (Kadın & Erkek)",
+                "brand": "ADIDAS ORIGINALS",
+                "price": "4.499,40₺",
+                "price_val": 4499.40,
+                "name": "Kadın Bordo Handball Spezial & Erkek Siyah/Beyaz Samba OG Sneaker",
+                "full_name": "Adidas Originals Kadın Bordo Handball Spezial & Erkek Siyah/Beyaz Samba Parti Sneaker",
+                "sku": "994497307",
+                "color": "Bordo & Siyah/Beyaz",
+                "store_url": "https://www.trendyol.com/adidas/handball-spezial-kadin-bordo-ayakkabi-p-994497307",
+                "product_url": "https://guzelai.com/go/994497307",
+                "guzelai_url": "https://guzelai.com/go/994497307",
+                "image_url": "/pinterest-models/hw_couple1_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple1_step1.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["siyah", "deri", "kemerli", "ceket"],
+            "cap": ["erkek", "siyah", "bomber", "ceket"],
+            "top": ["siyah", "tokalı", "parti", "elbise"],
+            "bottom": ["bordo", "antrasit", "erkek", "pantolon"],
+            "bag": ["siyah", "gold", "toka", "çanta"],
+            "shoes": ["bordo", "siyah", "adidas", "spezial", "samba"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/iv_01_jacket.png",
+            "cap": "assets/items/men2_01_outer.png",
+            "top": "assets/items/mon2_03_top.png",
+            "bottom": "assets/items/veor_03_top.png",
+            "bag": "assets/items/veor_05_bag.png",
+            "shoes": "assets/items/veor_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/iv_01_jacket.png",
+            "cap": "assets/items/men2_01_outer.png",
+            "top": "assets/items/mon2_03_top.png",
+            "bottom": "assets/items/veor_03_top.png",
+            "bag": "assets/items/veor_05_bag.png",
+            "shoes": "assets/items/veor_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/hw_couple1_step1.jpg",
+            "assets/hw_couple1_step2.jpg",
+            "assets/hw_couple1_step3.jpg",
+        ],
+    },
+    {
+        "id": "halloween_party_couple_gothic_oldmoney",
+        "gender_segment": "cift",
+        "ai_model_verified": True,
+        "preferred_music_id": "tiktok_vampiric_noir_gala_beat_pov",
+        "title": "Cadılar Bayramı Rooftop Parti Çift Kombini: Gothic Old Money & Dark Glamour (%100 AI Çift Model) 🎃🍷✨",
+        "spoken_hook_text": "Gece partisinde hem gizemli hem de en uyumlu çift olmanın sırrı bu kombinde!",
+        "viral_hook": "🛑 2027 Sonbahar/Kış & Cadılar Bayramı Rooftop Partisi için %100 AI Kadın ve Erkek Çift Manken üzerinde hazırlanan Gothic Old Money çift kombini! Kadın için peluş deri dış giyim, bordo üst ve antrasit palazzo; Erkek için siyah kaşe dış giyim, koyu katman ve kuplu pantolon! 💬 Sizce bu çift kombininde en çarpıcı parça hangisi (1-6)? Yorumlarda buluşalım! 👇🎃🍷✨",
+        "video_badge_collage": "» CADILAR BAYRAMI ROOFTOP ÇİFT KOMBİNİ «",
+        "video_badge_walk": "» GOTHIC OLD MONEY ÇİFT STİLİ «",
+        "seo_note": "📌 Not: Videodaki çift mankenler %100 Yapay Zeka (AI) üretimi sanal modellerdir. Cadılar Bayramı Rooftop Parti Çift Kombini parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
+        "verified_exact_items": {
+            "outerwear": {
+                "id": "ty_1099303505",
+                "category_label": "Kadın & Erkek Parti Dış Giyim",
+                "brand": "TRENDYOL & NIKA",
+                "price": "1.399₺",
+                "price_val": 1399.0,
+                "name": "Kadın Peluş Deri Mont & Erkek Siyah Kaşe Parti Bomber",
+                "full_name": "Cadılar Bayramı Çift Dış Giyim: Koyu Kahve/Siyah Peluş Deri Mont & Siyah Kaşe Bomber",
+                "sku": "1099303505",
+                "color": "Koyu Kahve & Siyah",
+                "store_url": "https://www.trendyol.com/genel-markalar/ici-pelus-detayli-kemerli-deri-ceket-p-1099303505",
+                "product_url": "https://guzelai.com/go/1099303505",
+                "guzelai_url": "https://guzelai.com/go/1099303505",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+            "cap": {
+                "id": "ty_835985416",
+                "category_label": "Çift Gece Partisi Gözlüğü",
+                "brand": "VOGUE EYEWEAR",
+                "price": "2.150₺",
+                "price_val": 2150.0,
+                "name": "Vogue Siyah Gece Partisi Unisex/Kadın Güneş Gözlüğü",
+                "full_name": "Vogue VO5586S Siyah Çerçeveli Gece & Parti Güneş Gözlüğü",
+                "sku": "835985416",
+                "color": "Siyah",
+                "store_url": "https://www.trendyol.com/vogue/vo5586s-w44-87-53-kadin-gunes-gozlugu-p-835985416",
+                "product_url": "https://guzelai.com/go/835985416",
+                "guzelai_url": "https://guzelai.com/go/835985416",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+            "top": {
+                "id": "ty_903567167",
+                "category_label": "Kadın & Erkek Bordo Parti Triko",
+                "brand": "MODASPARK",
+                "price": "309,05₺",
+                "price_val": 309.05,
+                "name": "Gece Yarısı Bordo Fitilli Dik Yaka Parti Triko Kazak",
+                "full_name": "Gece Yarısı Bordo Fitilli Dik Yaka Cadılar Bayramı Parti Triko Kazak",
+                "sku": "903567167",
+                "color": "Gece Yarısı Bordo",
+                "store_url": "https://www.trendyol.com/modaspark/bordo-bisiklet-yaka-oversize-kadin-triko-kazak-p-903567167",
+                "product_url": "https://guzelai.com/go/903567167",
+                "guzelai_url": "https://guzelai.com/go/903567167",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+            "bottom": {
+                "id": "ty_866458994",
+                "category_label": "Kadın Palazzo & Erkek Antrasit Pantolon",
+                "brand": "RITNICE & KİĞILI",
+                "price": "789₺",
+                "price_val": 789.0,
+                "name": "Kemerli Yüksek Bel Antrasit Palazzo & Erkek Kuplu Pantolon",
+                "full_name": "Cadılar Bayramı Çift Alt Giyim: Antrasit Kemerli Palazzo & Erkek Antrasit Pantolon",
+                "sku": "866458994",
+                "color": "Antrasit",
+                "store_url": "https://www.trendyol.com/ritnice/kadin-rena-kemerli-likrali-antrasit-palazzo-pantolon-p-866458994",
+                "product_url": "https://guzelai.com/go/866458994",
+                "guzelai_url": "https://guzelai.com/go/866458994",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+            "bag": {
+                "id": "ty_1174467943",
+                "category_label": "Parti Deri Omuz Çantası",
+                "brand": "MYSTOBAG",
+                "price": "463,51₺",
+                "price_val": 463.51,
+                "name": "Yumuşak Deri Siyah Gece & Parti Omuz Çantası",
+                "full_name": "Yumuşak Deri Siyah Fermuarlı Gece & Parti Omuz Çantası",
+                "sku": "1174467943",
+                "color": "Siyah",
+                "store_url": "https://www.trendyol.com/mystobag/siyah-krem-aci-kahve-3-lu-paket-suni-deri-fular-detayli-omuz-el-cantasi-p-1174467943",
+                "product_url": "https://guzelai.com/go/1174467943",
+                "guzelai_url": "https://guzelai.com/go/1174467943",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+            "shoes": {
+                "id": "ty_893278946",
+                "category_label": "Çift Parti Sneaker (Samba OG)",
+                "brand": "ADIDAS ORIGINALS",
+                "price": "3.899₺",
+                "price_val": 3899.0,
+                "name": "Adidas Samba OG Siyah / Beyaz Unisex Çift Parti Sneaker",
+                "full_name": "Adidas Samba OG Siyah / Beyaz Unisex Cadılar Bayramı Parti Sneaker",
+                "sku": "893278946",
+                "color": "Siyah / Beyaz",
+                "store_url": "https://www.trendyol.com/adidas-samba-x-b33-s1",
+                "product_url": "https://guzelai.com/go/893278946",
+                "guzelai_url": "https://guzelai.com/go/893278946",
+                "image_url": "/pinterest-models/hw_couple2_step1.jpg",
+                "image_urls": ["/pinterest-models/hw_couple2_step1.jpg"],
+            },
+        },
+        "keywords": {
+            "outerwear": ["peluş", "deri", "mont", "kaşe"],
+            "cap": ["vogue", "siyah", "gözlük"],
+            "top": ["bordo", "triko", "kazak"],
+            "bottom": ["antrasit", "palazzo", "pantolon"],
+            "bag": ["siyah", "deri", "çanta"],
+            "shoes": ["siyah", "beyaz", "adidas", "samba"],
+        },
+        "cutout_assets": {
+            "outerwear": "assets/items/veor_01_jacket.png",
+            "cap": "assets/items/veor_02_cap.png",
+            "top": "assets/items/veor_03_top.png",
+            "bottom": "assets/items/veor_04_bottom.png",
+            "bag": "assets/items/mon2_05_bag.png",
+            "shoes": "assets/items/mon2_06_shoes.png",
+        },
+        "fallback_cutout_assets": {
+            "outerwear": "assets/items/veor_01_jacket.png",
+            "cap": "assets/items/veor_02_cap.png",
+            "top": "assets/items/veor_03_top.png",
+            "bottom": "assets/items/veor_04_bottom.png",
+            "bag": "assets/items/mon2_05_bag.png",
+            "shoes": "assets/items/mon2_06_shoes.png",
+        },
+        "model_frames": [
+            "assets/hw_couple2_step1.jpg",
+            "assets/hw_couple2_step2.jpg",
+            "assets/hw_couple2_step3.jpg",
+        ],
+    },
     {
         "id": "guzelai_gomlek_kase_mont_palazzo",
         "preferred_music_id": "veor_uranis_da_da_da_2026",
@@ -899,12 +1183,12 @@ OUTFIT_ARCHETYPES = [
         "gender_segment": "erkek",
         "ai_model_verified": True,
         "preferred_music_id": "soho_lounge_sax_rhodes_pov",
-        "title": "Erkek Old Money Sonbahar Zarafeti: Camel Kaşe Kaban, Ekru Triko & Antrasit Chino (%100 AI Model) 🧥⌚✨",
-        "spoken_hook_text": "Erkek kombinlerinde sonbaharın en karizmatik Old Money duruşu: Camel kaşe kaban ve ekru triko!",
-        "viral_hook": "🛑 %100 Yapay Zeka (AI) Erkek Manken üzerinde doğrulanan 6 parçalık Old Money erkek sonbahar kombini! Camel kruvaze kaşe kaban, ekru yarım balıkçı triko, antrasit chino pantolon ve Ray-Ban! 💬 Erkek kombinlerinde sizce klasik kaşe kaban (1) mı yoksa spor bomber ceket mi daha şık? Yorumlara yazın! 👇🧥🔥",
-        "video_badge_collage": "» ERKEK OLD MONEY (%100 AI MODEL) «",
+        "title": "2027 Sonbahar/Kış Erkek Old Money Zarafeti: Camel Kaşe Kaban, Ekru Triko & Antrasit Chino (%100 AI Model) 🧥⌚✨",
+        "spoken_hook_text": "2027 sonbahar ve kış sezonunda erkek stilinde en karizmatik Old Money şehir duruşu!",
+        "viral_hook": "🛑 2027 Sonbahar/Kış (AW27) Konsept Ajanımız KOR tarafından %100 Yapay Zeka (AI) Erkek Manken üzerinde kurgulanan 6 parçalık Old Money erkek kombini! Camel kruvaze kaşe kaban, ekru yarım balıkçı triko, antrasit chino pantolon ve Ray-Ban! 💬 Erkek kış kombinlerinde sizce klasik Camel Kaban (1) mı yoksa spor Siyah Bomber mı daha şık? Yorumlara yazın! 👇🧥🔥",
+        "video_badge_collage": "» 2027 AW ERKEK OLD MONEY (%100 AI) «",
         "video_badge_walk": "» CAMEL KAŞE KABAN & EKRU TRİKO «",
-        "seo_note": "📌 Not: Videodaki manken %100 Yapay Zeka (AI) üretimi sanal modeldir. Erkek Old Money kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
+        "seo_note": "📌 Not: Videodaki manken %100 Yapay Zeka (AI) üretimi sanal modeldir. 2027 Sonbahar/Kış Erkek Old Money kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
         "verified_exact_items": {
             "outerwear": {
                 "id": "ty_854192011",
@@ -1038,12 +1322,12 @@ OUTFIT_ARCHETYPES = [
         "gender_segment": "erkek",
         "ai_model_verified": True,
         "preferred_music_id": "sunset_electric_guitar_chillwave_pov",
-        "title": "Erkek Smart Streetwear: Siyah Süet Bomber Ceket, Beyaz Heavyweight Tişört & Antrasit Jean (%100 AI Model) 🖤🔥",
-        "spoken_hook_text": "Hafta sonu şehirde en zahmetsiz ve karizmatik erkek sokak stili: Siyah bomber ve antrasit jean!",
-        "viral_hook": "🛑 %100 Yapay Zeka (AI) Erkek Manken üzerinde doğrulanan 6 parçalık Smart Streetwear erkek kombini! Siyah süet/deri bomber ceket, beyaz heavyweight tişört, antrasit straight jean ve Adidas Samba! 💬 Bu kombinde favoriniz Siyah Bomber Ceket (1) mi yoksa Adidas Samba (6) mı? Yorumlara yazın! 👇🖤✨",
-        "video_badge_collage": "» ERKEK SMART STREET (%100 AI MODEL) «",
-        "video_badge_walk": "» SİYAH BOMBER & ANTRASİT JEAN «",
-        "seo_note": "📌 Not: Videodaki manken %100 Yapay Zeka (AI) üretimi sanal modeldir. Erkek kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
+        "title": "2027 Sonbahar/Kış & Cadılar Bayramı Noir Erkek Kombini: Siyah Süet Bomber, Bordo/Beyaz Katman & Antrasit Jean (%100 AI Model) 🎃🖤🔥",
+        "spoken_hook_text": "Cadılar Bayramı gecesi ve 2027 sonbahar kış sezonunda en karizmatik erkek sokak stili!",
+        "viral_hook": "🛑 2027 Sonbahar/Kış & Cadılar Bayramı Konsept Ajanımız KOR tarafından %100 Yapay Zeka (AI) Erkek Manken üzerinde doğrulanan 6 parçalık Noir Streetwear erkek kombini! Siyah süet/deri bomber ceket, katmanlı üst, antrasit straight jean ve Adidas Samba! 💬 Bu Cadılar Bayramı & 2027 Kış kombininde favoriniz Siyah Bomber Ceket (1) mi yoksa Adidas Samba (6) mı? Yorumlara yazın! 👇🎃🖤✨",
+        "video_badge_collage": "» 2027 AW & CADILAR BAYRAMI ERKEK (%100 AI) «",
+        "video_badge_walk": "» NOIR SİYAH BOMBER & ANTRASİT STİL «",
+        "seo_note": "📌 Not: Videodaki manken %100 Yapay Zeka (AI) üretimi sanal modeldir. 2027 Sonbahar/Kış & Cadılar Bayramı erkek kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
         "verified_exact_items": {
             "outerwear": {
                 "id": "ty_891204512",
@@ -1167,9 +1451,9 @@ OUTFIT_ARCHETYPES = [
             "shoes": "assets/items/men2_06_shoes.png",
         },
         "model_frames": [
-            "assets/men2_model_step1.jpg",
-            "assets/men2_model_step2.jpg",
-            "assets/men2_model_step3.jpg",
+            "assets/hw27_men_step1.jpg",
+            "assets/hw27_men_step2.jpg",
+            "assets/hw27_men_step3.jpg",
         ],
     },
     {
@@ -1177,10 +1461,10 @@ OUTFIT_ARCHETYPES = [
         "gender_segment": "cocuk",
         "ai_model_verified": True,
         "preferred_music_id": "jazz_trumpet_grand_piano_pov",
-        "title": "Çocuk Sonbahar Kolej (Varsity) Kombini: Peluş Kolej Ceket, Krem Sweatshirt & Rahat Kot (%100 AI Çocuk Model) 🧸🍂✨",
-        "spoken_hook_text": "Minikler için hem sıcacık hem çok tarz sonbahar kolej kombini!",
-        "viral_hook": "🛑 %100 Yapay Zeka (AI) Çocuk Modeli ile hazırlanan 6 parçalık Sonbahar Kolej (Varsity) çocuk kombini! Peluş kolej bomber ceket, %100 pamuk krem sweatshirt, rahat kesim kot pantolon ve mini sırt çantası! 💬 Çocuk kombinlerinde sizce peluş kolej ceket (1) mi yoksa rahat sweatshirt (3) mü daha kullanışlı? Yorumlara yazın! 👇🧸✨",
-        "video_badge_collage": "» ÇOCUK KOLEJ STİLİ (%100 AI MODEL) «",
+        "title": "2027 Sonbahar/Kış & Cadılar Bayramı Çocuk Kolej (Varsity) Kombini: Peluş Kolej Ceket, Krem Sweatshirt & Rahat Kot (%100 AI Çocuk Model) 🎃🧸🍂",
+        "spoken_hook_text": "2027 sonbahar kış sezonunda ve Cadılar Bayramı haftasında minikler için en tarz kolej stili!",
+        "viral_hook": "🛑 2027 Sonbahar/Kış & Cadılar Bayramı Konsept Ajanımız KOR tarafından %100 Yapay Zeka (AI) Çocuk Modeli ile hazırlanan 6 parçalık Sonbahar Kolej (Varsity) çocuk kombini! Peluş kolej bomber ceket, %100 pamuk krem sweatshirt, rahat kesim kot pantolon ve mini sırt çantası! 💬 Çocuk kombinlerinde sizce peluş kolej ceket (1) mi yoksa rahat sweatshirt (3) mü daha kullanışlı? Yorumlara yazın! 👇🎃🧸✨",
+        "video_badge_collage": "» 2027 AW ÇOCUK KOLEJ STİLİ (%100 AI) «",
         "video_badge_walk": "» PELUŞ KOLEJ CEKET & RAHAT JEAN «",
         "seo_note": "📌 Not: Videodaki çocuk model %100 Yapay Zeka (AI) üretimi sanal karakterdir (gerçek çocuk fotoğrafı kullanılmamıştır). Çocuk kombin parçaları önce guzelai.com vitrininde doğrulanmış olup aşağıdaki guzelai.com/go linklerinden mağazaya yönlenir:",
         "verified_exact_items": {
@@ -1313,11 +1597,13 @@ OUTFIT_ARCHETYPES = [
     },
     {
         "id": "veor_uranis_bordo_kapsul_2k",
-        "preferred_music_id": "veor_uranis_da_da_da_2026",
-        "title": "Sokağa çıkarken herkesin dönüp baktığı o bordo & antrasit kapsül kombin 🔥✨",
-        "spoken_hook_text": "Sokağa çıkarken herkesin dönüp baktığı o kusursuz sonbahar kombinim!",
-        "viral_hook": "🛑 İçi peluş kemerli deri mont, bordo fitilli triko kazak, yüksek bel kemerli antrasit palazzo pantolon ve bordo Adidas Handball Spezial uyumu! Önce guzelai.com'da görselleri ve renkleri tek tek doğrulanmış 6 kadın parçası! 👇🔥",
-        "seo_note": "📌 Not: Videodaki %100 Kadın kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
+        "preferred_music_id": "october_celesta_strings_beat_pov",
+        "title": "2027 Sonbahar/Kış & Cadılar Bayramı Dark Glamour: Gece Yarısı Bordo Triko, İçi Peluş Deri Mont & Antrasit Palazzo (%100 AI Model) 🎃🍷✨",
+        "spoken_hook_text": "Cadılar Bayramı gecesi ve 2027 sonbahar kış sezonunda herkesin dönüp baktığı o gizemli şehir şıklığı!",
+        "viral_hook": "🛑 2027 Sonbahar/Kış & Cadılar Bayramı Konsept Ajanımız KOR tarafından kurgulanan Dark Glamour kapsül kombin! İçi peluş kemerli deri mont, gece yarısı bordo triko kazak, yüksek bel kemerli antrasit palazzo pantolon ve bordo Adidas Handball Spezial uyumu! 💬 Bu Cadılar Bayramı & 2027 Kış kombininde favori parçanız 1 (Peluş Deri Mont) mu yoksa 6 (Bordo Adidas Spezial) mı? Yorumlara yazın! 👇🎃🍷✨",
+        "video_badge_collage": "» 2027 AW & CADILAR BAYRAMI KOMBİNİ «",
+        "video_badge_walk": "» DARK GLAMOUR BORDO & PELUŞ DERİ «",
+        "seo_note": "📌 Not: Videodaki %100 AI Kadın kombin parçaları önce guzelai.com vitrininde görsel/renk/stok kontrolünden geçirilmiş olup aşağıdaki guzelai.com/go linklerinden doğrudan ilgili mağaza sayfasına yönlenir:",
         "verified_exact_items": {
             "outerwear": {
                 "id": "ty_1099303505",
@@ -1441,9 +1727,9 @@ OUTFIT_ARCHETYPES = [
             "shoes": "assets/items/veor_06_shoes.png",
         },
         "model_frames": [
-            "assets/veor_model_step1.jpg",
-            "assets/veor_model_step2.jpg",
-            "assets/veor_model_step3.jpg",
+            "assets/hw27_women_step1.jpg",
+            "assets/hw27_women_step2.jpg",
+            "assets/hw27_women_step3.jpg",
         ],
     },
     {
@@ -2431,7 +2717,14 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
     rng = random.Random(hashlib.md5(seed_str.encode()).hexdigest())
 
     history_path = "output/published_outfits_history.json"
-    used_archetypes = ["telegram_curly_champagne_palazzo", "curly_khaki_suede_palazzo"]
+    used_archetypes = [
+        "telegram_curly_champagne_palazzo",
+        "curly_khaki_suede_palazzo",
+        "sunday_slot1_espresso_cream_oldmoney",
+        "sunday_slot2_khaki_brown_oldmoney",
+        "guzelai_gomlek_kase_mont_palazzo",
+        "guzelai_elbise_deri_ceket_kombin",
+    ]
     used_skus = {
         "959328122", "1120763550", "1059088919", "652719507", "1206721873", "938465141",
         "985362984", "1160666803", "963371271", "866458994", "826407400", "994497307",
@@ -2458,7 +2751,11 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
             except Exception:
                 pass
 
-    forced_id = os.environ.get("FORCE_ARCHETYPE_ID", "").strip() or slot_name
+    forced_id = (
+        os.environ.get("FORCE_ARCHETYPE_ID", "").strip()
+        or os.environ.get("FORCE_ARCHETYPE", "").strip()
+        or slot_name
+    )
     forced_matches = [a for a in OUTFIT_ARCHETYPES if a["id"] == forced_id and os.path.exists(a["model_frames"][0])]
     if forced_matches:
         archetype = forced_matches[0]
@@ -2711,6 +3008,8 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
         "slot": slot_name,
         "is_trial": False,
         "archetype_id": archetype["id"],
+        "gender_segment": archetype.get("gender_segment", "kadin"),
+        "ai_model_verified": archetype.get("ai_model_verified", True),
         "archetype_title": archetype_title,
         "calendar_concept": active_concept,
         "preferred_music_id": archetype.get("preferred_music_id", "veor_uranis_da_da_da_2026"),

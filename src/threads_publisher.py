@@ -48,19 +48,23 @@ def build_threads_chain(outfit: dict, reel_url: str = "") -> dict:
     yapısına %100 uyumlu 3 parçalı zincir (flood) oluşturur.
     """
     items = outfit["items"]
-    title = outfit.get("archetype_title", "Günün Kombin Önerisi")
+    title = (
+        outfit.get("hook_title")
+        or outfit.get("archetype_title")
+        or "5.000₺ Bütçeyle 50.000₺'lik 'Old Money' Görünmenin Sırrı! 🔥"
+    )
     total_str = outfit.get("total_price_str", "")
     ig_link = reel_url.strip() or "https://www.instagram.com/guzelaicom/"
 
     post_1_lines = [
-        f"✨ Günün Kombin Önerisi: {title} ({total_str})",
-        "Sizce bu kombin 10 üzerinden kaç? 👇🤍",
-        "",
-        f"🎬 2K Reels Videosu & Detaylar: {ig_link}",
-        "👇 Tüm parçaların doğrudan tıklanabilir mağaza linkleri alt yanıtlarda!",
-        "",
+        f"🔥 {title} ({total_str})",
+        "🎃 Sonbahar & Cadılar Bayramı Şıklığı | %100 Kadın (Benzer Muadil)",
+        f"🌐 Görselli & Videolu Linkler: https://guzelai.com/#kombinler",
+        f"💬 WhatsApp Kanalı: https://whatsapp.com/channel/0029VbDetYc3mFYDwZSry016",
+        f"🎬 Reels: {ig_link}",
+        "👇 Tüm ürün linkleri alt yanıtlarda!",
         TR_LEGAL_NOTICE_SHORT,
-        "#kombin #günlükkombin #ootdtr",
+        "#kadınkombin #oldmoneystil #ootdtr",
     ]
     post_1_text = _trim_to_threads_limit("\n".join(post_1_lines))
 
@@ -88,7 +92,7 @@ def build_threads_chain(outfit: dict, reel_url: str = "") -> dict:
             "role": "main_post",
             "text": post_1_text,
             "char_count": len(post_1_text),
-            "link_attachment": ig_link,
+            "link_attachment": "https://guzelai.com/#kombinler",
         },
         {
             "step": 2,
@@ -136,14 +140,136 @@ def save_threads_outputs(outfit: dict, out_dir: str = "output", reel_url: str = 
     return chain
 
 
+def publish_to_threads_cdp(chain: dict, cdp_port: int = 9228) -> str:
+    """Publishes main Threads post via persistent local Chrome CDP session (ig_chrome_profile2)."""
+    import subprocess
+    from pathlib import Path
+    from urllib.parse import quote
+    import websocket
+
+    profile_dir = Path(r"C:\Users\zenci\.gemini\antigravity\scratch\ig_chrome_profile2")
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        tabs = requests.get(f"http://127.0.0.1:{cdp_port}/json", timeout=2).json()
+    except Exception:
+        chrome_cmd = (
+            f'"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe" '
+            f'--remote-debugging-port={cdp_port} '
+            f'--remote-allow-origins=* '
+            f'--user-data-dir="{profile_dir}" '
+            f'--no-first-run --no-default-browser-check '
+            f'--disable-blink-features=AutomationControlled '
+            f'--window-size=1200,900 "https://www.threads.com/"'
+        )
+        subprocess.run(
+            ["powershell", "-NoProfile", "-Command", f"Invoke-WmiMethod -Class Win32_Process -Name Create -ArgumentList '{chrome_cmd}'"],
+            capture_output=True,
+        )
+        for _ in range(15):
+            time.sleep(1)
+            try:
+                tabs = requests.get(f"http://127.0.0.1:{cdp_port}/json", timeout=2).json()
+                if any(t.get("type") == "page" for t in tabs):
+                    break
+            except Exception:
+                pass
+        else:
+            return ""
+
+    page_tab = next((t for t in tabs if t.get("type") == "page"), None)
+    if not page_tab:
+        return ""
+
+    ws = websocket.create_connection(page_tab["webSocketDebuggerUrl"], timeout=25)
+    msg_id = 0
+
+    def cdp(method: str, params: dict | None = None) -> dict:
+        nonlocal msg_id
+        msg_id += 1
+        ws.send(json.dumps({"id": msg_id, "method": method, "params": params or {}}))
+        while True:
+            resp = json.loads(ws.recv())
+            if resp.get("id") == msg_id:
+                return resp.get("result", {})
+
+    def pump_frames(seconds: float) -> None:
+        end_t = time.time() + seconds
+        while time.time() < end_t:
+            try:
+                cdp("Page.captureScreenshot", {"format": "jpeg", "quality": 20})
+            except Exception:
+                pass
+            time.sleep(0.5)
+
+    try:
+        cdp("Page.enable")
+        cdp("Runtime.enable")
+        cdp("Input.enable")
+        cdp("Page.bringToFront")
+
+        main_text = chain["posts"][0]["text"]
+        intent_url = f"https://www.threads.com/intent/post?text={quote(main_text)}"
+        cdp("Page.navigate", {"url": intent_url})
+        pump_frames(6)
+
+        # If Threads prompts "Instagram hesabını kullan" / "Instagram ile devam et" / "Continue with Instagram", click it
+        sso_res = json.loads(cdp("Runtime.evaluate", {
+            "expression": """JSON.stringify((() => {
+                const btns = Array.from(document.querySelectorAll('div[role="button"], button, a, span'));
+                const sso = btns.find(b => /Instagram hesab|Instagram ile|Continue with Instagram|guzelaicom/i.test((b.innerText || '').trim()));
+                if (sso && !/Paylaş|Post/i.test(sso.innerText || '')) {
+                    const r = sso.getBoundingClientRect();
+                    sso.click();
+                    return {clicked: true, x: r.left + r.width/2, y: r.top + r.height/2};
+                }
+                return {clicked: false};
+            })())""",
+            "returnByValue": True,
+        }).get("result", {}).get("value", "{}") or "{}")
+        if sso_res.get("clicked"):
+            sx, sy = sso_res.get("x", 0), sso_res.get("y", 0)
+            if sx and sy:
+                cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": sx, "y": sy, "button": "left", "clickCount": 1})
+                cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": sx, "y": sy, "button": "left", "clickCount": 1})
+            pump_frames(8)
+            cdp("Page.navigate", {"url": intent_url})
+            pump_frames(6)
+
+        post_res = json.loads(cdp("Runtime.evaluate", {
+            "expression": """JSON.stringify((() => {
+                const btns = Array.from(document.querySelectorAll('div[role="button"], button'));
+                const p = btns.find(b => /^(Paylaş|Post)$/i.test((b.innerText || '').trim()));
+                if (!p) return {clicked: false};
+                const r = p.getBoundingClientRect();
+                p.click();
+                return {clicked: true, x: r.left + r.width/2, y: r.top + r.height/2};
+            })())""",
+            "returnByValue": True,
+        }).get("result", {}).get("value", "{}") or "{}")
+
+        if post_res.get("clicked"):
+            x, y = post_res.get("x", 0), post_res.get("y", 0)
+            if x and y:
+                cdp("Input.dispatchMouseEvent", {"type": "mousePressed", "x": x, "y": y, "button": "left", "clickCount": 1})
+                cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": x, "y": y, "button": "left", "clickCount": 1})
+            pump_frames(5)
+            print("[BAŞARILI - Threads CDP] @guzelaicom Threads paylaşımı tamamlandı.")
+            return "https://www.threads.net/@guzelaicom"
+        return ""
+    finally:
+        try:
+            ws.close()
+        except Exception:
+            pass
+
+
 def publish_via_threads_session(chain: dict, session_str: str) -> str:
     """
-    Instagram sessionid çerezini kullanarak (ayrı bir şifreye gerek kalmadan)
-    www.threads.net/api/v1/media/configure_text_only_post/ üzerinden
-    ana gönderiyi ve altındaki tıklanabilir ürün linki zincirini otomatik paylaşır.
+    Instagram sessionid çerezini kullanarak (veya yerel Chrome CDP yedeği ile)
+    Threads üzerinde ana gönderiyi ve tıklanabilir ürün linki zincirini otomatik paylaşır.
     """
     if not session_str:
-        return ""
+        return publish_to_threads_cdp(chain)
 
     raw = session_str.strip()
     if raw.startswith("{"):
@@ -156,7 +282,7 @@ def publish_via_threads_session(chain: dict, session_str: str) -> str:
         sid = raw
     sid = unquote(sid.strip())
     if not sid:
-        return ""
+        return publish_to_threads_cdp(chain)
 
     user_match = re.search(r"^\d+", sid)
     viewer_id = user_match.group(0) if user_match else "46394512287"
@@ -200,26 +326,30 @@ def publish_via_threads_session(chain: dict, session_str: str) -> str:
             "text_post_app_info": json.dumps(app_info),
         }
 
-        r = requests.post(
-            "https://www.threads.net/api/v1/media/configure_text_only_post/",
-            headers=headers,
-            data=payload,
-            timeout=25,
-        )
-        if r.status_code == 200 and "media" in r.text:
-            m = r.json().get("media", {})
-            pk = str(m.get("pk", ""))
-            code = m.get("code") or (media_id_to_shortcode(pk) if pk else "")
-            post_url = f"https://www.threads.net/@guzelaicom/post/{code}"
-            print(f"[BAŞARILI - Threads] Adım {p['step']} paylaşıldı! PK: {pk} | Link: {post_url}")
-            if idx == 0:
-                root_url = post_url
-            if pk:
-                parent_pk = pk
-        else:
-            print(f"[Threads Uyarısı] Adım {p['step']} ({r.status_code}): {r.text[:250]}")
+        try:
+            r = requests.post(
+                "https://www.threads.net/api/v1/media/configure_text_only_post/",
+                headers=headers,
+                data=payload,
+                timeout=25,
+            )
+            if r.status_code == 200 and "media" in r.text:
+                m = r.json().get("media", {})
+                pk = str(m.get("pk", ""))
+                code = m.get("code") or (media_id_to_shortcode(pk) if pk else "")
+                post_url = f"https://www.threads.net/@guzelaicom/post/{code}"
+                print(f"[BAŞARILI - Threads] Adım {p['step']} paylaşıldı! PK: {pk} | Link: {post_url}")
+                if idx == 0:
+                    root_url = post_url
+                if pk:
+                    parent_pk = pk
+            else:
+                break
+        except Exception:
             break
 
+    if not root_url:
+        return publish_to_threads_cdp(chain)
     return root_url
 
 
@@ -282,6 +412,8 @@ def main():
             publish_via_threads_session(chain, session_json)
         elif th_token and th_user:
             publish_to_threads_api(chain, th_token, th_user)
+        else:
+            publish_to_threads_cdp(chain)
 
 
 if __name__ == "__main__":

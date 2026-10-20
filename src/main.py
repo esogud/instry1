@@ -68,21 +68,35 @@ def build_caption(outfit: dict) -> str:
         "Pinterest 'Old Money / Quiet Luxury' Sonbahar Renk Kurgusu: Camel Kruvaze Trençkot (#C8A98E) + Buz Mavisi Çizgili Gömlek (#A8C3D4) + Taba Kemerli Ekru Pantolon (#F3EFEA) + Acı Kahve & Gold Deri Detaylar (#4A2E1B)",
     )
 
+    seg = outfit.get("gender_segment", "kadin")
+    if seg == "cift":
+        col_label = "%100 AI KADIN & ERKEK CADILAR BAYRAMI PARTİ ÇİFT KOLEKSİYONU"
+        hashtags = "#kombinönerileri #çiftkombini #cadılarbayramı #partikombini #guzelai"
+    elif seg == "erkek":
+        col_label = "%100 AI ERKEK SONBAHAR/KIŞ KOLEKSİYONU"
+        hashtags = "#kombinönerileri #erkekkombin #sonbaharkombini #cadılarbayramı #guzelai"
+    elif seg == "cocuk":
+        col_label = "%100 AI ÇOCUK SONBAHAR/KIŞ KOLEKSİYONU"
+        hashtags = "#kombinönerileri #çocukkombin #sonbaharkombini #cadılarbayramı #guzelai"
+    else:
+        col_label = "%100 AI KADIN 2027 AW & CADILAR BAYRAMI KOLEKSİYONU"
+        hashtags = "#kombinönerileri #kadınkombin #sonbaharkombini #cadılarbayramı #guzelai"
+
     lines = [
         f"🔥 {hook_title}",
-        "📌 'Bugün ne giysem?' krizinde saniyeler içinde kurtulmak için bu 2K Old Money kapsül kombini hemen KAYDET ve stil sahibi arkadaşına GÖNDER! 🤍✨",
+        "📌 'Bugün ne giysem?' krizinde saniyeler içinde kurtulmak için bu 2K kapsül kombini hemen KAYDET ve stil sahibi arkadaşına GÖNDER! 🎃✨",
         "",
         viral_hook,
         "",
-        f"💬 STİL ANKETİ: Bu Old Money kombinde senin favori parçan {items['outerwear']['name']} mi yoksa {items['top']['name']} mu? Yorumlarda buluşalım 👇✨",
+        f"💬 STİL ANKETİ: Bu 2027 Sonbahar/Kış & Cadılar Bayramı kombininde senin favori parçan {items['outerwear']['name']} mi yoksa {items['top']['name']} mu? Yorumlarda buluşalım 👇✨",
         "",
-        "🛍️ KOMBİN FİYAT, MARKA & ÜRÜN KODU DETAYLARI (%100 KADIN OLD MONEY KOLEKSİYONU):",
+        f"🛍️ KOMBİN FİYAT, MARKA & ÜRÜN KODU DETAYLARI ({col_label}):",
         f"1️⃣ 🧥 {c_out}: {items['outerwear']['brand']} – {items['outerwear']['name']} | Fiyat: {items['outerwear']['price']} | Ürün Kodu: {items['outerwear'].get('sku', '-')}",
         f"2️⃣ 🕶️ {c_cap}: {items['cap']['brand']} – {items['cap']['name']} | Fiyat: {items['cap']['price']} | Ürün Kodu: {items['cap'].get('sku', '-')}",
         f"3️⃣ 👚 {c_top}: {items['top']['brand']} – {items['top']['name']} | Fiyat: {items['top']['price']} | Ürün Kodu: {items['top'].get('sku', '-')}",
         f"4️⃣ 👖 {c_bot}: {items['bottom']['brand']} – {items['bottom']['name']} | Fiyat: {items['bottom']['price']} | Ürün Kodu: {items['bottom'].get('sku', '-')}",
         f"5️⃣ 👜 {c_bag}: {items['bag']['brand']} – {items['bag']['name']} | Fiyat: {items['bag']['price']} | Ürün Kodu: {items['bag'].get('sku', '-')}",
-        f"6️⃣ 👠 {c_sho}: {items['shoes']['brand']} – {items['shoes']['name']} | Fiyat: {items['shoes']['price']} | Ürün Kodu: {items['shoes'].get('sku', '-')}",
+        f"6️⃣ 👟 {c_sho}: {items['shoes']['brand']} – {items['shoes']['name']} | Fiyat: {items['shoes']['price']} | Ürün Kodu: {items['shoes'].get('sku', '-')}",
         "",
         f"💰 TOPLAM 6 PARÇA KOMBİN BÜTÇESİ: {total_str}",
         "",
@@ -92,7 +106,7 @@ def build_caption(outfit: dict) -> str:
         "",
         TR_LEGAL_NOTICE_FULL,
         "",
-        "#kombinönerileri #kadınkombin #sonbaharkombini #oldmoneystil #guzelai",
+        hashtags,
     ]
     return "\n".join(lines)
 
@@ -101,10 +115,10 @@ def build_links_comment(outfit: dict) -> str:
     items = outfit["items"]
     viral_hook = outfit.get(
         "viral_hook",
-        "🛑 Bu 6'lı kadın kombinini kaybetmemek için hemen kaydet! 👇✨",
+        "🛑 Bu 6'lı kombini kaybetmemek için hemen kaydet! 👇✨",
     )
     lines = [
-        "📌 KOMBİNDEKİ 6 KADIN PARÇASININ GÜZELAİ.COM DOĞRULANMIŞ LİNKLERİ & KODLARI 👇",
+        "📌 KOMBİNDEKİ 6 PARÇANIN GÜZELAİ.COM DOĞRULANMIŞ LİNKLERİ & KODLARI 👇",
         viral_hook,
         "🌐 Tüm Örnek Kombinler & Görselli Alışveriş Vitrini: https://guzelai.com/#kombinler",
         "",

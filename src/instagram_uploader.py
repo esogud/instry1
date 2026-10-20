@@ -59,6 +59,70 @@ def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_us
     return True
 
 
+def _pull_remote_history_if_newer(local_file: Path, repo_rel_path: str):
+    """Bulut (GitHub Actions) paylaşım yaptığında yerel PC'nin haberdar olması için uzak geçmişi senkronize eder."""
+    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true":
+        return
+    try:
+        url = f"https://raw.githubusercontent.com/thezencirs/instagram-kombin-bot/main/{repo_rel_path}?t={int(time.time())}"
+        r = requests.get(url, timeout=6)
+        if r.status_code == 200:
+            remote_data = r.json()
+            if not local_file.exists():
+                local_file.parent.mkdir(parents=True, exist_ok=True)
+                local_file.write_text(json.dumps(remote_data, ensure_ascii=False, indent=2), encoding="utf-8")
+                return
+            local_data = json.loads(local_file.read_text(encoding="utf-8"))
+            if isinstance(remote_data, dict) and isinstance(local_data, dict):
+                rem_ts = float(remote_data.get("last_upload_timestamp", 0.0) or 0.0)
+                loc_ts = float(local_data.get("last_upload_timestamp", 0.0) or 0.0)
+                if rem_ts > loc_ts:
+                    local_file.write_text(json.dumps(remote_data, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def _sync_history_file_to_github_repo(local_file: Path, repo_rel_path: str):
+    """Yerel PC paylaşım yaptığında GitHub Actions bulut yedeklemesinin haberdar olması için geçmişi depoya yazar."""
+    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true" or not local_file.exists():
+        return
+    try:
+        import base64
+        import shutil
+        import subprocess
+
+        gh_exe = r"C:\Users\zenci\.gemini\antigravity\scratch\tools\gh\bin\gh.exe"
+        if not os.path.exists(gh_exe):
+            gh_exe = shutil.which("gh") or "gh"
+        repo = "thezencirs/instagram-kombin-bot"
+        sha = ""
+        r_get = subprocess.run(
+            [gh_exe, "api", f"repos/{repo}/contents/{repo_rel_path}", "--jq", ".sha"],
+            capture_output=True,
+            text=True,
+            timeout=12,
+        )
+        if r_get.returncode == 0 and r_get.stdout.strip():
+            sha = r_get.stdout.strip()
+        b64 = base64.b64encode(local_file.read_bytes()).decode("ascii")
+        cmd = [
+            gh_exe,
+            "api",
+            "--method",
+            "PUT",
+            f"repos/{repo}/contents/{repo_rel_path}",
+            "-f",
+            f"message=chore(sync): update {repo_rel_path} after local upload [skip ci]",
+            "-f",
+            f"content={b64}",
+        ]
+        if sha:
+            cmd.extend(["-f", f"sha={sha}"])
+        subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+    except Exception:
+        pass
+
+
 def upload_via_instagrapi(
     video_path: str,
     caption: str,
@@ -67,14 +131,6 @@ def upload_via_instagrapi(
     session_str: str = "",
     comment_text: str = "",
 ) -> str:
-    # 0. Yurt Dışı Bulut IP (GitHub Actions / Veri Merkezi) Engeli — "Şüpheli Giriş / Şifre Değiştir" uyarısını %100 önler
-    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true":
-        print(
-            "[BULUT IP KORUMASI AKTİF] Yurt dışı GitHub Actions / Azure veri merkezi IP'sinden "
-            "@guzelaicom hesabına bağlanılması güvenlik gereği engellendi. Paylaşımlar yalnızca yerel Türkiye IP'sinden yapılır."
-        )
-        return ""
-
     # 1. Kısıt / Güvenlik Kilidi: IG_ENABLE_UPLOAD=1 olmadan Instagram'a istek gönderilmez
     if os.environ.get("IG_ENABLE_UPLOAD", "0") != "1":
         print(
@@ -106,7 +162,8 @@ def upload_via_instagrapi(
     except Exception as ce:
         print(f"[Uyumluluk Denetimi Uyarısı] {ce}")
 
-    # 2. En az 4 saatlik paylaşım aralığı (Rate-Limit / Cooldown Koruması)
+    # 2. En az 4 saatlik paylaşım aralığı (Rate-Limit / Cooldown Koruması + Bulut Senkronu)
+    _pull_remote_history_if_newer(ig_hist_path, "output/instagram_uploaded_history.json")
     min_interval_sec = int(os.environ.get("IG_MIN_INTERVAL_SEC", str(4 * 3600)))
     last_upload_ts = 0.0
     if ig_hist_path.exists():
@@ -255,6 +312,9 @@ def upload_via_instagrapi(
                 ),
                 encoding="utf-8",
             )
+            _sync_history_file_to_github_repo(ig_hist_path, "output/instagram_uploaded_history.json")
+            _sync_history_file_to_github_repo(out_dir / "published_outfits_history.json", "output/published_outfits_history.json")
+            _sync_history_file_to_github_repo(out_dir / "last_used_music_profiles.json", "output/last_used_music_profiles.json")
         except Exception as he:
             print(f"[IG Geçmiş Kayıt Uyarısı] {he}")
 

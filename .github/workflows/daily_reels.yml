@@ -1,24 +1,34 @@
-name: GuzelAI.com 7/24 Otonom Medya, SEO & Kombin Reels Sistemi (Bulut + Yerel)
+name: GuzelAI.com 7/24 Tam Otonom 12-Ajan Kombin Reels & Vitrin Otomasyonu (Bilgisayar Kapalıyken Bulut Yayını)
 
 on:
+  schedule:
+    # Türkiye Saati (TSİ / UTC+3) ile her gün Prime-Time kuşakları:
+    # 07:15 UTC = 10:15 TSİ (Sabah Kuşağı)
+    # 12:15 UTC = 15:15 TSİ (Öğleden Sonra Kuşağı)
+    # 17:15 UTC = 20:15 TSİ (Akşam Prime-Time Kuşağı)
+    - cron: '15 7,12,17 * * *'
   workflow_dispatch:
     inputs:
       slot_name:
         description: 'Paylaşım Kuşağı (sabah / oglen / aksam / otomatik)'
         required: false
         default: 'otomatik'
-      dry_run:
-        description: 'Bulut IP Koruması: Sadece 2K Reels + GuzelAI.com vitrin üret, Instagram yüklemesini yerel TR IPye bırak (true/false)'
+      force_archetype_id:
+        description: 'Zorunlu Kombin ID (boş bırakılırsa sıradaki yayınlanmamış kombin seçilir)'
         required: false
-        default: 'true'
+        default: ''
 
 permissions:
   contents: write
 
+concurrency:
+  group: guzelai-primetime-publisher
+  cancel-in-progress: false
+
 jobs:
   create-and-publish-reel:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
 
     steps:
       - name: 📥 Proje Dosyalarını Çek
@@ -42,47 +52,56 @@ jobs:
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 👗 Tarih & Konsept Otomasyonu + 2K QHD+ Graph-Motion Reels + GuzelAI.com Vitrin Güncellemesi
+      - name: 👗 1. Adım — 2K QHD+ Graph-Motion Reels + Dinamik Viral Müzik + GuzelAI.com Vitrin Üretimi
         env:
           IG_WATERMARK: ${{ vars.IG_WATERMARK || '@guzelaicom' }}
-          HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
           SLOT_NAME: ${{ github.event.inputs.slot_name || 'otomatik' }}
+          FORCE_ARCHETYPE_ID: ${{ github.event.inputs.force_archetype_id || '' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '995164733' }}
         run: |
-          python src/main.py --output output/daily_kombin_reel.mp4
+          python src/main.py --output output/reel_final.mp4
 
-      - name: 📤 2K Reels, Hook Kapak ve Kalite Raporunu Artifacts Olarak Kaydet
+      - name: 🤖 2. Adım — 12 Uzman Ajan Swarm Denetimi (KOR + ADA + ALP + ALİ + EFE + CAN + ELA + EGE)
+        env:
+          GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
+          IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
+        run: |
+          python src/kombin_agent_swarm.py --role all
+
+      - name: 📱 3. Adım — Şifresiz Mobil Bearer IGT ile @guzelaicom Instagram + GuzelAI.com + Telegram Yayını
+        env:
+          IG_ENABLE_UPLOAD: '1'
+          IG_USERNAME: ${{ secrets.IG_USERNAME || 'guzelaicom' }}
+          IG_SESSION_JSON: ${{ secrets.IG_SESSION_JSON }}
+          GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID || '995164733' }}
+        run: |
+          python src/instagram_uploader.py --video output/reel_final.mp4 --caption-file output/caption.txt --all-channels
+          python src/social_health_agent.py --force || true
+
+      - name: 📤 4. Adım — 2K Reels, Hook Kapak ve 11/11 Sertifikasını Artifacts Olarak Kaydet
+        if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: kombin-reels-2k-${{ github.run_number }}
           path: |
-            output/daily_kombin_reel.mp4
+            output/reel_final.mp4
             output/hook_cover.jpg
-            output/kombin_collage.png
-            output/model_street.png
             output/caption.txt
             output/quality_check_report.json
+            output/prepublish_compliance_certificate.json
+            output/viral_music_selection_report.json
+            output/social_health_report.json
             output/outfit_links.json
           retention-days: 7
 
-      - name: 📱 Resmi Graph API Kontrolü (Bulut IP Güvenli Mod)
-        if: ${{ github.event.inputs.dry_run == 'false' }}
-        env:
-          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
-          GH_TOKEN: ${{ secrets.GUZELAI_PAT || secrets.GITHUB_TOKEN }}
-          IG_ENABLE_UPLOAD: '1'
-        run: |
-          if [ -n "$IG_ACCESS_TOKEN" ]; then
-            python src/instagram_uploader.py --video output/daily_kombin_reel.mp4 --caption-file output/caption.txt
-          else
-            echo "Bulut IP Koruması: Resmi IG_ACCESS_TOKEN tanımlı değil, Türkiye IP oturumu korundu."
-          fi
-
-      - name: 💾 Yayınlanan Kombin Geçmişini Depoya Kaydet (Tekrar Paylaşım Koruması)
+      - name: 💾 5. Adım — Yayınlanan Kombin ve Müzik Geçmişini Depoya Kaydet (Tekrar Paylaşım & Müzik Tekrarı Koruması)
         if: ${{ always() }}
         run: |
-          git config user.name "GuzelAI Media Bot"
+          git config user.name "GuzelAI 12-Agent Bot"
           git config user.email "bot@guzelai.com"
-          git add output/published_history.json output/instagram_uploaded_history.json 2>/dev/null || true
-          git diff --staged --quiet || (git commit -m "chore(history): sync published outfit & model history [skip ci]" && git push)
+          git add output/instagram_uploaded_history.json output/published_outfits_history.json output/last_used_music_profiles.json output/social_health_report.json output/prepublish_compliance_certificate.json 2>/dev/null || true
+          git diff --staged --quiet || (git commit -m "chore(history): sync 7/24 autonomous outfit, model & viral music history [skip ci]" && git push)
