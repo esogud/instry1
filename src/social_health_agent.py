@@ -256,7 +256,12 @@ def check_other_platforms_health() -> dict:
 
     # 2. GitHub Actions Bulut Otomasyonu Sağlığı
     try:
-        if GH_BIN.exists():
+        if os.environ.get("LOCAL_ONLY", "0") == "1" or os.environ.get("DISABLE_GITHUB_SYNC", "0") == "1":
+            platforms["github_actions"] = {
+                "status": "LOCAL_ONLY_PROTECTED",
+                "detail": "Yerel Tek Güvenli Oturum Modu: Uzak GitHub Actions ve sunucu sorgusu devredışı.",
+            }
+        elif GH_BIN.exists():
             res = subprocess.run(
                 [
                     str(GH_BIN),

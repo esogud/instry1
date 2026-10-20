@@ -2821,15 +2821,21 @@ def select_daily_outfit(slot_name: str = "otomatik") -> dict:
 
         if not chosen:
             mapped_cat = cat_map.get(cat_key, cat_key)
-            live_pool = fetch_live_trendyol_items(cat_key)
-            if cat_key == "bag":
-                live_pool = fetch_live_bagmori_bags() + live_pool
-            elif cat_key in ("outerwear", "top", "bottom"):
-                live_pool = live_pool + fetch_live_quzu_items(cat_key)
+            live_pool = []
             if cached_catalog.get(mapped_cat):
                 live_pool.extend(cached_catalog[mapped_cat])
             elif cached_catalog.get(cat_key):
                 live_pool.extend(cached_catalog[cat_key])
+
+            if not live_pool:
+                try:
+                    live_pool = fetch_live_trendyol_items(cat_key)
+                    if cat_key == "bag":
+                        live_pool = fetch_live_bagmori_bags() + live_pool
+                    elif cat_key in ("outerwear", "top", "bottom"):
+                        live_pool = live_pool + fetch_live_quzu_items(cat_key)
+                except Exception:
+                    pass
 
             fresh_pool = [it for it in live_pool if str(it.get("sku", "")) not in used_skus]
             chosen = _pick_matching_live_item(

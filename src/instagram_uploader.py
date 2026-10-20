@@ -61,7 +61,11 @@ def upload_via_graph_api(video_path: str, caption: str, access_token: str, ig_us
 
 def _pull_remote_history_if_newer(local_file: Path, repo_rel_path: str):
     """Bulut (GitHub Actions) paylaşım yaptığında yerel PC'nin haberdar olması için uzak geçmişi senkronize eder."""
-    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true":
+    if (
+        os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+        or os.environ.get("LOCAL_ONLY", "0") == "1"
+        or os.environ.get("DISABLE_GITHUB_SYNC", "0") == "1"
+    ):
         return
     try:
         url = f"https://raw.githubusercontent.com/thezencirs/instagram-kombin-bot/main/{repo_rel_path}?t={int(time.time())}"
@@ -84,7 +88,12 @@ def _pull_remote_history_if_newer(local_file: Path, repo_rel_path: str):
 
 def _sync_history_file_to_github_repo(local_file: Path, repo_rel_path: str):
     """Yerel PC paylaşım yaptığında GitHub Actions bulut yedeklemesinin haberdar olması için geçmişi depoya yazar."""
-    if os.environ.get("GITHUB_ACTIONS", "").lower() == "true" or not local_file.exists():
+    if (
+        os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+        or os.environ.get("LOCAL_ONLY", "0") == "1"
+        or os.environ.get("DISABLE_GITHUB_SYNC", "0") == "1"
+        or not local_file.exists()
+    ):
         return
     try:
         import base64

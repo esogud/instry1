@@ -301,6 +301,11 @@ def build_verified_kombin_entry(
 
 def _gh_put_file(repo_path: str, content_bytes: bytes, commit_message: str) -> bool:
     """Creates or updates a file in thezencirs/guzelai via GitHub Contents API."""
+    if (
+        os.environ.get("LOCAL_ONLY", "0") == "1"
+        or os.environ.get("DISABLE_GITHUB_SYNC", "0") == "1"
+    ):
+        return False
     if not (os.path.exists(GH_EXE) or shutil.which(GH_EXE)):
         print(f"[UYARI] gh CLI bulunamadı: {GH_EXE}")
         return False
@@ -352,6 +357,11 @@ def _gh_put_file(repo_path: str, content_bytes: bytes, commit_message: str) -> b
 
 def _get_existing_go_files() -> set:
     """Returns the set of filenames (e.g. '981976289.html') already present in `public/go` on GitHub."""
+    if (
+        os.environ.get("LOCAL_ONLY", "0") == "1"
+        or os.environ.get("DISABLE_GITHUB_SYNC", "0") == "1"
+    ):
+        return set()
     if not (os.path.exists(GH_EXE) or shutil.which(GH_EXE)):
         return set()
     try:
