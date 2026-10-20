@@ -105,3 +105,10 @@ jobs:
           git config user.email "bot@guzelai.com"
           git add output/instagram_uploaded_history.json output/published_outfits_history.json output/last_used_music_profiles.json output/social_health_report.json output/prepublish_compliance_certificate.json 2>/dev/null || true
           git diff --staged --quiet || (git commit -m "chore(history): sync 7/24 autonomous outfit, model & viral music history [skip ci]" && git push)
+
+      - name: ☁️ 6. Adım — Tüm Verileri, 2K Reels Videosunu ve Raporları Google Drive'a (mehmetzenciir@gmail.com) Kaydet
+        if: ${{ always() }}
+        env:
+          GDRIVE_BRIDGE_URL: ${{ secrets.GDRIVE_BRIDGE_URL }}
+        run: |
+          python src/google_drive_sync.py --mode cloud-post-run || true
