@@ -1,143 +1,44 @@
 {
-  "generated_at": "2026-10-20 15:24:27",
-  "timestamp_epoch": 1792499067.6836805,
-  "overall_health": "HEALTHY",
+  "generated_at": "2026-10-20 17:33:50",
+  "timestamp_epoch": 1792517630.1789846,
+  "overall_health": "ACTION_REQUIRED",
   "instagram": {
     "username": "guzelaicom",
-    "session_healthy": true,
-    "device_profile_locked": true,
-    "bearer_token_present": true,
-    "account_status": "HEALTHY_ACTIVE",
-    "risk_level": "LOW",
-    "risk_notes": [],
+    "session_healthy": false,
+    "device_profile_locked": false,
+    "bearer_token_present": false,
+    "account_status": "MISSING_SESSION",
+    "risk_level": "HIGH",
+    "risk_notes": [
+      "ig_session.json bulunamadı."
+    ],
     "compliance_checks": {
-      "persistent_device_uuid": true,
+      "persistent_device_uuid": false,
       "zero_auto_comment_bot": true,
       "zero_raw_urls_in_caption": true,
       "hashtag_count_safe": true,
       "cooldown_4h_active": true
     },
     "metrics": {
-      "follower_count": 267,
-      "following_count": 53,
-      "media_count": 37,
-      "total_reel_views": 865,
-      "total_reel_likes": 8,
-      "total_reel_comments": 2,
-      "avg_views_per_reel": 86.5,
-      "engagement_rate_pct": 1.16
+      "follower_count": 0,
+      "following_count": 0,
+      "media_count": 0,
+      "total_reel_views": 0,
+      "total_reel_likes": 0,
+      "total_reel_comments": 0,
+      "avg_views_per_reel": 0.0,
+      "engagement_rate_pct": 0.0
     },
     "deltas": {
       "follower_delta": 0,
-      "total_views_delta": -143,
-      "total_likes_delta": -1
+      "total_views_delta": 0,
+      "total_likes_delta": 0
     },
-    "recent_reels": [
-      {
-        "code": "Det0Cn5IFyz",
-        "pk": "4012091721748864179",
-        "url": "https://www.instagram.com/reel/Det0Cn5IFyz/",
-        "taken_at": "2026-10-20 12:17",
-        "play_count": 0,
-        "like_count": 0,
-        "comment_count": 0,
-        "title": "🔥 2027 Sonbahar/Kış & Cadılar Bayramı Çocuk Kolej (Varsity) Kombini: Peluş Kolej"
-      },
-      {
-        "code": "DetSHj9I-AZ",
-        "pk": "4011942527537242137",
-        "url": "https://www.instagram.com/reel/DetSHj9I-AZ/",
-        "taken_at": "2026-10-20 07:21",
-        "play_count": 13,
-        "like_count": 0,
-        "comment_count": 0,
-        "title": "🔥 Cadılar Bayramı Parti Çift Kombini: Siyah Deri & Bordo Gece Şıklığı (%100 AI Ç"
-      },
-      {
-        "code": "Der2FCZo8dn",
-        "pk": "4011537733790189415",
-        "url": "https://www.instagram.com/reel/Der2FCZo8dn/",
-        "taken_at": "2026-10-19 17:57",
-        "play_count": 28,
-        "like_count": 0,
-        "comment_count": 0,
-        "title": "🔥 2027 Sonbahar/Kış & Cadılar Bayramı Dark Glamour: Gece Yarısı Bordo Triko, İçi"
-      },
-      {
-        "code": "DerLsKTo20v",
-        "pk": "4011351306339052847",
-        "url": "https://www.instagram.com/reel/DerLsKTo20v/",
-        "taken_at": "2026-10-19 11:47",
-        "play_count": 129,
-        "like_count": 1,
-        "comment_count": 0,
-        "title": "🔥 Tek Parça Siyah Tokalı Elbise & Oversize Deri Ceketle Zahmetsiz Gece/Gündüz Şı"
-      },
-      {
-        "code": "Dequt4aILVu",
-        "pk": "4011223881210705262",
-        "url": "https://www.instagram.com/reel/Dequt4aILVu/",
-        "taken_at": "2026-10-19 07:33",
-        "play_count": 223,
-        "like_count": 2,
-        "comment_count": 0,
-        "title": "🔥 Mavi Çizgili Gömlek, Siyah Kaşe Mont ve Pileli Palazzo ile Ofisten Sokağa Old "
-      },
-      {
-        "code": "Depd0xCoq8p",
-        "pk": "4010868112569315113",
-        "url": "https://www.instagram.com/reel/Depd0xCoq8p/",
-        "taken_at": "2026-10-18 19:46",
-        "play_count": 130,
-        "like_count": 2,
-        "comment_count": 0,
-        "title": "🔥 Yeni Haftaya Hazırlık Prestij Old Money: H&M Triko, Stradivarius & Tommy Hilfi"
-      },
-      {
-        "code": "Deop-KRIJJm",
-        "pk": "4010640059712705126",
-        "url": "https://www.instagram.com/reel/Deop-KRIJJm/",
-        "taken_at": "2026-10-18 12:13",
-        "play_count": 129,
-        "like_count": 2,
-        "comment_count": 0,
-        "title": "🔥 Pazar Brunch & Boğaz Yürüyüşü Old Money Zarafeti: Zara Trençkot, İpekyol Monog"
-      },
-      {
-        "code": "DeoIDlQo3Yj",
-        "pk": "4010490898711541283",
-        "url": "https://www.instagram.com/reel/DeoIDlQo3Yj/",
-        "taken_at": "2026-10-18 07:16",
-        "play_count": 201,
-        "like_count": 1,
-        "comment_count": 0,
-        "title": "🔥 Nişantaşı Galeri & Akşamüstü Kahve Quiet Luxury: Stradivarius Süet, Calvin Kle"
-      },
-      {
-        "code": "DemC8aEssyO",
-        "pk": "4009905465477745806",
-        "url": "https://www.instagram.com/reel/DemC8aEssyO/",
-        "taken_at": "2026-10-17 11:53",
-        "play_count": 9,
-        "like_count": 0,
-        "comment_count": 1,
-        "title": "🔥 Pinterest'te En Çok Kaydedilen Old Money Sonbahar Renk Kurgusu: Camel, Buz Mav"
-      },
-      {
-        "code": "Del9WNNM7yb",
-        "pk": "4009880850089098395",
-        "url": "https://www.instagram.com/reel/Del9WNNM7yb/",
-        "taken_at": "2026-10-17 11:04",
-        "play_count": 3,
-        "like_count": 0,
-        "comment_count": 1,
-        "title": "🔥 Bordo & Koyu Kahve Peluş Deri Mont: Sonbaharın En Viral 2K Kapsül Kombini 🔥🍂✨"
-      }
-    ],
+    "recent_reels": [],
     "cooldown_status": {
-      "last_upload_epoch": 1792498659.2424242,
-      "minutes_since_last_upload": 6,
-      "cooldown_4h_remaining_min": 233,
+      "last_upload_epoch": 1792517111.9086723,
+      "minutes_since_last_upload": 8,
+      "cooldown_4h_remaining_min": 231,
       "ready_for_next_post": false
     }
   },
@@ -145,45 +46,37 @@
     "guzelai_web": {
       "status": "HEALTHY",
       "http_code": 200,
-      "latency_ms": 1708,
+      "latency_ms": 669,
       "showcase_section_active": false,
       "active_go_redirect_links": 0
     },
-    "github_actions": {
-      "status": "HEALTHY",
-      "latest_run_id": 39107345431,
-      "run_status": "completed",
-      "conclusion": "success",
-      "created_at": "2026-10-18T07:21:16Z",
-      "cloud_ip_protection": "ACTIVE (dry_run=true default)"
-    },
     "tiktok": {
       "handle": "@guzelaicom",
-      "session_or_profile_present": true,
+      "session_or_profile_present": false,
       "latest_content_ready": true,
       "operating_mode": "STANDBY_SAFE (FYP linksiz format hazır)"
     },
     "threads": {
       "handle": "@guzelaicom",
-      "session_or_profile_present": true,
+      "session_or_profile_present": false,
       "latest_content_ready": true,
       "operating_mode": "STANDBY_SAFE (Instagram SSO bağlı, tıklanabilir link metni hazır)"
     },
     "youtube_shorts": {
       "handle": "@guzelaicom",
-      "session_or_profile_present": true,
+      "session_or_profile_present": false,
       "latest_content_ready": true,
       "operating_mode": "READY (2K dikey video + başlık/açıklama hazır)"
     },
     "pinterest": {
       "handle": "@guzelaicom",
-      "session_or_profile_present": true,
+      "session_or_profile_present": false,
       "latest_content_ready": true,
       "operating_mode": "READY (Old Money vitrin kartı + doğrudan link hazır)"
     },
     "x_twitter": {
       "handle": "@guzelaicom",
-      "session_or_profile_present": true,
+      "session_or_profile_present": false,
       "latest_content_ready": true,
       "operating_mode": "READY (<=100 karakter ana tweet + kombin zinciri hazır)"
     },
