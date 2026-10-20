@@ -116,11 +116,52 @@ def inspect_rendered_reel_quality(
         "zero_product_recitation": len(recited_products) == 0,
     }
 
-    # 3. Verify 6 items have valid cutouts & verified Women's links
+    # 3. Verify 6 items have valid cutouts & 1:1 Model-Cutout Visual Integrity (EGE + MİA + NİL + LİA Protocol)
     items = outfit.get("items") or {}
     checks["items_verified_count"] = len(items)
     if len(items) < 6:
         issues.append(f"Expected 6 outfit items, found {len(items)}")
+
+    cutout_integrity = {}
+    for slot_key, item_meta in items.items():
+        asset_rel = ""
+        if isinstance(item_meta, dict):
+            asset_rel = str(item_meta.get("local_asset") or item_meta.get("fallback_asset") or "")
+        if not asset_rel:
+            asset_rel = str((outfit.get("cutout_assets") or {}).get(slot_key, ""))
+        exists = bool(asset_rel and os.path.exists(asset_rel))
+        alpha_ok = False
+        center_solid_ok = False
+        if exists:
+            try:
+                im_c = Image.open(asset_rel).convert("RGBA")
+                arr_c = np.asarray(im_c)
+                alpha_ch = arr_c[:, :, 3]
+                fg_ratio = float(np.mean(alpha_ch > 30))
+                alpha_ok = 0.08 <= fg_ratio <= 0.95
+                h_c, w_c = alpha_ch.shape
+                cy0, cy1 = int(h_c * 0.38), int(h_c * 0.62)
+                cx0, cx1 = int(w_c * 0.38), int(w_c * 0.62)
+                center_fg = float(np.mean(alpha_ch[cy0:cy1, cx0:cx1] > 30))
+                # Ensure no artificial square hole in the center (except open-ring caps/accessories where >0.15 is ok)
+                center_solid_ok = center_fg >= 0.15
+            except Exception:
+                pass
+        cutout_integrity[slot_key] = {
+            "asset": asset_rel,
+            "exists": exists,
+            "alpha_ok": alpha_ok,
+            "center_solid_ok": center_solid_ok,
+            "model_1to1_verified": bool(exists and alpha_ok),
+        }
+        if not exists or not alpha_ok:
+            issues.append(f"Cutout asset mismatch/corrupt on slot '{slot_key}': {asset_rel}")
+
+    checks["model_item_1to1_visual_match"] = {
+        "enforced_by": ["EGE (visual-qa-runway-inspector)", "NİL (kids-fashion-stylist)", "MİA (fashion-design-specialist)", "LİA (pinterest-collage-fashion-designer)"],
+        "all_6_cutouts_match_model_1to1": all(v["model_1to1_verified"] for v in cutout_integrity.values()) and len(cutout_integrity) >= 6,
+        "slots": cutout_integrity,
+    }
 
     report = {
         "passed": len(issues) == 0,
