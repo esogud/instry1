@@ -1,12 +1,12 @@
 {
   "agent": "prepublish-compliance-auditor",
   "collaborated_with": "social-health-analyst",
-  "generated_at": "2026-10-20 17:33:38",
+  "generated_at": "2026-10-20 20:40:13",
   "verdict": "%100 İHLAL DOĞURMAZ — YAYINA UYGUN",
   "zero_violation_guaranteed": true,
   "compliance_score_pct": 100.0,
   "passed_checks": "11/11",
-  "cooldown_remaining_min": 232,
+  "cooldown_remaining_min": 65,
   "ready_to_publish_immediately": false,
   "checks": {
     "01_persistent_android_device_uuid": {
@@ -51,7 +51,7 @@
     },
     "11_rate_limit_4h_cooldown_guard": {
       "passed": true,
-      "detail": "4 saatlik hız sınırı kalkanı devrede (Son paylaşımdan geçen: 8 dk | Kalan soğuma: 232 dk)."
+      "detail": "4 saatlik hız sınırı kalkanı devrede (Son paylaşımdan geçen: 175 dk | Kalan soğuma: 65 dk)."
     }
   }
 }
