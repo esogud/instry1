@@ -223,7 +223,7 @@ OUTFIT_ARCHETYPES = [
         "id": "halloween_party_couple_gothic_oldmoney",
         "gender_segment": "cift",
         "ai_model_verified": True,
-        "preferred_music_id": "tiktok_vampiric_noir_gala_beat_pov",
+        "preferred_music_id": "english_hit_royalty_neoni",
         "title": "Cadılar Bayramı Rooftop Parti Çift Kombini: Gothic Old Money & Dark Glamour (%100 AI Çift Model) 🎃🍷✨",
         "spoken_hook_text": "Gece partisinde hem gizemli hem de en uyumlu çift olmanın sırrı bu kombinde!",
         "viral_hook": "🛑 2027 Sonbahar/Kış & Cadılar Bayramı Rooftop Partisi için %100 AI Kadın ve Erkek Çift Manken üzerinde hazırlanan Gothic Old Money çift kombini! Kadın için peluş deri dış giyim, bordo üst ve antrasit palazzo; Erkek için siyah kaşe dış giyim, koyu katman ve kuplu pantolon! 💬 Sizce bu çift kombininde en çarpıcı parça hangisi (1-6)? Yorumlarda buluşalım! 👇🎃🍷✨",
@@ -2493,8 +2493,24 @@ def load_cutout_image(item: dict, use_local_first: bool = True) -> Image.Image:
     1) Önce kombinin yürüyen model sahnesiyle birebir örtüşen temiz stüdyo dekupe görselini ('local_asset') kontrol eder,
     2) Yoksa canlı mağaza ürününün beyaz fonlu stüdyo fotoğrafını indirip arka planını silerek kullanır.
     """
-    local_path = item.get("local_asset")
-    fallback_path = item.get("fallback_asset")
+    bot_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    def _resolve_asset(rel_p: str) -> str:
+        if not rel_p:
+            return ""
+        if os.path.exists(rel_p):
+            return rel_p
+        cand = os.path.join(bot_root, rel_p.lstrip("/\\"))
+        if os.path.exists(cand):
+            return cand
+        if rel_p.startswith("/pinterest-models/"):
+            cand2 = os.path.join(bot_root, "assets", os.path.basename(rel_p))
+            if os.path.exists(cand2):
+                return cand2
+        return ""
+
+    local_path = _resolve_asset(item.get("local_asset"))
+    fallback_path = _resolve_asset(item.get("fallback_asset"))
 
     if use_local_first and local_path and os.path.exists(local_path):
         im = Image.open(local_path).convert("RGBA")
@@ -2504,6 +2520,12 @@ def load_cutout_image(item: dict, use_local_first: bool = True) -> Image.Image:
 
     candidate_urls = item.get("image_urls") or ([item["image_url"]] if item.get("image_url") else [])
     for url in candidate_urls[:3]:
+        resolved_local_url = _resolve_asset(url)
+        if resolved_local_url:
+            im = Image.open(resolved_local_url).convert("RGBA")
+            return im
+        if not str(url).startswith("http"):
+            continue
         try:
             resp = requests.get(url, headers=HEADERS, timeout=12)
             if resp.status_code == 200:

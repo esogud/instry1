@@ -382,13 +382,16 @@ def dispatch_all_channels(video_path: str, reel_url: str = ""):
     except Exception as tge:
         print(f"[Telegram Paylaşım Bilgilendirmesi] {tge}")
 
-    # 5. Pinterest hesabında (archzencir@gmail.com) otomatik Pin paylaşımı
+    # 5. Pinterest hesabında (archzencir@gmail.com) Ajan 15 (LİA) Moda Tasarım Kolajı ile otomatik Pin paylaşımı
     try:
+        from kombin_agent_swarm import run_pinterest_collage_fashion_designer
         from pinterest_publisher import save_pinterest_outputs, publish_to_pinterest_cdp
+        lia_rep = run_pinterest_collage_fashion_designer()
+        lia_collage = Path(lia_rep.get("collage_path", str(Path(out_dir) / "pinterest_fashion_collage.jpg")))
         save_pinterest_outputs(outfit_data, out_dir=out_dir, reel_url=reel_url)
-        pin_media = collage_candidate if collage_candidate.exists() else Path(video_path)
+        pin_media = lia_collage if lia_collage.exists() else (collage_candidate if collage_candidate.exists() else Path(video_path))
         pin_res = publish_to_pinterest_cdp(outfit_data, pin_media, reel_url=reel_url)
-        print(f"[Pinterest Otomatik Paylaşım] Durum: {pin_res}")
+        print(f"[Pinterest LİA Moda Kolajı Otomatik Paylaşım] Durum: {pin_res}")
     except Exception as pne:
         print(f"[Pinterest Paylaşım Bilgilendirmesi] {pne}")
 

@@ -362,14 +362,133 @@ MULTI_INSTRUMENT_PROFILES = [
         "intro_hook_text": "Gece partisinde hem gizemli hem de en uyumlu çift olmanın sırrı bu kombinde!",
         "outro_cta_text": "Detaylar güzelai nokta com'da.",
     },
+    {
+        "id": "english_hit_royalty_neoni",
+        "name": "Egzod, Maestro Chives & Neoni – Royalty (Global Viral English Pop/Couture Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Neoni) + Sinematik Yaylılar + 126 BPM Couture Trap/Pop Drop",
+        "bpm": 126,
+        "intro_track": "english_hit_royalty_neoni.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_royalty_neoni.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [293.66, 349.23, 440.0, 523.25, 587.33, 698.46],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Podyum yürüyüşüne geçtiğimiz an bütün bakışları üzerine çeken o İngilizce hit kombin!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_cradles_sub_urban",
+        "name": "Sub Urban – Cradles (TikTok Viral Dark Pop & Halloween Party English Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Sub Urban) + Dark Pop Çelesta + 124 BPM Parti Synth Bass",
+        "bpm": 124,
+        "intro_track": "english_hit_cradles_sub_urban.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_cradles_sub_urban.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [311.13, 369.99, 466.16, 554.37, 622.25, 739.99],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Cadılar Bayramı ve gece partisinde herkesin sorduğu o ikonik çift kombini!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_mortals_laura_brehm",
+        "name": "Warriyo feat. Laura Brehm – Mortals (Viral English Vocal Luxury Runway Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Laura Brehm) + Senfonik Synth + 128 BPM Lüks Podyum Drop",
+        "bpm": 128,
+        "intro_track": "english_hit_mortals_laura_brehm.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_mortals_laura_brehm.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [293.66, 369.99, 440.0, 554.37, 659.25, 739.99],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "2027 Sonbahar Kış podyum enerjisini sokağa taşıyan kusursuz tasarım!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_on_and_on_daniel_levi",
+        "name": "Cartoon feat. Daniel Levi – On & On (Global Pop English Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Daniel Levi) + Modern Pop Synth + 122 BPM Sıcak Groove",
+        "bpm": 122,
+        "intro_track": "english_hit_on_and_on_daniel_levi.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_on_and_on_daniel_levi.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [261.63, 329.63, 392.0, 493.88, 523.25, 659.25],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Gün boyu enerjisini hiç kaybetmeyen Old Money sokak stili!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_fearless_chris_linton",
+        "name": "Lost Sky feat. Chris Linton – Fearless pt.II (Viral English Pop Runway Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Chris Linton) + Güçlü Bas & Elektro Gitar + 126 BPM Beat",
+        "bpm": 126,
+        "intro_track": "english_hit_fearless_chris_linton.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_fearless_chris_linton.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [293.66, 349.23, 440.0, 523.25, 659.25, 783.99],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Özgüveni yüksek modern şehir stilinde bu sezonun favori parçaları!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_heroes_tonight_johnning",
+        "name": "Janji feat. Johnning – Heroes Tonight (Viral English Dance-Pop Hit)",
+        "instruments_desc": "Orijinal İngilizce Vokal (Johnning) + Dance-Pop Synth Lead + 128 BPM Enerjik Ritim",
+        "bpm": 128,
+        "intro_track": "english_hit_heroes_tonight_johnning.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_heroes_tonight_johnning.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [277.18, 329.63, 440.0, 554.37, 659.25, 739.99],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Hafta sonu ve davet şıklığında enerjisiyle fark yaratan kombin!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
+    {
+        "id": "english_hit_feel_good_syn_cole",
+        "name": "Syn Cole – Feel Good (Viral English Upbeat Preppy & Kids Fashion Hit)",
+        "instruments_desc": "Popüler İngilizce Dance-Pop Vokal Hook + Parlak Piyano Akorları + 126 BPM Upbeat Groove",
+        "bpm": 126,
+        "intro_track": "english_hit_feel_good_syn_cole.ogg",
+        "intro_offset": 0.0,
+        "walk_track": "english_hit_feel_good_syn_cole.ogg",
+        "walk_offset": 5.2,
+        "continuous_track": True,
+        "is_english_hit": True,
+        "horn_accent": False,
+        "pluck_scale_hz": [261.63, 329.63, 392.0, 523.25, 659.25, 783.99],
+        "voice_hook": ("tr-TR-EmelNeural", "+4%", "+0Hz"),
+        "intro_hook_text": "Hem rahat hem de kolej şıklığını yansıtan günün favori kombini!",
+        "outro_cta_text": "Detaylar güzelai nokta com'da.",
+    },
 ]
 
 
 def _select_non_repeating_profile(seed_key: str, preferred_id: str = None) -> dict:
     """
-    Son kullanılan müzik profillerini takip ederek üst üste aynı müziğin kullanılmasını (Algoritmik Ses Tekrarı Cezası)
-    kesin olarak önler. Tercih edilen müzik son 4 paylaşımda kullanılmadıysa onu seçer; kullanıldıysa
-    otomatik olarak sıradaki en yüksek viral skorlu taze müziğe geçiş yapar.
+    Her gün popüler İngilizce hit müzikleri (is_english_hit=True) önceliklendirerek
+    ve son kullanılan müzik profillerini takip ederek üst üste aynı müziğin kullanılmasını
+    kesin olarak önler.
     """
     recent_ids = []
     if os.path.exists(HISTORY_FILE):
@@ -379,17 +498,26 @@ def _select_non_repeating_profile(seed_key: str, preferred_id: str = None) -> di
         except Exception:
             recent_ids = []
 
+    english_pool = [p for p in MULTI_INSTRUMENT_PROFILES if p.get("is_english_hit")]
     recent_window = recent_ids[-4:]
     chosen = None
+
+    # Eğer preferred_id bir popüler İngilizce hit ise ve son 4 yayında kullanılmadıysa onu seç
     if preferred_id and preferred_id not in recent_window:
-        matched = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] == preferred_id]
+        matched = [p for p in english_pool if p["id"] == preferred_id]
         if matched:
             chosen = matched[0]
 
+    # Aksi halde popüler İngilizce hit havuzundan son yayınlarda kullanılmamış olanı seç
+    if chosen is None and english_pool:
+        avail_en = [p for p in english_pool if p["id"] not in recent_ids[-5:]]
+        if not avail_en:
+            avail_en = [p for p in english_pool if p["id"] not in recent_ids[-2:]] or english_pool
+        h = int(hashlib.md5(str(seed_key).encode("utf-8")).hexdigest()[:8], 16)
+        chosen = avail_en[h % len(avail_en)]
+
     if chosen is None:
-        available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-5:]]
-        if not available:
-            available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-2:]] or MULTI_INSTRUMENT_PROFILES
+        available = [p for p in MULTI_INSTRUMENT_PROFILES if p["id"] not in recent_ids[-5:]] or MULTI_INSTRUMENT_PROFILES
         h = int(hashlib.md5(str(seed_key).encode("utf-8")).hexdigest()[:8], 16)
         chosen = available[h % len(available)]
 
