@@ -4,6 +4,7 @@
     "chic_black_biker_denim",
     "cocuk_slot1_sonbahar_kolej_kombin",
     "curly_khaki_suede_palazzo",
+    "erkek_slot2_smart_street_deri_bomber_jean",
     "guzelai_elbise_deri_ceket_kombin",
     "guzelai_gomlek_kase_mont_palazzo",
     "halloween_party_couple_gothic_oldmoney",
@@ -20,6 +21,7 @@
   ],
   "published_models": [
     "assets/curly_model_step1.jpg",
+    "assets/hw27_men_step1.jpg",
     "assets/hw27_women_step1.jpg",
     "assets/hw_couple1_step1.jpg",
     "assets/hw_couple2_step1.jpg",
@@ -50,7 +52,8 @@
     "guzelai_elbise_deri_ceket_kombin": "https://www.instagram.com/reel/DerLsKTo20v/",
     "halloween_party_couple_vampiric_noir": "https://www.instagram.com/reel/DetSHj9I-AZ/",
     "cocuk_slot1_sonbahar_kolej_kombin": "https://www.instagram.com/reel/DeuFlxVoiyH/",
-    "halloween_party_couple_gothic_oldmoney": "https://www.instagram.com/reel/DeuZchboEYq/"
+    "halloween_party_couple_gothic_oldmoney": "https://www.instagram.com/reel/DeuZchboEYq/",
+    "erkek_slot2_smart_street_deri_bomber_jean": "https://www.instagram.com/reel/Dev4LhVoKrF/"
   },
-  "last_upload_timestamp": 1792518264.4640543
+  "last_upload_timestamp": 1792567929.7316628
 }
