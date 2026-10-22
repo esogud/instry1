@@ -1,7 +1,7 @@
 {
   "agent": "prepublish-compliance-auditor",
   "collaborated_with": "social-health-analyst",
-  "generated_at": "2026-10-22 13:09:13",
+  "generated_at": "2026-10-22 17:33:27",
   "verdict": "%100 İHLAL DOĞURMAZ — YAYINA UYGUN",
   "zero_violation_guaranteed": true,
   "compliance_score_pct": 100.0,
@@ -51,7 +51,7 @@
     },
     "11_rate_limit_4h_cooldown_guard": {
       "passed": true,
-      "detail": "4 saatlik hız sınırı kalkanı devrede (Son paylaşımdan geçen: 1777 dk | Kalan soğuma: 0 dk)."
+      "detail": "4 saatlik hız sınırı kalkanı devrede (Son paylaşımdan geçen: 2041 dk | Kalan soğuma: 0 dk)."
     }
   }
 }
