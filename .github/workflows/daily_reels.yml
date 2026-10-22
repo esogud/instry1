@@ -6,7 +6,7 @@ on:
     # 07:15 UTC = 10:15 TSİ (Sabah Kuşağı)
     # 12:15 UTC = 15:15 TSİ (Öğleden Sonra Kuşağı)
     # 17:15 UTC = 20:15 TSİ (Akşam Prime-Time Kuşağı)
-    - cron: '15 7,12,17 * * *'
+    - cron: '30 7,12,17,0 * * *'
   workflow_dispatch:
     inputs:
       slot_name:
